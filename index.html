@@ -102,6 +102,7 @@
       color: #d9d9d6;
       cursor: pointer;
       white-space: nowrap;
+      user-select: none;
     }
 
     .nav-links li.active,
@@ -491,6 +492,123 @@
       margin-top: 5px;
     }
 
+    /* ================= ALL CHARACTERS PAGE ================= */
+
+    .all-characters-page {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      display: none;
+      overflow-y: auto;
+      background:
+        radial-gradient(circle at top right, rgba(229, 9, 20, 0.12), transparent 35%),
+        #050505;
+    }
+
+    .all-characters-page.open {
+      display: block;
+    }
+
+    .all-page-inner {
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      padding: 90px clamp(16px, 4vw, 56px) 60px;
+    }
+
+    .all-page-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 42px;
+    }
+
+    .back-btn {
+      border: 1px solid var(--nx-line);
+      background: #151515;
+      color: white;
+      border-radius: 5px;
+      padding: 10px 16px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background: #242424;
+    }
+
+    .all-page-badge {
+      font-family: "Roboto Mono", monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: #ffb3b6;
+      border: 1px solid rgba(229, 9, 20, .4);
+      padding: 7px 12px;
+      border-radius: 3px;
+    }
+
+    .all-page-heading {
+      margin-bottom: 30px;
+    }
+
+    .all-page-kicker {
+      color: var(--nx-red);
+      font-family: "Roboto Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .14em;
+      margin-bottom: 8px;
+    }
+
+    .all-page-heading h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(46px, 7vw, 78px);
+      line-height: .95;
+      margin-bottom: 10px;
+    }
+
+    .all-page-heading p:last-child {
+      color: var(--nx-muted);
+      font-size: 14px;
+    }
+
+    .all-character-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .all-character-grid .card {
+      width: 100%;
+    }
+
+    @media (max-width: 1100px) {
+      .all-character-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .all-page-inner {
+        padding-top: 76px;
+      }
+
+      .all-page-top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .all-character-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .all-character-grid .card {
+        width: 100%;
+      }
+    }
+
+
     /* ================= MODAL ================= */
 
     .overlay {
@@ -718,9 +836,9 @@
       </div>
 
       <ul class="nav-links">
-        <li class="active">หน้าแรก</li>
-        <li>ตัวละครทั้งหมด</li>
-        <li>ANIME HALL OF FAME 2026</li>
+        <li class="active" onclick="goHome()">หน้าแรก</li>
+        <li onclick="goAllCharacters()">ตัวละครทั้งหมด</li>
+        <li onclick="goHallOfFame()">ANIME HALL OF FAME 2026</li>
       </ul>
 
     </div>
@@ -840,6 +958,26 @@
   >
     ไม่พบตัวละครหรืออนิเมะที่ค้นหา
   </div>
+
+
+  <!-- ================= ALL CHARACTERS PAGE ================= -->
+
+  <section class="all-characters-page" id="allCharactersPage">
+    <div class="all-page-inner">
+      <div class="all-page-top">
+        <button class="back-btn" onclick="closeAllCharacters()">← กลับหน้าหลัก</button>
+        <div class="all-page-badge">ANIME HALL OF FAME 2026</div>
+      </div>
+
+      <div class="all-page-heading">
+        <p class="all-page-kicker">CHARACTERS</p>
+        <h1>ตัวละครทั้งหมด</h1>
+        <p>รวมตัวละครทั้ง 23 อันดับใน Hall of Fame 2026</p>
+      </div>
+
+      <div class="all-character-grid" id="allCharacterGrid"></div>
+    </div>
+  </section>
 
 
   <!-- ================= MODAL ================= -->
@@ -1331,57 +1469,48 @@
     function loadThumbnail(element, videoId) {
 
       const urls = [
-
         `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
         `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`,
         `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`
-
+        `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+        `https://img.youtube.com/vi/${videoId}/0.jpg`
       ];
 
-
       let current = 0;
-
 
       function tryNext() {
 
         if (current >= urls.length) {
-
-          element.style.background =
-            "linear-gradient(135deg, #151515, #450000)";
-
+          // Never leave a card blank.
+          element.style.backgroundImage =
+            "linear-gradient(135deg, #151515 0%, #450000 100%)";
           return;
-
         }
-
 
         const img = new Image();
 
-
         img.onload = function () {
-
-          element.style.backgroundImage =
-            `url("${urls[current]}")`;
-
+          // Ignore tiny/invalid placeholder responses.
+          if (img.naturalWidth >= 120 && img.naturalHeight >= 90) {
+            element.style.backgroundImage =
+              `url("${urls[current]}")`;
+          } else {
+            current++;
+            tryNext();
+          }
         };
-
 
         img.onerror = function () {
-
           current++;
-
           tryNext();
-
         };
 
-
         img.src = urls[current];
-
       }
 
-
       tryNext();
-
     }
 
 
@@ -1625,6 +1754,75 @@
 
 
     /* =========================================
+       Navigation
+    ========================================= */
+
+    function setActiveNav(index) {
+      document
+        .querySelectorAll(".nav-links li")
+        .forEach((item, i) => {
+          item.classList.toggle("active", i === index);
+        });
+    }
+
+    function goHome() {
+      setActiveNav(0);
+      closeAllCharacters();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      document.getElementById("rows").style.display = "block";
+      document.getElementById("emptyState").classList.remove("show");
+    }
+
+    function goAllCharacters() {
+      setActiveNav(1);
+
+      const input = document.getElementById("searchInput");
+      input.value = "";
+
+      document
+        .querySelectorAll(".card")
+        .forEach(card => {
+          card.style.display = "flex";
+        });
+
+      document.getElementById("rows").style.display = "block";
+      document.getElementById("emptyState").classList.remove("show");
+
+      const grid = document.getElementById("allCharacterGrid");
+
+      // Build a true 23-character page from the existing data/order.
+      grid.innerHTML = order
+        .map(title => createCard(title))
+        .join("");
+
+      loadAllThumbnails();
+
+      document.getElementById("allCharactersPage").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeAllCharacters() {
+      document.getElementById("allCharactersPage").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function goHallOfFame() {
+      setActiveNav(2);
+      closeAllCharacters();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+
+    /* =========================================
        Search
     ========================================= */
 
@@ -1736,6 +1934,7 @@
       if (event.key === "Escape") {
 
         closeModal();
+        closeAllCharacters();
 
       }
 
