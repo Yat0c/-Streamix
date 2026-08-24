@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STREAMIX — ดูหนังและซีรีส์ออนไลน์</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
+
+  :root{
+    --nx-black:#000; --nx-panel:#141414; --nx-panel-2:#1c1c1c;
+    --nx-red:#E50914; --nx-text:#F2F2F0; --nx-muted:#9a9a9a; --nx-line:#2b2b2b;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--nx-black); color:var(--nx-text);
+    font-family:'Noto Sans Thai', sans-serif; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--nx-red); color:#fff; }
+  img{ display:block; }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:14px clamp(16px,4vw,56px);
+    transition:background .3s ease, box-shadow .3s ease;
+  }
+  .nav.scrolled{ background:#0a0a0a; box-shadow:0 4px 20px rgba(0,0,0,.5); }
+  .nav-left{ display:flex; align-items:center; gap:28px; }
+  .logo{
+    font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:.03em;
+    color:var(--nx-red); text-shadow:0 0 18px rgba(229,9,20,.4); cursor:pointer; white-space:nowrap;
+  }
+  .nav-links{ display:none; gap:20px; list-style:none; }
+  .nav-links li{ font-size:13.5px; color:#d9d9d6; cursor:pointer; transition:color .2s; white-space:nowrap; }
+  .nav-links li.active{ color:#fff; font-weight:700; }
+  .nav-links li:hover{ color:#fff; }
+  @media(min-width:820px){ .nav-links{ display:flex; } }
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+  .search-wrap{ position:relative; display:flex; align-items:center; }
+  .search-input{
+    width:0; opacity:0; padding:8px 10px; border-radius:3px; border:1px solid var(--nx-line);
+    background:rgba(0,0,0,.75); color:#fff; font-size:13px; font-family:inherit;
+    transition:width .25s ease, opacity .2s ease, padding .25s ease;
+  }
+  .search-wrap.open .search-input{ width:200px; opacity:1; margin-left:8px; }
+  .icon-btn{ background:none; border:none; color:#e5e5e5; cursor:pointer; font-size:17px; padding:4px; }
+  .avatar{
+    width:30px; height:30px; border-radius:5px;
+    background:linear-gradient(135deg,var(--nx-red),#5c0d13);
+    display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue'; font-size:15px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:92vh; display:flex; align-items:flex-end;
+    padding:0 clamp(16px,4vw,56px) 70px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.4) 55%, #000 100%),
+      radial-gradient(ellipse 1000px 560px at 22% 15%, rgba(229,9,20,.32), transparent 60%),
+      radial-gradient(ellipse 800px 500px at 90% 5%, rgba(90,10,20,.28), transparent 55%),
+      #0a0a0a;
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; max-width:680px; opacity:0; animation:fadeUp .8s .15s ease forwards; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px; font-family:'Roboto Mono',monospace;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#e5e5e5;
+    background:rgba(229,9,20,.16); border:1px solid rgba(229,9,20,.4);
+    padding:6px 14px; border-radius:3px; margin-bottom:20px;
+  }
+  .hero h1{ font-family:'Bebas Neue', sans-serif; font-size:clamp(48px,9vw,104px); line-height:.95; color:#fff; margin-bottom:14px; }
+  .hero p{ font-size:clamp(14.5px,1.8vw,17px); color:#d2d2d0; line-height:1.65; max-width:540px; margin-bottom:26px; }
+  .hero-meta{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--nx-muted); margin-bottom:24px; font-family:'Roboto Mono',monospace; }
+  .hero-meta .match{ color:#4CAF66; font-weight:700; }
+  .pill{ border:1px solid var(--nx-line); padding:2px 8px; border-radius:3px; }
+  .hero-btns{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:15px; padding:11px 24px; border-radius:4px; border:none; cursor:pointer; }
+  .btn-primary{ background:#fff; color:#000; }
+  .btn-primary:hover{ background:#d9d9d6; }
+  .btn-ghost{ background:rgba(109,109,110,.5); color:#fff; }
+  .btn-ghost:hover{ background:rgba(109,109,110,.75); }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- ROWS ---------- */
+  .rows{ position:relative; z-index:2; margin-top:-64px; padding-bottom:70px; }
+  .row{ margin-bottom:38px; }
+  .row-head{ display:flex; align-items:baseline; justify-content:space-between; padding:0 clamp(16px,4vw,56px); margin-bottom:12px; }
+  .row-title{ font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:.02em; color:#fff; }
+  .row-scroller{ display:flex; gap:10px; overflow-x:auto; padding:4px clamp(16px,4vw,56px) 16px; scroll-snap-type:x proximity; }
+  .row-scroller::-webkit-scrollbar{ height:6px; }
+  .row-scroller::-webkit-scrollbar-thumb{ background:var(--nx-line); border-radius:3px; }
+
+  .card{
+    scroll-snap-align:start; flex:0 0 auto; width:210px; aspect-ratio:2/3;
+    border-radius:6px; position:relative; overflow:hidden; cursor:pointer;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, z-index 0s;
+    display:flex; align-items:flex-end;
+  }
+  .card:hover{ transform:translateY(-8px) scale(1.08); box-shadow:0 24px 44px -12px rgba(0,0,0,.7); z-index:3; }
+  .card .poster-bg{ position:absolute; inset:0; }
+  .card .shade{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, rgba(0,0,0,.85) 100%); }
+  .card-body{ position:relative; padding:12px 12px 14px; width:100%; }
+  .card-tag{ font-family:'Roboto Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#ffb3b6; text-transform:uppercase; margin-bottom:4px; }
+  .card-title{ font-family:'Bebas Neue',sans-serif; font-size:18px; color:#fff; line-height:1.05; }
+  .card-genre{ font-size:11px; color:#c9c9c6; margin-top:3px; }
+
+  /* poster gradients (no real images used) */
+  .p1{ background:linear-gradient(160deg,#3a0a10,#0d0d0d 70%); }
+  .p2{ background:linear-gradient(160deg,#1a2438,#0d0d0d 70%); }
+  .p3{ background:linear-gradient(160deg,#2a1f10,#0d0d0d 70%); }
+  .p4{ background:linear-gradient(160deg,#132a1f,#0d0d0d 70%); }
+  .p5{ background:linear-gradient(160deg,#2a1030,#0d0d0d 70%); }
+  .p6{ background:linear-gradient(160deg,#1f1f1f,#0d0d0d 70%); }
+  .p7{ background:linear-gradient(160deg,#0d2a2a,#0d0d0d 70%); }
+  .p8{ background:linear-gradient(160deg,#301818,#0d0d0d 70%); }
+
+  /* ---------- MODAL ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:200;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .overlay.open{ display:flex; }
+  .modal{
+    width:100%; max-width:640px; max-height:88vh; overflow-y:auto;
+    background:var(--nx-panel); border-radius:8px; border:1px solid var(--nx-line);
+    animation:fadeUp .3s ease forwards;
+  }
+  .modal-hero{ height:220px; position:relative; display:flex; align-items:flex-end; padding:20px; background:#000; }
+  .modal-hero .shade{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 0%, rgba(20,20,20,1) 100%); }
+  .modal-close{
+    position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
+    background:rgba(0,0,0,.6); border:1px solid var(--nx-line); color:#fff; font-size:16px; cursor:pointer; z-index:3;
+  }
+  .modal-title{ position:relative; font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; z-index:1; }
+  .modal-video{ position:absolute; inset:0; display:none; }
+  .modal-video iframe{ width:100%; height:100%; border:0; }
+  .modal.playing .modal-video{ display:block; }
+  .modal.playing .modal-hero .shade,
+  .modal.playing .modal-hero .modal-title{ display:none; }
+  .modal-body{ padding:6px 24px 26px; }
+  .modal-btns{ display:flex; gap:10px; margin-bottom:18px; }
+  .modal-meta{ display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--nx-muted); font-family:'Roboto Mono',monospace; margin-bottom:14px; flex-wrap:wrap; }
+  .modal-desc{ font-size:14px; line-height:1.7; color:#d9d9d6; margin-bottom:16px; }
+  .modal-genres{ display:flex; gap:8px; flex-wrap:wrap; }
+  .genre-chip{ font-size:11.5px; border:1px solid var(--nx-line); padding:4px 10px; border-radius:20px; color:#c9c9c6; }
+
+  /* ---------- FOOTER ---------- */
+  .footer{ border-top:1px solid var(--nx-line); padding:36px clamp(16px,4vw,56px) 50px; }
+  .footer p{ font-size:12.5px; color:var(--nx-muted); line-height:1.8; }
+  .footer .label{ font-family:'Roboto Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--nx-muted); margin-bottom:6px; }
+  .footer .names{ font-size:13px; color:#c9c9c6; margin-bottom:20px; }
+
+  .empty-state{ padding:60px clamp(16px,4vw,56px); text-align:center; color:var(--nx-muted); display:none; }
+  .empty-state.show{ display:block; }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-left">
+      <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">STREAMIX</div>
+      <ul class="nav-links">
+        <li class="active" data-filter="all">หน้าแรก</li>
+        <li data-filter="ซีรีส์">ซีรีส์</li>
+        <li data-filter="หนัง">หนัง</li>
+        <li data-filter="ยอดนิยม">ยอดนิยมล่าสุด</li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrap" id="searchWrap">
+        <button class="icon-btn" onclick="toggleSearch()">🔍</button>
+        <input class="search-input" id="searchInput" placeholder="ค้นหาชื่อเรื่อง..." oninput="filterCards()">
+      </div>
+      <div class="avatar">S</div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">● STREAMIX ORIGINAL</div>
+      <h1>My Hero</h1>
+      <p>เมื่อคดีฆาตกรรมปริศนากลางเมืองใหญ่เชื่อมโยงไปถึงความลับที่ฝังลึกมา 20 ปี นักสืบหญิงต้องไล่ล่าความจริงก่อนที่อดีตจะกลืนกินทุกคนที่เธอรัก</p>
+      <div class="hero-meta">
+        <span class="match">ตรงใจ 97%</span>
+        <span>2026</span>
+        <span class="pill">15+</span>
+        <span>1 ซีซัน</span>
+        <span class="pill">ดราม่า · ระทึกขวัญ</span>
+      </div>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="openModal('My Hero'); playTrailer();">▶ เล่น</button>
+        <button class="btn btn-ghost" onclick="openModal('My Hero')">ℹ ข้อมูลเพิ่มเติม</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="rows" id="rows">
+
+    <section class="row" data-cat="ยอดนิยม">
+      <div class="row-head"><h2 class="row-title">กำลังมาแรงตอนนี้</h2></div>
+      <div class="row-scroller">
+        <div class="card" data-title="My Hero" data-genre="ดราม่า · ระทึกขวัญ" onclick="openModal('My Hero')">
+          <div class="poster-bg p1"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series · New</p><p class="card-title">My Hero</p><p class="card-genre">ดราม่า · ระทึกขวัญ</p></div>
+        </div>
+        <div class="card" data-title="Ippo" data-genre="ไซไฟ · แอ็กชัน" onclick="openModal('Ippo')">
+          <div class="poster-bg p2"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">Ippo</p><p class="card-genre">ไซไฟ · แอ็กชัน</p></div>
+        </div>
+        <div class="card" data-title="ร้านลับข้างซอย" data-genre="คอมเมดี้" onclick="openModal('ร้านลับข้างซอย')">
+          <div class="poster-bg p3"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">ร้านลับข้างซอย</p><p class="card-genre">คอมเมดี้</p></div>
+        </div>
+        <div class="card" data-title="ไฟใต้สายฝน" data-genre="โรแมนติก" onclick="openModal('ไฟใต้สายฝน')">
+          <div class="poster-bg p4"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ไฟใต้สายฝน</p><p class="card-genre">โรแมนติก</p></div>
+        </div>
+        <div class="card" data-title="เขาวงกตราตรี" data-genre="สยองขวัญ" onclick="openModal('เขาวงกตราตรี')">
+          <div class="poster-bg p5"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">เขาวงกตราตรี</p><p class="card-genre">สยองขวัญ</p></div>
+        </div>
+        <div class="card" data-title="นักล่าแสงดาว" data-genre="แอนิเมชัน" onclick="openModal('นักล่าแสงดาว')">
+          <div class="poster-bg p6"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Animation</p><p class="card-title">นักล่าแสงดาว</p><p class="card-genre">แอนิเมชัน</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row" data-cat="ซีรีส์">
+      <div class="row-head"><h2 class="row-title">ซีรีส์ยอดฮิต</h2></div>
+      <div class="row-scroller">
+        <div class="card" data-title="ห้องเรียนสีเลือด" data-genre="ระทึกขวัญ" onclick="openModal('ห้องเรียนสีเลือด')">
+          <div class="poster-bg p7"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">ห้องเรียนสีเลือด</p><p class="card-genre">ระทึกขวัญ</p></div>
+        </div>
+        <div class="card" data-title="คนละครึ่งฟ้า" data-genre="ดราม่าครอบครัว" onclick="openModal('คนละครึ่งฟ้า')">
+          <div class="poster-bg p8"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">คนละครึ่งฟ้า</p><p class="card-genre">ดราม่าครอบครัว</p></div>
+        </div>
+        <div class="card" data-title="เมืองที่ไม่หลับใหล" data-genre="อาชญากรรม" onclick="openModal('เมืองที่ไม่หลับใหล')">
+          <div class="poster-bg p1"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">เมืองที่ไม่หลับใหล</p><p class="card-genre">อาชญากรรม</p></div>
+        </div>
+        <div class="card" data-title="รักนี้ไม่มีสคริปต์" data-genre="โรแมนติกคอมเมดี้" onclick="openModal('รักนี้ไม่มีสคริปต์')">
+          <div class="poster-bg p4"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">รักนี้ไม่มีสคริปต์</p><p class="card-genre">โรแมนติกคอมเมดี้</p></div>
+        </div>
+        <div class="card" data-title="รหัสลับสุดขอบฟ้า" data-genre="ไซไฟ" onclick="openModal('รหัสลับสุดขอบฟ้า')">
+          <div class="poster-bg p2"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">รหัสลับสุดขอบฟ้า</p><p class="card-genre">ไซไฟ</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row" data-cat="หนัง">
+      <div class="row-head"><h2 class="row-title">ภาพยนตร์แนะนำ</h2></div>
+      <div class="row-scroller">
+        <div class="card" data-title="ปลายทางที่ไม่มีชื่อ" data-genre="ดราม่า" onclick="openModal('ปลายทางที่ไม่มีชื่อ')">
+          <div class="poster-bg p3"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ปลายทางที่ไม่มีชื่อ</p><p class="card-genre">ดราม่า</p></div>
+        </div>
+        <div class="card" data-title="เกมล่าเงา" data-genre="แอ็กชันระทึกขวัญ" onclick="openModal('เกมล่าเงา')">
+          <div class="poster-bg p5"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">เกมล่าเงา</p><p class="card-genre">แอ็กชันระทึกขวัญ</p></div>
+        </div>
+        <div class="card" data-title="ครัวไฟฝัน" data-genre="สารคดี" onclick="openModal('ครัวไฟฝัน')">
+          <div class="poster-bg p6"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Documentary</p><p class="card-title">ครัวไฟฝัน</p><p class="card-genre">สารคดี</p></div>
+        </div>
+        <div class="card" data-title="ก่อนฟ้าจะสาง" data-genre="ดราม่าโรแมนติก" onclick="openModal('ก่อนฟ้าจะสาง')">
+          <div class="poster-bg p8"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ก่อนฟ้าจะสาง</p><p class="card-genre">ดราม่าโรแมนติก</p></div>
+        </div>
+        <div class="card" data-title="หมู่บ้านมายา" data-genre="แฟนตาซี" onclick="openModal('หมู่บ้านมายา')">
+          <div class="poster-bg p7"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">หมู่บ้านมายา</p><p class="card-genre">แฟนตาซี</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="empty-state" id="emptyState">ไม่พบเรื่องที่ค้นหา ลองคำอื่นดูนะ</div>
+
+  <div class="overlay" id="overlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal" id="modal">
+      <div class="modal-hero" id="modalHero">
+        <div class="modal-video" id="modalVideo"></div>
+        <div class="shade"></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h2 class="modal-title" id="modalTitle">—</h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-btns">
+          <button class="btn btn-primary" style="padding:9px 20px;" onclick="playTrailer()">▶ เล่น</button>
+          <button class="icon-btn" style="border:1px solid var(--nx-line); border-radius:50%; width:36px; height:36px;">+</button>
+        </div>
+        <div class="modal-meta">
+          <span class="match" style="color:#4CAF66; font-weight:700;">ตรงใจ 9x%</span>
+          <span>2026</span>
+          <span class="pill">15+</span>
+        </div>
+        <p class="modal-desc" id="modalDesc">เนื้อเรื่องย่อจะแสดงที่นี่</p>
+        <div class="modal-genres" id="modalGenres"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p class="label">Prepared by</p>
+    <p class="names">ชื่อสมาชิกทีม<br>(แก้ไขส่วนนี้ให้ตรงกับรายชื่อจริงของทีม)</p>
+    <p>เว็บไซต์นี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น เนื้อหาชื่อเรื่อง โปสเตอร์ และเรื่องย่อทั้งหมดเป็นผลงานสมมติ ไม่ได้เกี่ยวข้องกับคอนเทนต์จริงของแพลตฟอร์มใด ๆ · STREAMIX MOCKUP · Business: Netflix (โมเดลอ้างอิง)</p>
+  </footer>
+
+<script>
+  const descriptions = {
+    "My Hero":"เมื่อคดีฆาตกรรมปริศนากลางเมืองใหญ่เชื่อมโยงไปถึงความลับที่ฝังลึกมา 20 ปี นักสืบหญิงต้องไล่ล่าความจริงก่อนที่อดีตจะกลืนกินทุกคนที่เธอรัก",
+    "Ippo":"ทีมนักบินอวกาศต้องเอาชีวิตรอดหลังยานถูกตัดขาดจากโลก ท่ามกลางสัญญาณประหลาดที่ไม่มีใครอธิบายได้",
+    "ร้านลับข้างซอย":"ร้านก๋วยเตี๋ยวเล็ก ๆ ในซอยกลายเป็นจุดนัดพบของคนแปลกหน้าที่ต่างมีความลับซ่อนอยู่",
+    "ไฟใต้สายฝน":"ความรักของสองคนที่พบกันในคืนฝนตก ท่ามกลางเมืองที่กำลังจะเปลี่ยนไปตลอดกาล",
+    "เขาวงกตราตรี":"กลุ่มเพื่อนติดอยู่ในบ้านเก่าที่ซ่อนเขาวงกตลึกลับ ทุกการตัดสินใจนำไปสู่จุดจบที่ต่างกัน",
+    "นักล่าแสงดาว":"เด็กหญิงผู้ค้นพบพลังพิเศษต้องออกเดินทางเพื่อปกป้องดวงดาวดวงสุดท้ายของจักรวาล",
+    "ห้องเรียนสีเลือด":"นักเรียนกลุ่มหนึ่งค้นพบความจริงอันน่าสะพรึงเบื้องหลังโรงเรียนที่พวกเขาเรียนอยู่",
+    "คนละครึ่งฟ้า":"ครอบครัวที่แตกแยกต้องกลับมารวมตัวกันอีกครั้งเพื่อรับมือกับวิกฤตครั้งใหญ่",
+    "เมืองที่ไม่หลับใหล":"นักสืบหนุ่มไล่ล่าองค์กรอาชญากรรมที่ควบคุมเมืองอยู่เบื้องหลัง",
+    "รักนี้ไม่มีสคริปต์":"นักเขียนบทที่ชีวิตรักไม่เป็นไปตามแผน ต้องเรียนรู้ที่จะปล่อยให้เรื่องราวเป็นไปเอง",
+    "รหัสลับสุดขอบฟ้า":"นักวิทยาศาสตร์ค้นพบสัญญาณลึกลับจากอวกาศที่อาจเปลี่ยนอนาคตของมนุษยชาติ",
+    "ปลายทางที่ไม่มีชื่อ":"ชายที่สูญเสียความทรงจำออกเดินทางตามรอยอดีตของตัวเอง",
+    "เกมล่าเงา":"หน่วยปฏิบัติการลับต้องหยุดแผนร้ายก่อนที่มันจะสายเกินไป",
+    "ครัวไฟฝัน":"สารคดีที่พาไปสำรวจเบื้องหลังร้านอาหารริมทางทั่วประเทศ และเรื่องราวของคนทำอาหาร",
+    "ก่อนฟ้าจะสาง":"คู่รักที่ต้องเลือกระหว่างความฝันกับความรักในคืนสุดท้ายก่อนแยกจากกัน",
+    "หมู่บ้านมายา":"หมู่บ้านลึกลับที่ปรากฏขึ้นเพียงคืนเดียวในรอบร้อยปี ซ่อนความจริงที่เปลี่ยนโลกได้"
+  };
+  const genresMap = {
+    "My Hero":["ดราม่า","ระทึกขวัญ"], "Ippo":["ไซไฟ","แอ็กชัน"],
+    "ร้านลับข้างซอย":["คอมเมดี้"], "ไฟใต้สายฝน":["โรแมนติก"], "เขาวงกตราตรี":["สยองขวัญ"],
+    "นักล่าแสงดาว":["แอนิเมชัน"], "ห้องเรียนสีเลือด":["ระทึกขวัญ"], "คนละครึ่งฟ้า":["ดราม่า","ครอบครัว"],
+    "เมืองที่ไม่หลับใหล":["อาชญากรรม"], "รักนี้ไม่มีสคริปต์":["โรแมนติก","คอมเมดี้"],
+    "รหัสลับสุดขอบฟ้า":["ไซไฟ"], "ปลายทางที่ไม่มีชื่อ":["ดราม่า"], "เกมล่าเงา":["แอ็กชัน","ระทึกขวัญ"],
+    "ครัวไฟฝัน":["สารคดี"], "ก่อนฟ้าจะสาง":["ดราม่า","โรแมนติก"], "หมู่บ้านมายา":["แฟนตาซี"]
+  };
+
+  // ---- วิดีโอตัวอย่าง (YouTube) ----
+  // ใส่ YouTube Video ID ของแต่ละเรื่องตรงนี้ (เอามาจากท้าย URL ของคลิป เช่น youtube.com/watch?v=XXXXXXXXXXX)
+  // ตอนนี้ทุกเรื่องยังใช้คลิปตัวอย่างเดียวกันแบบ placeholder (Creative Commons) — เปลี่ยนได้ตามต้องการ
+  const DEFAULT_VIDEO_ID = "aqz-KE-bpKQ"; // Big Buck Bunny (CC-BY, ใช้เป็น placeholder)
+  const videoMap = {
+    "My Hero": "2iqlLWFvRv0",
+    "Ippo": "WxrTu7fT1FY",
+  };
+
+  let currentTitle = null;
+
+  function getVideoId(title){ return videoMap[title] || DEFAULT_VIDEO_ID; }
+
+  function openModal(title){
+    currentTitle = title;
+    document.getElementById('modal').classList.remove('playing');
+    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเดิมถ้ามี
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDesc').textContent = descriptions[title] || "เนื้อเรื่องย่อจะแสดงที่นี่";
+    const genresWrap = document.getElementById('modalGenres');
+    genresWrap.innerHTML = "";
+    (genresMap[title]||[]).forEach(g=>{
+      const chip = document.createElement('span');
+      chip.className = 'genre-chip'; chip.textContent = g;
+      genresWrap.appendChild(chip);
+    });
+    document.getElementById('overlay').classList.add('open');
+  }
+
+  function playTrailer(){
+    if(!currentTitle) currentTitle = "My Hero";
+    const id = getVideoId(currentTitle);
+    const frame = document.createElement('iframe');
+    frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    frame.title = "trailer player";
+    frame.allow = "autoplay; encrypted-media; picture-in-picture";
+    frame.allowFullscreen = true;
+    document.getElementById('modalVideo').innerHTML = "";
+    document.getElementById('modalVideo').appendChild(frame);
+    document.getElementById('modal').classList.add('playing');
+  }
+
+  function closeModal(){
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('modal').classList.remove('playing');
+    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเมื่อปิดหน้าต่าง
+  }
+
+  function toggleSearch(){
+    const wrap = document.getElementById('searchWrap');
+    wrap.classList.toggle('open');
+    if(wrap.classList.contains('open')) document.getElementById('searchInput').focus();
+  }
+
+  function filterCards(){
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    const cards = document.querySelectorAll('.card');
+    let visibleCount = 0;
+    cards.forEach(c=>{
+      const match = c.dataset.title.toLowerCase().includes(q);
+      c.style.display = match ? 'flex' : 'none';
+      if(match) visibleCount++;
+    });
+    document.getElementById('emptyState').classList.toggle('show', q.length>0 && visibleCount===0);
+    document.getElementById('rows').style.display = (q.length>0 && visibleCount===0) ? 'none' : 'block';
+  }
+
+  document.querySelectorAll('.nav-links li').forEach(li=>{
+    li.addEventListener('click', ()=>{
+      document.querySelectorAll('.nav-links li').forEach(x=>x.classList.remove('active'));
+      li.classList.add('active');
+      const filter = li.dataset.filter;
+      document.querySelectorAll('.row').forEach(row=>{
+        row.style.display = (filter==='all' || row.dataset.cat===filter) ? 'block' : 'none';
+      });
+    });
+  });
+
+  window.addEventListener('scroll', ()=>{
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+</script>
+</body>
+</html>
