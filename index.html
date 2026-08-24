@@ -3,740 +3,1835 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>STREAMIX — ตัวละครอนิเมะยอดนิยมตลอดกาล</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
 
-  :root{
-    --nx-black:#000; --nx-panel:#141414; --nx-panel-2:#1c1c1c;
-    --nx-red:#E50914; --nx-text:#F2F2F0; --nx-muted:#9a9a9a; --nx-line:#2b2b2b;
-  }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
-  body{
-    background:var(--nx-black); color:var(--nx-text);
-    font-family:'Noto Sans Thai', sans-serif; -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  ::selection{ background:var(--nx-red); color:#fff; }
-  img{ display:block; }
+:root{
+  --nx-black:#000;
+  --nx-panel:#141414;
+  --nx-panel-2:#1c1c1c;
+  --nx-red:#E50914;
+  --nx-text:#F2F2F0;
+  --nx-muted:#9a9a9a;
+  --nx-line:#2b2b2b;
+}
 
-  /* ---------- NAV ---------- */
-  .nav{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-    padding:14px clamp(16px,4vw,56px);
-    transition:background .3s ease, box-shadow .3s ease;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--nx-black);
+  color:var(--nx-text);
+  font-family:'Noto Sans Thai',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+::selection{
+  background:var(--nx-red);
+  color:#fff;
+}
+
+img{
+  display:block;
+}
+
+/* ================= NAV ================= */
+
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+
+  padding:14px clamp(16px,4vw,56px);
+
+  transition:
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.nav.scrolled{
+  background:#0a0a0a;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;
+  letter-spacing:.04em;
+  color:var(--nx-red);
+  text-shadow:0 0 18px rgba(229,9,20,.4);
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.nav-links{
+  display:none;
+  gap:20px;
+  list-style:none;
+}
+
+.nav-links li{
+  font-size:13.5px;
+  color:#d9d9d6;
+  cursor:pointer;
+  transition:color .2s;
+  white-space:nowrap;
+}
+
+.nav-links li.active,
+.nav-links li:hover{
+  color:#fff;
+  font-weight:700;
+}
+
+@media(min-width:820px){
+  .nav-links{
+    display:flex;
   }
-  .nav.scrolled{ background:#0a0a0a; box-shadow:0 4px 20px rgba(0,0,0,.5); }
-  .nav-left{ display:flex; align-items:center; gap:28px; }
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.search-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+.search-input{
+  width:0;
+  opacity:0;
+  padding:8px 0;
+  border-radius:3px;
+  border:1px solid var(--nx-line);
+  background:rgba(0,0,0,.75);
+  color:#fff;
+  font-size:13px;
+  font-family:inherit;
+
+  transition:
+    width .25s ease,
+    opacity .2s ease,
+    padding .25s ease;
+}
+
+.search-wrap.open .search-input{
+  width:220px;
+  opacity:1;
+  padding:8px 10px;
+  margin-left:8px;
+}
+
+.icon-btn{
+  background:none;
+  border:none;
+  color:#e5e5e5;
+  cursor:pointer;
+  font-size:17px;
+  padding:4px;
+}
+
+.avatar{
+  width:30px;
+  height:30px;
+  border-radius:5px;
+  background:linear-gradient(135deg,var(--nx-red),#5c0d13);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-family:'Bebas Neue',sans-serif;
+  font-size:15px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  position:relative;
+  min-height:92vh;
+
+  display:flex;
+  align-items:flex-end;
+
+  padding:0 clamp(16px,4vw,56px) 70px;
+
+  background-color:#0a0a0a;
+  background-size:cover;
+  background-position:center 20%;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255,255,255,.02) 0px,
+      rgba(255,255,255,.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+
+  pointer-events:none;
+}
+
+.hero-inner{
+  position:relative;
+  z-index:2;
+  max-width:680px;
+
+  opacity:0;
+  animation:fadeUp .8s .15s ease forwards;
+}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  font-family:'Roboto Mono',monospace;
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+
+  color:#e5e5e5;
+
+  background:rgba(229,9,20,.16);
+  border:1px solid rgba(229,9,20,.4);
+
+  padding:6px 14px;
+  border-radius:3px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,9vw,104px);
+  line-height:.95;
+  color:#fff;
+  margin-bottom:14px;
+}
+
+.hero p{
+  font-size:clamp(14.5px,1.8vw,17px);
+  color:#d2d2d0;
+  line-height:1.65;
+  max-width:540px;
+  margin-bottom:26px;
+}
+
+.hero-meta{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+
+  font-size:12.5px;
+  color:var(--nx-muted);
+  margin-bottom:24px;
+
+  font-family:'Roboto Mono',monospace;
+}
+
+.match{
+  color:#4CAF66;
+  font-weight:700;
+}
+
+.pill{
+  border:1px solid var(--nx-line);
+  padding:2px 8px;
+  border-radius:3px;
+}
+
+.hero-btns{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  font-weight:700;
+  font-size:15px;
+
+  padding:11px 24px;
+
+  border-radius:4px;
+  border:none;
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.btn-primary{
+  background:#fff;
+  color:#000;
+}
+
+.btn-primary:hover{
+  background:#d9d9d6;
+}
+
+.btn-ghost{
+  background:rgba(109,109,110,.5);
+  color:#fff;
+}
+
+.btn-ghost:hover{
+  background:rgba(109,109,110,.75);
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ================= ROWS ================= */
+
+.rows{
+  position:relative;
+  z-index:2;
+  margin-top:-64px;
+  padding-bottom:70px;
+}
+
+.row{
+  margin-bottom:38px;
+}
+
+.row-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+
+  padding:0 clamp(16px,4vw,56px);
+  margin-bottom:12px;
+}
+
+.row-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:24px;
+  letter-spacing:.02em;
+  color:#fff;
+}
+
+.row-scroller{
+  display:flex;
+  gap:10px;
+
+  overflow-x:auto;
+
+  padding:4px clamp(16px,4vw,56px) 16px;
+
+  scroll-snap-type:x proximity;
+}
+
+.row-scroller::-webkit-scrollbar{
+  height:6px;
+}
+
+.row-scroller::-webkit-scrollbar-thumb{
+  background:var(--nx-line);
+  border-radius:3px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+  scroll-snap-align:start;
+
+  flex:0 0 auto;
+
+  width:210px;
+  aspect-ratio:2/3;
+
+  border-radius:6px;
+
+  position:relative;
+  overflow:hidden;
+
+  cursor:pointer;
+
+  transition:
+    transform .3s cubic-bezier(.2,.8,.2,1),
+    box-shadow .3s ease;
+
+  display:flex;
+  align-items:flex-end;
+
+  background:#111;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.08);
+  box-shadow:0 24px 44px -12px rgba(0,0,0,.7);
+  z-index:3;
+}
+
+.poster-bg{
+  position:absolute;
+  inset:0;
+
+  background-color:#111;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  transition:transform .4s ease;
+}
+
+.card:hover .poster-bg{
+  transform:scale(1.04);
+}
+
+.card .shade{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 20%,
+      rgba(0,0,0,.9) 100%
+    );
+}
+
+.card-body{
+  position:relative;
+  z-index:2;
+
+  padding:12px 12px 14px;
+  width:100%;
+}
+
+.card-tag{
+  font-family:'Roboto Mono',monospace;
+  font-size:9.5px;
+  letter-spacing:.08em;
+
+  color:#ffb3b6;
+  text-transform:uppercase;
+
+  margin-bottom:4px;
+}
+
+.card-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  color:#fff;
+  line-height:1.05;
+}
+
+.card-genre{
+  font-size:11px;
+  color:#c9c9c6;
+  margin-top:4px;
+}
+
+/* ================= MODAL ================= */
+
+.overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.8);
+
+  z-index:200;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:20px;
+}
+
+.overlay.open{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:640px;
+  max-height:88vh;
+
+  overflow-y:auto;
+
+  background:var(--nx-panel);
+
+  border-radius:8px;
+  border:1px solid var(--nx-line);
+
+  animation:fadeUp .3s ease forwards;
+}
+
+.modal-hero{
+  height:280px;
+  position:relative;
+
+  display:flex;
+  align-items:flex-end;
+
+  padding:20px;
+
+  background:#000;
+  background-size:cover;
+  background-position:center;
+}
+
+.modal-hero .shade{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(20,20,20,1) 100%
+    );
+}
+
+.modal-close{
+  position:absolute;
+
+  top:14px;
+  right:14px;
+
+  width:34px;
+  height:34px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.7);
+  border:1px solid var(--nx-line);
+
+  color:#fff;
+  font-size:16px;
+
+  cursor:pointer;
+  z-index:5;
+}
+
+.modal-title{
+  position:relative;
+  z-index:2;
+
+  font-family:'Bebas Neue',sans-serif;
+  font-size:38px;
+
+  color:#fff;
+}
+
+.modal-video{
+  position:absolute;
+  inset:0;
+
+  display:none;
+}
+
+.modal-video iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.modal.playing .modal-video{
+  display:block;
+}
+
+.modal.playing .modal-hero .shade,
+.modal.playing .modal-hero .modal-title{
+  display:none;
+}
+
+.modal-body{
+  padding:18px 24px 26px;
+}
+
+.modal-btns{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.modal-meta{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+
+  font-size:12.5px;
+  color:var(--nx-muted);
+
+  font-family:'Roboto Mono',monospace;
+
+  margin-bottom:14px;
+}
+
+.modal-desc{
+  font-size:14px;
+  line-height:1.7;
+
+  color:#d9d9d6;
+
+  margin-bottom:16px;
+}
+
+.modal-genres{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.genre-chip{
+  font-size:11.5px;
+
+  border:1px solid var(--nx-line);
+
+  padding:4px 10px;
+
+  border-radius:20px;
+
+  color:#c9c9c6;
+}
+
+/* ================= EMPTY ================= */
+
+.empty-state{
+  padding:60px clamp(16px,4vw,56px);
+  text-align:center;
+  color:var(--nx-muted);
+  display:none;
+}
+
+.empty-state.show{
+  display:block;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+  border-top:1px solid var(--nx-line);
+  padding:36px clamp(16px,4vw,56px) 50px;
+}
+
+.footer p{
+  font-size:12.5px;
+  color:var(--nx-muted);
+  line-height:1.8;
+}
+
+.footer .label{
+  font-family:'Roboto Mono',monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.footer .names{
+  font-size:13px;
+  color:#c9c9c6;
+  margin-bottom:20px;
+}
+
+@media(max-width:600px){
+
+  .nav-left{
+    gap:12px;
+  }
+
   .logo{
-    font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:.03em;
-    color:var(--nx-red); text-shadow:0 0 18px rgba(229,9,20,.4); cursor:pointer; white-space:nowrap;
-  }
-  .nav-links{ display:none; gap:20px; list-style:none; }
-  .nav-links li{ font-size:13.5px; color:#d9d9d6; cursor:pointer; transition:color .2s; white-space:nowrap; }
-  .nav-links li.active{ color:#fff; font-weight:700; }
-  .nav-links li:hover{ color:#fff; }
-  @media(min-width:820px){ .nav-links{ display:flex; } }
-  .nav-right{ display:flex; align-items:center; gap:14px; }
-  .search-wrap{ position:relative; display:flex; align-items:center; }
-  .search-input{
-    width:0; opacity:0; padding:8px 10px; border-radius:3px; border:1px solid var(--nx-line);
-    background:rgba(0,0,0,.75); color:#fff; font-size:13px; font-family:inherit;
-    transition:width .25s ease, opacity .2s ease, padding .25s ease;
-  }
-  .search-wrap.open .search-input{ width:200px; opacity:1; margin-left:8px; }
-  .icon-btn{ background:none; border:none; color:#e5e5e5; cursor:pointer; font-size:17px; padding:4px; }
-  .avatar{
-    width:30px; height:30px; border-radius:5px;
-    background:linear-gradient(135deg,var(--nx-red),#5c0d13);
-    display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue'; font-size:15px;
+    font-size:24px;
   }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative; min-height:92vh; display:flex; align-items:flex-end;
-    padding:0 clamp(16px,4vw,56px) 70px;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.4) 55%, #000 100%),
-      radial-gradient(ellipse 1000px 560px at 22% 15%, rgba(229,9,20,.32), transparent 60%),
-      radial-gradient(ellipse 800px 500px at 90% 5%, rgba(90,10,20,.28), transparent 55%),
-      #0a0a0a;
+  .search-wrap.open .search-input{
+    width:150px;
   }
-  .hero::after{
-    content:""; position:absolute; inset:0;
-    background:repeating-linear-gradient(180deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 3px);
-    pointer-events:none;
-  }
-  .hero-inner{ position:relative; max-width:680px; opacity:0; animation:fadeUp .8s .15s ease forwards; }
-  .hero-badge{
-    display:inline-flex; align-items:center; gap:8px; font-family:'Roboto Mono',monospace;
-    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#e5e5e5;
-    background:rgba(229,9,20,.16); border:1px solid rgba(229,9,20,.4);
-    padding:6px 14px; border-radius:3px; margin-bottom:20px;
-  }
-  .hero h1{ font-family:'Bebas Neue', sans-serif; font-size:clamp(48px,9vw,104px); line-height:.95; color:#fff; margin-bottom:14px; }
-  .hero p{ font-size:clamp(14.5px,1.8vw,17px); color:#d2d2d0; line-height:1.65; max-width:540px; margin-bottom:26px; }
-  .hero-meta{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--nx-muted); margin-bottom:24px; font-family:'Roboto Mono',monospace; }
-  .hero-meta .match{ color:#4CAF66; font-weight:700; }
-  .pill{ border:1px solid var(--nx-line); padding:2px 8px; border-radius:3px; }
-  .hero-btns{ display:flex; gap:12px; flex-wrap:wrap; }
-  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:15px; padding:11px 24px; border-radius:4px; border:none; cursor:pointer; }
-  .btn-primary{ background:#fff; color:#000; }
-  .btn-primary:hover{ background:#d9d9d6; }
-  .btn-ghost{ background:rgba(109,109,110,.5); color:#fff; }
-  .btn-ghost:hover{ background:rgba(109,109,110,.75); }
-
-  @keyframes fadeUp{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
-
-  /* ---------- ROWS ---------- */
-  .rows{ position:relative; z-index:2; margin-top:-64px; padding-bottom:70px; }
-  .row{ margin-bottom:38px; }
-  .row-head{ display:flex; align-items:baseline; justify-content:space-between; padding:0 clamp(16px,4vw,56px); margin-bottom:12px; }
-  .row-title{ font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:.02em; color:#fff; }
-  .row-scroller{ display:flex; gap:10px; overflow-x:auto; padding:4px clamp(16px,4vw,56px) 16px; scroll-snap-type:x proximity; }
-  .row-scroller::-webkit-scrollbar{ height:6px; }
-  .row-scroller::-webkit-scrollbar-thumb{ background:var(--nx-line); border-radius:3px; }
 
   .card{
-    scroll-snap-align:start; flex:0 0 auto; width:210px; aspect-ratio:2/3;
-    border-radius:6px; position:relative; overflow:hidden; cursor:pointer;
-    transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, z-index 0s;
-    display:flex; align-items:flex-end;
+    width:160px;
   }
-  .card:hover{ transform:translateY(-8px) scale(1.08); box-shadow:0 24px 44px -12px rgba(0,0,0,.7); z-index:3; }
-  .card .poster-bg{ position:absolute; inset:0; }
-  .card .shade{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, rgba(0,0,0,.85) 100%); }
-  .card-body{ position:relative; padding:12px 12px 14px; width:100%; }
-  .card-tag{ font-family:'Roboto Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:#ffb3b6; text-transform:uppercase; margin-bottom:4px; }
-  .card-title{ font-family:'Bebas Neue',sans-serif; font-size:18px; color:#fff; line-height:1.05; }
-  .card-genre{ font-size:11px; color:#c9c9c6; margin-top:3px; }
 
-  /* ---------- MODAL ---------- */
-  .overlay{
-    position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:200;
-    display:none; align-items:center; justify-content:center; padding:20px;
+  .row-title{
+    font-size:21px;
   }
-  .overlay.open{ display:flex; }
-  .modal{
-    width:100%; max-width:640px; max-height:88vh; overflow-y:auto;
-    background:var(--nx-panel); border-radius:8px; border:1px solid var(--nx-line);
-    animation:fadeUp .3s ease forwards;
-  }
-  .modal-hero{ height:220px; position:relative; display:flex; align-items:flex-end; padding:20px; background:#000; }
-  .modal-hero .shade{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 0%, rgba(20,20,20,1) 100%); }
-  .modal-close{
-    position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
-    background:rgba(0,0,0,.6); border:1px solid var(--nx-line); color:#fff; font-size:16px; cursor:pointer; z-index:3;
-  }
-  .modal-title{ position:relative; font-family:'Bebas Neue',sans-serif; font-size:36px; color:#fff; z-index:1; }
-  .modal-video{ position:absolute; inset:0; display:none; }
-  .modal-video iframe{ width:100%; height:100%; border:0; }
-  .modal.playing .modal-video{ display:block; }
-  .modal.playing .modal-hero .shade,
-  .modal.playing .modal-hero .modal-title{ display:none; }
-  .modal-body{ padding:6px 24px 26px; }
-  .modal-btns{ display:flex; gap:10px; margin-bottom:18px; }
-  .modal-meta{ display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--nx-muted); font-family:'Roboto Mono',monospace; margin-bottom:14px; flex-wrap:wrap; }
-  .modal-desc{ font-size:14px; line-height:1.7; color:#d9d9d6; margin-bottom:16px; }
-  .modal-genres{ display:flex; gap:8px; flex-wrap:wrap; }
-  .genre-chip{ font-size:11.5px; border:1px solid var(--nx-line); padding:4px 10px; border-radius:20px; color:#c9c9c6; }
 
-  /* ---------- FOOTER ---------- */
-  .footer{ border-top:1px solid var(--nx-line); padding:36px clamp(16px,4vw,56px) 50px; }
-  .footer p{ font-size:12.5px; color:var(--nx-muted); line-height:1.8; }
-  .footer .label{ font-family:'Roboto Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--nx-muted); margin-bottom:6px; }
-  .footer .names{ font-size:13px; color:#c9c9c6; margin-bottom:20px; }
-
-  .empty-state{ padding:60px clamp(16px,4vw,56px); text-align:center; color:var(--nx-muted); display:none; }
-  .empty-state.show{ display:block; }
+}
 </style>
 </head>
+
 <body>
 
-  <nav class="nav" id="nav">
-    <div class="nav-left">
-      <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">STREAMIX</div>
-      <ul class="nav-links">
-        <li class="active" data-filter="all">หน้าแรก</li>
-        <li data-filter="all">ตัวละครทั้งหมด</li>
-        <li data-filter="all">ANIME HALL OF FAME 2026</li>
-      </ul>
-    </div>
-    <div class="nav-right">
-      <div class="search-wrap" id="searchWrap">
-        <button class="icon-btn" onclick="toggleSearch()">🔍</button>
-        <input class="search-input" id="searchInput" placeholder="ค้นหาชื่อตัวละครหรืออนิเมะ..." oninput="filterCards()">
-      </div>
-      <div class="avatar">S</div>
-    </div>
-  </nav>
+<!-- ================= NAV ================= -->
 
-  <!-- HERO BANNER (อันดับ 1: Goku จาก Dragon Ball) -->
-  <header class="hero" id="heroSection" style="background-image:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 55%, #000 100%), linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.15)), url('https://img.youtube.com/vi/Qda0Q8dO4sI/hqdefault.jpg'); background-size:cover; background-position:center 20%;">
-    <div class="hero-inner">
-      <div class="hero-badge">● อันดับ 1 · GLOBAL ANIME POLL 2026</div>
-      <h1>Goku</h1>
-      <p><b>Dragon Ball</b> — ชาวไซย่าระดับตำนานผู้ก้าวข้ามขีดจำกัดของตนเองครั้งแล้วครั้งเล่าด้วยพลังสัญชาตญาณดิบและจิตใจที่รักการต่อสู้ สัญลักษณ์ตลอดกาลแห่งวงการอนิเมะโชเน็น</p>
-      <div class="hero-meta">
-        <span class="match">ความนิยมอันดับ 1 (Hall of Fame)</span>
-        <span>2026</span>
-        <span class="pill">ทุกวัย</span>
-        <span class="pill">แอ็กชัน · ศิลปะการต่อสู้</span>
-      </div>
-      <div class="hero-btns">
-        <button class="btn btn-primary" onclick="openModal('Goku'); playTrailer();">▶ เล่นไฮไลต์</button>
-        <button class="btn btn-ghost" onclick="openModal('Goku')">ℹ ข้อมูลเพิ่มเติม</button>
-      </div>
-    </div>
-  </header>
+<nav class="nav" id="nav">
 
-  <main class="rows" id="rows">
+  <div class="nav-left">
 
-    <div style="padding:0 clamp(16px,4vw,56px) 6px; color:var(--nx-muted); font-family:'Roboto Mono',monospace; font-size:11.5px; letter-spacing:.04em;">
-      เรียงลำดับจากตัวละครที่ได้รับความนิยม <b style="color:#c9c9c6;">น้อยที่สุด → มากที่สุด (อันดับ 23 → อันดับ 1)</b> · Goku อันดับ 1 อยู่ที่ Hero Banner ด้านบน
+    <div class="logo"
+         onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      STREAMIX
     </div>
 
-    <!-- ROW 1: อันดับ 23 - 18 -->
-    <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">เริ่มต้นสายความนิยม (อันดับ 23 - 18)</h2></div>
-      <div class="row-scroller">
-        
-        <!-- #23 -->
-        <div class="card" data-title="Arsene Lupin 3 Lupin III" onclick="openModal('Arsene Lupin 3')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/bX27wV8bmdQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#23 · Lupin III</p>
-            <p class="card-title">Arsene Lupin 3</p>
-            <p class="card-genre">แอ็กชัน · สืบสวน · ตลก</p>
-          </div>
-        </div>
+    <ul class="nav-links">
 
-        <!-- #22 -->
-        <div class="card" data-title="Motoko Kusanagi Ghost in the Shell" onclick="openModal('Motoko Kusanagi')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/lnKmw6lC0os/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#22 · Ghost in the Shell</p>
-            <p class="card-title">Motoko Kusanagi</p>
-            <p class="card-genre">ไซไฟ · สืบสวน · แอ็กชัน</p>
-          </div>
-        </div>
+      <li class="active"
+          onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        หน้าแรก
+      </li>
 
-        <!-- #21 -->
-        <div class="card" data-title="Shinji Ikari Neon Genesis Evangelion" onclick="openModal('Shinji Ikari')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/13nSB_-64Xg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#21 · Evangelion</p>
-            <p class="card-title">Shinji Ikari</p>
-            <p class="card-genre">จิตวิทยา · หุ่นยนต์ · ดราม่า</p>
-          </div>
-        </div>
+      <li onclick="document.getElementById('rows').scrollIntoView({behavior:'smooth'})">
+        ตัวละครทั้งหมด
+      </li>
 
-        <!-- #20 -->
-        <div class="card" data-title="Sailor Moon Bishoujo Senshi Sailor Moon" onclick="openModal('Sailor Moon')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/0p89Jk36j0A/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#20 · Sailor Moon</p>
-            <p class="card-title">Sailor Moon</p>
-            <p class="card-genre">เวทมนตร์ · แฟนตาซี</p>
-          </div>
-        </div>
+      <li onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        ANIME HALL OF FAME 2026
+      </li>
 
-        <!-- #19 -->
-        <div class="card" data-title="Vash the Stampede Trigun" onclick="openModal('Vash the Stampede')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/2X23aw8qUOk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#19 · Trigun</p>
-            <p class="card-title">Vash the Stampede</p>
-            <p class="card-genre">ไซไฟ · แอ็กชัน · คาวบอย</p>
-          </div>
-        </div>
+    </ul>
 
-        <!-- #18 -->
-        <div class="card" data-title="Johan Monster" onclick="openModal('Johan')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/4aW2jFkM6fM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#18 · Monster</p>
-            <p class="card-title">Johan Liebert</p>
-            <p class="card-genre">ระทึกขวัญ · จิตวิทยา</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ROW 2: อันดับ 17 - 12 -->
-    <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">แฟนคลับเพิ่มขึ้นเรื่อย ๆ (อันดับ 17 - 12)</h2></div>
-      <div class="row-scroller">
-        
-        <!-- #17 -->
-        <div class="card" data-title="Dio Brando JoJo's Bizarre Adventure" onclick="openModal('Dio Brando')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/n3pMtz5_Rj8/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#17 · JoJo's Bizarre Adventure</p>
-            <p class="card-title">Dio Brando</p>
-            <p class="card-genre">วายร้าย · แฟนตาซี · แอ็กชัน</p>
-          </div>
-        </div>
-
-        <!-- #16 -->
-        <div class="card" data-title="Gon Freecss Hunter x Hunter" onclick="openModal('Gon Freecss')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/QeejY2OflB4/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#16 · Hunter x Hunter</p>
-            <p class="card-title">Gon Freecss</p>
-            <p class="card-genre">ผจญภัย · แอ็กชัน</p>
-          </div>
-        </div>
-
-        <!-- #15 -->
-        <div class="card" data-title="Spike Spiegel Cowboy Bebop" onclick="openModal('Spike Spiegel')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/JQv67DpMgjk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#15 · Cowboy Bebop</p>
-            <p class="card-title">Spike Spiegel</p>
-            <p class="card-genre">ไซไฟ · แอ็กชัน · นีโอโนอาร์</p>
-          </div>
-        </div>
-
-        <!-- #14 -->
-        <div class="card" data-title="Himura Kenshin Rurouni Kenshin" onclick="openModal('Himura Kenshin')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/W7g7Kq-gHUk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#14 · Rurouni Kenshin</p>
-            <p class="card-title">Himura Kenshin</p>
-            <p class="card-genre">ซามูไร · ประวัติศาสตร์ · ดราม่า</p>
-          </div>
-        </div>
-
-        <!-- #13 -->
-        <div class="card" data-title="Edward Elric Fullmetal Alchemist" onclick="openModal('Edward Elric')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/2uq34TeWEdQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#13 · Fullmetal Alchemist</p>
-            <p class="card-title">Edward Elric</p>
-            <p class="card-genre">เล่นแร่แปรธาตุ · ผจญภัย</p>
-          </div>
-        </div>
-
-        <!-- #12 -->
-        <div class="card" data-title="Tanjiro Demon Slayer" onclick="openModal('Tanjiro')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/VQGCKyvzIM4/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#12 · Demon Slayer</p>
-            <p class="card-title">Tanjiro Kamado</p>
-            <p class="card-genre">แอ็กชัน · แฟนตาซี · ดราม่า</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ROW 3: อันดับ 11 - 6 -->
-    <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">ระดับตำนานยอดนิยม (อันดับ 11 - 6)</h2></div>
-      <div class="row-scroller">
-        
-        <!-- #11 -->
-        <div class="card" data-title="L Death Note" onclick="openModal('L')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/hT_nvWreIhg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#11 · Death Note</p>
-            <p class="card-title">L Lawliet</p>
-            <p class="card-genre">สืบสวน · จิตวิทยา</p>
-          </div>
-        </div>
-
-        <!-- #10 -->
-        <div class="card" data-title="Guts Berserk" onclick="openModal('Guts')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/q4441p0-Sps/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#10 · Berserk</p>
-            <p class="card-title">Guts</p>
-            <p class="card-genre">ดาร์กแฟนตาซี · แอ็กชัน</p>
-          </div>
-        </div>
-
-        <!-- #9 -->
-        <div class="card" data-title="Jotaro Kujo JoJo's Bizarre Adventure" onclick="openModal('Jotaro Kujo')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/13o6q51wR9g/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#9 · JoJo's Bizarre Adventure</p>
-            <p class="card-title">Jotaro Kujo</p>
-            <p class="card-genre">แอ็กชัน · แอ็กชันสแตนด์</p>
-          </div>
-        </div>
-
-        <!-- #8 -->
-        <div class="card" data-title="Lelouch Lamperouge Code Geass" onclick="openModal('Lelouch Lamperouge')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/DiBdFgaYtaU/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#8 · Code Geass</p>
-            <p class="card-title">Lelouch Lamperouge</p>
-            <p class="card-genre">หุ่นยนต์ · วางแผน · ดราม่า</p>
-          </div>
-        </div>
-
-        <!-- #7 -->
-        <div class="card" data-title="Kakashi Naruto" onclick="openModal('Kakashi')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/v7p7d4d42bE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#7 · Naruto</p>
-            <p class="card-title">Kakashi Hatake</p>
-            <p class="card-genre">นินจา · แอ็กชัน</p>
-          </div>
-        </div>
-
-        <!-- #6 -->
-        <div class="card" data-title="Monkey D. Luffy One Piece" onclick="openModal('Monkey D. Luffy')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/yaXu9XrvhhM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#6 · One Piece</p>
-            <p class="card-title">Monkey D. Luffy</p>
-            <p class="card-genre">โจรสลัด · ผจญภัย · แอ็กชัน</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ROW 4: อันดับ 5 - 2 -->
-    <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">ท็อป 5 สุดยอดตัวละครตลอดกาล (อันดับ 5 - 2)</h2></div>
-      <div class="row-scroller">
-        
-        <!-- #5 -->
-        <div class="card" data-title="Levi Ackerman Attack on Titan" onclick="openModal('Levi Ackerman')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/4_f3L0o9l3g/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#5 · Attack on Titan</p>
-            <p class="card-title">Levi Ackerman</p>
-            <p class="card-genre">แอ็กชัน · สงคราม · ดราม่า</p>
-          </div>
-        </div>
-
-        <!-- #4 -->
-        <div class="card" data-title="Roronoa Zoro One Piece" onclick="openModal('Roronoa Zoro')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Zuu6ClXRabE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#4 · One Piece</p>
-            <p class="card-title">Roronoa Zoro</p>
-            <p class="card-genre">ซามูไร · แอ็กชัน · ผจญภัย</p>
-          </div>
-        </div>
-
-        <!-- #3 -->
-        <div class="card" data-title="Naruto Uzumaki Naruto" onclick="openModal('Naruto Uzumaki')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/31_v38o6H8c/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#3 · Naruto</p>
-            <p class="card-title">Naruto Uzumaki</p>
-            <p class="card-genre">นินจา · แอ็กชัน · มิตรภาพ</p>
-          </div>
-        </div>
-
-        <!-- #2 -->
-        <div class="card" data-title="Vegeta Dragon Ball" onclick="openModal('Vegeta')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/72jLqX31v3k/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body">
-            <p class="card-tag">#2 · Dragon Ball</p>
-            <p class="card-title">Vegeta</p>
-            <p class="card-genre">แอ็กชัน · ศิลปะการต่อสู้</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <div class="empty-state" id="emptyState">ไม่พบตัวละครหรืออนิเมะที่ค้นหา ลองคำอื่นดูนะ</div>
-
-  <!-- MODAL DISPLAY -->
-  <div class="overlay" id="overlay" onclick="if(event.target===this) closeModal()">
-    <div class="modal" id="modal">
-      <div class="modal-hero" id="modalHero">
-        <div class="modal-video" id="modalVideo"></div>
-        <div class="shade"></div>
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <h2 class="modal-title" id="modalTitle">—</h2>
-      </div>
-      <div class="modal-body">
-        <div class="modal-btns">
-          <button class="btn btn-primary" style="padding:9px 20px;" onclick="playTrailer()">▶ เล่นไฮไลต์</button>
-          <button class="icon-btn" style="border:1px solid var(--nx-line); border-radius:50%; width:36px; height:36px;">+</button>
-        </div>
-        <div class="modal-meta">
-          <span class="match" style="color:#4CAF66; font-weight:700;" id="modalRank">อันดับความนิยม</span>
-          <span id="modalAnimeName">Anime Title</span>
-          <span class="pill">15+</span>
-        </div>
-        <p class="modal-desc" id="modalDesc">เนื้อเรื่องย่อจะแสดงที่นี่</p>
-        <div class="modal-genres" id="modalGenres"></div>
-      </div>
-    </div>
   </div>
 
-  <footer class="footer">
-    <p class="label">Prepared by</p>
-    <p class="names">ชื่อสมาชิกทีม<br>(แก้ไขส่วนนี้ให้ตรงกับรายชื่อจริงของทีม)</p>
-    <p>เว็บไซต์นี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น เนื้อหาชื่อตัวละคร โปสเตอร์ และวิดีโอทั้งหมดเป็นผลงานเพื่อความบันเทิงและการนำเสนอแบบจำลอง · STREAMIX MOCKUP · Business: Netflix (โมเดลอ้างอิง)</p>
-  </footer>
+  <div class="nav-right">
+
+    <div class="search-wrap" id="searchWrap">
+
+      <button class="icon-btn" onclick="toggleSearch()">
+        🔍
+      </button>
+
+      <input
+        class="search-input"
+        id="searchInput"
+        placeholder="ค้นหาตัวละคร..."
+        oninput="filterCards()"
+      >
+
+    </div>
+
+    <div class="avatar">S</div>
+
+  </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<header class="hero" id="heroSection">
+
+  <div class="hero-inner">
+
+    <div class="hero-badge">
+      ● อันดับ 1 · ANIME HALL OF FAME
+    </div>
+
+    <h1>GOKU</h1>
+
+    <p>
+      <b>Dragon Ball</b> —
+      ชาวไซย่าระดับตำนานผู้ก้าวข้ามขีดจำกัดของตัวเอง
+      และกลายเป็นหนึ่งในสัญลักษณ์ที่ยิ่งใหญ่ที่สุดของวงการอนิเมะ
+    </p>
+
+    <div class="hero-meta">
+
+      <span class="match">
+        ความนิยมอันดับ 1
+      </span>
+
+      <span>2026</span>
+
+      <span class="pill">
+        ทุกวัย
+      </span>
+
+      <span class="pill">
+        แอ็กชัน · ศิลปะการต่อสู้
+      </span>
+
+    </div>
+
+    <div class="hero-btns">
+
+      <button
+        class="btn btn-primary"
+        onclick="openModal('Goku'); playTrailer();"
+      >
+        ▶ เล่นไฮไลต์
+      </button>
+
+      <button
+        class="btn btn-ghost"
+        onclick="openModal('Goku')"
+      >
+        ℹ ข้อมูลเพิ่มเติม
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="rows" id="rows">
+
+  <div style="
+    padding:0 clamp(16px,4vw,56px) 6px;
+    color:var(--nx-muted);
+    font-family:'Roboto Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:.04em;
+  ">
+
+    เรียงลำดับจาก
+    <b style="color:#c9c9c6;">
+      อันดับ 23 → อันดับ 2
+    </b>
+    · Goku อันดับ 1 อยู่ด้านบน
+
+  </div>
+
+
+  <!-- ROW 1 -->
+
+  <section class="row">
+
+    <div class="row-head">
+      <h2 class="row-title">
+        เริ่มต้นสายความนิยม (อันดับ 23 - 18)
+      </h2>
+    </div>
+
+    <div class="row-scroller">
+
+      <div class="card"
+           data-title="Arsene Lupin 3 Lupin III"
+           onclick="openModal('Arsene Lupin 3')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#23 · Lupin III</p>
+          <p class="card-title">Arsene Lupin 3</p>
+          <p class="card-genre">แอ็กชัน · สืบสวน · ตลก</p>
+        </div>
+
+      </div>
+
+
+      <div class="card"
+           data-title="Motoko Kusanagi Ghost in the Shell"
+           onclick="openModal('Motoko Kusanagi')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#22 · Ghost in the Shell</p>
+          <p class="card-title">Motoko Kusanagi</p>
+          <p class="card-genre">ไซไฟ · สืบสวน · แอ็กชัน</p>
+        </div>
+
+      </div>
+
+
+      <div class="card"
+           data-title="Shinji Ikari Evangelion"
+           onclick="openModal('Shinji Ikari')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#21 · Evangelion</p>
+          <p class="card-title">Shinji Ikari</p>
+          <p class="card-genre">จิตวิทยา · หุ่นยนต์ · ดราม่า</p>
+        </div>
+
+      </div>
+
+
+      <div class="card"
+           data-title="Sailor Moon"
+           onclick="openModal('Sailor Moon')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#20 · Sailor Moon</p>
+          <p class="card-title">Sailor Moon</p>
+          <p class="card-genre">เวทมนตร์ · แฟนตาซี</p>
+        </div>
+
+      </div>
+
+
+      <div class="card"
+           data-title="Vash the Stampede Trigun"
+           onclick="openModal('Vash the Stampede')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#19 · Trigun</p>
+          <p class="card-title">Vash the Stampede</p>
+          <p class="card-genre">ไซไฟ · แอ็กชัน · คาวบอย</p>
+        </div>
+
+      </div>
+
+
+      <div class="card"
+           data-title="Johan Liebert Monster"
+           onclick="openModal('Johan')">
+
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+
+        <div class="card-body">
+          <p class="card-tag">#18 · Monster</p>
+          <p class="card-title">Johan Liebert</p>
+          <p class="card-genre">ระทึกขวัญ · จิตวิทยา</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ROW 2 -->
+
+  <section class="row">
+
+    <div class="row-head">
+      <h2 class="row-title">
+        แฟนคลับเพิ่มขึ้นเรื่อย ๆ (อันดับ 17 - 12)
+      </h2>
+    </div>
+
+    <div class="row-scroller">
+
+      <div class="card" data-title="Dio Brando JoJo"
+           onclick="openModal('Dio Brando')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#17 · JoJo</p>
+          <p class="card-title">Dio Brando</p>
+          <p class="card-genre">วายร้าย · แฟนตาซี</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Gon Freecss Hunter x Hunter"
+           onclick="openModal('Gon Freecss')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#16 · Hunter x Hunter</p>
+          <p class="card-title">Gon Freecss</p>
+          <p class="card-genre">ผจญภัย · แอ็กชัน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Spike Spiegel Cowboy Bebop"
+           onclick="openModal('Spike Spiegel')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#15 · Cowboy Bebop</p>
+          <p class="card-title">Spike Spiegel</p>
+          <p class="card-genre">ไซไฟ · แอ็กชัน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Himura Kenshin Rurouni Kenshin"
+           onclick="openModal('Himura Kenshin')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#14 · Rurouni Kenshin</p>
+          <p class="card-title">Himura Kenshin</p>
+          <p class="card-genre">ซามูไร · ประวัติศาสตร์</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Edward Elric Fullmetal Alchemist"
+           onclick="openModal('Edward Elric')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#13 · Fullmetal Alchemist</p>
+          <p class="card-title">Edward Elric</p>
+          <p class="card-genre">ผจญภัย · แฟนตาซี</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Tanjiro Kamado Demon Slayer"
+           onclick="openModal('Tanjiro')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#12 · Demon Slayer</p>
+          <p class="card-title">Tanjiro Kamado</p>
+          <p class="card-genre">แอ็กชัน · แฟนตาซี</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ROW 3 -->
+
+  <section class="row">
+
+    <div class="row-head">
+      <h2 class="row-title">
+        ระดับตำนานยอดนิยม (อันดับ 11 - 6)
+      </h2>
+    </div>
+
+    <div class="row-scroller">
+
+      <div class="card" data-title="L Lawliet Death Note"
+           onclick="openModal('L')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#11 · Death Note</p>
+          <p class="card-title">L Lawliet</p>
+          <p class="card-genre">สืบสวน · จิตวิทยา</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Guts Berserk"
+           onclick="openModal('Guts')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#10 · Berserk</p>
+          <p class="card-title">Guts</p>
+          <p class="card-genre">ดาร์กแฟนตาซี</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Jotaro Kujo JoJo"
+           onclick="openModal('Jotaro Kujo')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#9 · JoJo</p>
+          <p class="card-title">Jotaro Kujo</p>
+          <p class="card-genre">แอ็กชัน · ผจญภัย</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Lelouch Lamperouge Code Geass"
+           onclick="openModal('Lelouch Lamperouge')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#8 · Code Geass</p>
+          <p class="card-title">Lelouch Lamperouge</p>
+          <p class="card-genre">หุ่นยนต์ · วางแผน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Kakashi Hatake Naruto"
+           onclick="openModal('Kakashi')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#7 · Naruto</p>
+          <p class="card-title">Kakashi Hatake</p>
+          <p class="card-genre">นินจา · แอ็กชัน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Monkey D. Luffy One Piece"
+           onclick="openModal('Monkey D. Luffy')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#6 · One Piece</p>
+          <p class="card-title">Monkey D. Luffy</p>
+          <p class="card-genre">โจรสลัด · ผจญภัย</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ROW 4 -->
+
+  <section class="row">
+
+    <div class="row-head">
+      <h2 class="row-title">
+        ท็อป 5 สุดยอดตัวละครตลอดกาล
+      </h2>
+    </div>
+
+    <div class="row-scroller">
+
+      <div class="card" data-title="Levi Ackerman Attack on Titan"
+           onclick="openModal('Levi Ackerman')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#5 · Attack on Titan</p>
+          <p class="card-title">Levi Ackerman</p>
+          <p class="card-genre">แอ็กชัน · สงคราม</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Roronoa Zoro One Piece"
+           onclick="openModal('Roronoa Zoro')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#4 · One Piece</p>
+          <p class="card-title">Roronoa Zoro</p>
+          <p class="card-genre">ซามูไร · แอ็กชัน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Naruto Uzumaki Naruto"
+           onclick="openModal('Naruto Uzumaki')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#3 · Naruto</p>
+          <p class="card-title">Naruto Uzumaki</p>
+          <p class="card-genre">นินจา · แอ็กชัน</p>
+        </div>
+      </div>
+
+      <div class="card" data-title="Vegeta Dragon Ball"
+           onclick="openModal('Vegeta')">
+        <div class="poster-bg"></div>
+        <div class="shade"></div>
+        <div class="card-body">
+          <p class="card-tag">#2 · Dragon Ball</p>
+          <p class="card-title">Vegeta</p>
+          <p class="card-genre">แอ็กชัน · ศิลปะการต่อสู้</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<div class="empty-state" id="emptyState">
+  ไม่พบตัวละครหรืออนิเมะที่ค้นหา ลองคำอื่นดูนะ
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="overlay"
+     id="overlay"
+     onclick="if(event.target===this) closeModal()">
+
+  <div class="modal" id="modal">
+
+    <div class="modal-hero" id="modalHero">
+
+      <div class="modal-video" id="modalVideo"></div>
+
+      <div class="shade"></div>
+
+      <button
+        class="modal-close"
+        onclick="closeModal()">
+        ✕
+      </button>
+
+      <h2 class="modal-title" id="modalTitle">
+        —
+      </h2>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="modal-btns">
+
+        <button
+          class="btn btn-primary"
+          style="padding:9px 20px;"
+          onclick="playTrailer()">
+          ▶ เล่นไฮไลต์
+        </button>
+
+      </div>
+
+
+      <div class="modal-meta">
+
+        <span class="match" id="modalRank">
+          อันดับความนิยม
+        </span>
+
+        <span id="modalAnimeName">
+          Anime Title
+        </span>
+
+        <span class="pill">
+          15+
+        </span>
+
+      </div>
+
+
+      <p class="modal-desc" id="modalDesc">
+        เนื้อเรื่องย่อจะแสดงที่นี่
+      </p>
+
+
+      <div class="modal-genres" id="modalGenres"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+  <p class="label">
+    Prepared by
+  </p>
+
+  <p class="names">
+    ชื่อสมาชิกทีม<br>
+    (แก้ไขส่วนนี้ให้ตรงกับรายชื่อจริงของทีม)
+  </p>
+
+  <p>
+    เว็บไซต์นี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น
+    · STREAMIX MOCKUP
+    · Business Model Reference: Netflix
+  </p>
+
+</footer>
+
 
 <script>
-  // ข้อมูลรายละเอียดตัวละครและอนิเมะ
-  const animeData = {
-    "Arsene Lupin 3": {
-      anime: "Lupin III",
-      rank: "#23 ใน Hall of Fame",
-      desc: "จอมโจรจอมกะล่อนผู้สืบทอดเชื้อสายจากอาร์แซน ลูแปง มีไหวพริบยอดเยี่ยมและทักษะการปลอมตัวกับดัดแปลงอุปกรณ์ที่ไม่เป็นสองรองใคร",
-      genres: ["แอ็กชัน", "สืบสวน", "ตลก"],
-      videoId: "bX27wV8bmdQ"
-    },
-    "Motoko Kusanagi": {
-      anime: "Ghost in the Shell",
-      rank: "#22 ใน Hall of Fame",
-      desc: "ผู้พันแห่งแผนก 9 ไซบอร์กเต็มตัวผู้เปี่ยมไปด้วยทักษะการต่อสู้และการเจาะระบบขั้นสูง พร้อมการตั้งคำถามเกี่ยวกับจิตวิญญาณและตัวตนของมนุษย์",
-      genres: ["ไซไฟ", "สืบสวน", "แอ็กชัน"],
-      videoId: "lnKmw6lC0os"
-    },
-    "Shinji Ikari": {
-      anime: "Neon Genesis Evangelion",
-      rank: "#21 ใน Hall of Fame",
-      desc: "นักขับ EVA-01 วัยรุ่นผู้ต้องแบกรับชะตากรรมของมนุษยชาติ ตัวแทนความสับสน ความกลัว และความเหงาของมนุษย์ในโลกอันโหดร้าย",
-      genres: ["จิตวิทยา", "หุ่นยนต์", "ดราม่า"],
-      videoId: "13nSB_-64Xg"
-    },
-    "Sailor Moon": {
-      anime: "Bishoujo Senshi Sailor Moon",
-      rank: "#20 ใน Hall of Fame",
-      desc: "สึคิโนะ อุซางิ สาวน้อยผู้แปลงร่างเป็นอัศวินเซเลอร์แห่งดวงจันทร์ ตัวแทนแห่งความรักและความยุติธรรม ไอคอนในตำนานของสาวน้อยเวทมนตร์",
-      genres: ["เวทมนตร์", "แฟนตาซี", "ดราม่า"],
-      videoId: "0p89Jk36j0A"
-    },
-    "Vash the Stampede": {
-      anime: "Trigun",
-      rank: "#19 ใน Hall of Fame",
-      desc: "มือปืนผู้มีค่าหัวสูงถึง 6 หมื่นล้านเหรียญดอลลาร์ซิกแซก ชายผู้ยึดมั่นในสันติภาพและไม่เคยฆ่าใคร แม้จะเดินทางไปที่ไหนก็สร้างความวินาศสิ้นสูญก็ตาม",
-      genres: ["ไซไฟ", "แอ็กชัน", "คาวบอย"],
-      videoId: "2X23aw8qUOk"
-    },
-    "Johan": {
-      anime: "Monster",
-      rank: "#18 ใน Hall of Fame",
-      desc: "โยฮัน ลีเบิร์ท สุดยอดวายร้ายผู้เกลี้ยกล่อมผู้คนให้จบชีวิตหรือชั่วร้ายได้อย่างแยบยล ตัวแทนแห่งความมืดมิดไร้ที่มาที่ไปในจิตใจมนุษย์",
-      genres: ["ระทึกขวัญ", "จิตวิทยา", "ดราม่า"],
-      videoId: "4aW2jFkM6fM"
-    },
-    "Dio Brando": {
-      anime: "JoJo's Bizarre Adventure",
-      rank: "#17 ใน Hall of Fame",
-      desc: "ดิโอ บรันโด อดีตมนุษย์ผู้ละทิ้งความเป็นมนุษย์ไปเป็นแอ็กชันแวมไพร์และเจ้าของสแตนด์ The World ที่สามารถหยุดเวลาได้",
-      genres: ["วายร้าย", "แฟนตาซี", "แอ็กชัน"],
-      videoId: "n3pMtz5_Rj8"
-    },
-    "Gon Freecss": {
-      anime: "Hunter x Hunter",
-      rank: "#16 ใน Hall of Fame",
-      desc: "เด็กหนุ่มผู้ใสซื่อที่มีสัญชาตญาณสัตว์ป่า ออกเดินทางเป็นฮันเตอร์เพื่อตามหาพ่อ พร้อมพลังสายเสริมพลังอันมหาศาล",
-      genres: ["ผจญภัย", "แอ็กชัน", "มิตรภาพ"],
-      videoId: "QeejY2OflB4"
-    },
-    "Spike Spiegel": {
-      anime: "Cowboy Bebop",
-      rank: "#15 ใน Hall of Fame",
-      desc: "นักล่าค่าหัวอวกาศผู้ใช้ชีวิตอย่างไร้ความกลัวและมีศิลปะการต่อสู้แบบจีทคุนโด อดีตสมาชิกองค์กรอาชญากรรมที่ถูกอดีตตามล่า",
-      genres: ["ไซไฟ", "แอ็กชัน", "นีโอโนอาร์"],
-      videoId: "JQv67DpMgjk"
-    },
-    "Himura Kenshin": {
-      anime: "Rurouni Kenshin",
-      rank: "#14 ใน Hall of Fame",
-      desc: "อดีตมือสังหาร 'มือประหารบัตโตไซ' ผู้ปฏิญาณว่าจะไม่ฆ่าใครอีกต่อไปด้วยการใช้ดาบสลับคมเพื่อปกป้องผู้คนในยุคเมจิ",
-      genres: ["ซามูไร", "ประวัติศาสตร์", "ดราม่า"],
-      videoId: "W7g7Kq-gHUk"
-    },
-    "Edward Elric": {
-      anime: "Fullmetal Alchemist",
-      rank: "#13 ใน Hall of Fame",
-      desc: "นักเล่นแร่แปรธาตุเหล็กไหล ผู้สูญเสียแขนและขาในการชุบชีวิตมารดา ออกเดินทางตามหาศิลาเหล็กไหลเพื่อคืนร่างกายให้ตัวเองและน้องชาย",
-      genres: ["เล่นแร่แปรธาตุ", "ผจญภัย", "ดราม่า"],
-      videoId: "2uq34TeWEdQ"
-    },
-    "Tanjiro": {
-      anime: "Demon Slayer (Kimetsu no Yaiba)",
-      rank: "#12 ใน Hall of Fame",
-      desc: "เด็กหนุ่มผู้จิตใจอ่อนโยน เข้าร่วมกลุ่มพิฆาตอสูรเพื่อหาทางรักษาเนซึโกะน้องสาวให้กลับมาเป็นมนุษย์ พร้อมวิชาปราณวารีและฮิโนคามิ คางุระ",
-      genres: ["แอ็กชัน", "แฟนตาซี", "ดราม่า"],
-      videoId: "VQGCKyvzIM4"
-    },
-    "L": {
-      anime: "Death Note",
-      rank: "#11 ใน Hall of Fame",
-      desc: "นักสืบอัจฉริยะอันดับหนึ่งของโลก ผู้ไขคดีลับสมองกับคิระ (ยาคามิ ไลท์) ด้วยบุคลิกแปลกแยกและการวิเคราะห์อย่างเฉียบแหลม",
-      genres: ["สืบสวน", "จิตวิทยา", "ดราม่า"],
-      videoId: "hT_nvWreIhg"
-    },
-    "Guts": {
-      anime: "Berserk",
-      rank: "#10 ใน Hall of Fame",
-      desc: "นักนักดาบดำผู้แบกดาบฆ่ามังกรขนาดมหึมา ฟันฝ่าโชคชะตาและอสูรร้ายด้วยความโกรธเกรี้ยวและจิตวิญญาณที่ไม่เคยยอมแพ้",
-      genres: ["ดาร์กแฟนตาซี", "แอ็กชัน", "โศกนาฏกรรม"],
-      videoId: "q4441p0-Sps"
-    },
-    "Jotaro Kujo": {
-      anime: "JoJo's Bizarre Adventure",
-      rank: "#9 ใน Hall of Fame",
-      desc: "ตัวเอกภาค Stardust Crusaders ผู้มาพร้อมกับสแตนด์สายหมัดหมัดหนักปานสายฟ้าอย่าง Star Platinum และคำพูดติดปาก 'ยาเร ยาเร ดาเซะ'",
-      genres: ["แอ็กชัน", "แอ็กชันสแตนด์", "ผจญภัย"],
-      videoId: "13o6q51wR9g"
-    },
-    "Lelouch Lamperouge": {
-      anime: "Code Geass",
-      rank: "#8 ใน Hall of Fame",
-      desc: "อดีตเจ้าชายแห่งบริทาเนียผู้ได้รับพลัง 'กีอัส' บังคับสั่งการผู้อื่น ปลอมตัวเป็น 'ซีโร่' ผู้นำการปฏิวัติเพื่อสร้างโลกใหม่ให้น้องสาว",
-      genres: ["หุ่นยนต์", "วางแผน", "ดราม่า"],
-      videoId: "DiBdFgaYtaU"
-    },
-    "Kakashi": {
-      anime: "Naruto",
-      rank: "#7 ใน Hall of Fame",
-      desc: "คาคาชิ นินจาคาถาพันมนต์ เจ้าของเนตรวงแหวนและครูผู้ชี้นำทีม 7 บุคลิกชิลล์แต่เต็มเปี่ยมด้วยทักษะการต่อสู้ระดับโฮคาเงะ",
-      genres: ["นินจา", "แอ็กชัน", "ดราม่า"],
-      videoId: "v7p7d4d42bE"
-    },
-    "Monkey D. Luffy": {
-      anime: "One Piece",
-      rank: "#6 ใน Hall of Fame",
-      desc: "กัปตันหมวกฟาง ผู้ใฝ่ฝันเป็นราชาโจรสลัด เจ้าของพลังผลปีศาจยางยืด (นิกะ) ผู้รักอิสระและพวกพ้องเหนือสิ่งอื่นใด",
-      genres: ["โจรสลัด", "ผจญภัย", "แอ็กชัน"],
-      videoId: "yaXu9XrvhhM"
-    },
-    "Levi Ackerman": {
-      anime: "Attack on Titan",
-      rank: "#5 ใน Hall of Fame",
-      desc: "หัวหน้าหมู่รีไว ทหารที่แข็งแกร่งที่สุดของมนุษยชาติ ทักษะการใช้เครื่องเคลื่อนย้าย 3 มิติระดับอัจฉริยะสังหารไททันไร้ปรานี",
-      genres: ["แอ็กชัน", "สงคราม", "ดราม่า"],
-      videoId: "4_f3L0o9l3g"
-    },
-    "Roronoa Zoro": {
-      anime: "One Piece",
-      rank: "#4 ใน Hall of Fame",
-      desc: "นักดาบสามสไตล์แห่งกลุ่มหมวกฟาง มุ่งสู่การเป็นนักดาบอันดับ 1 ของโลก ชายผู้พร้อมสละชีวิตเพื่อปกป้องกัปตันและศักดิ์ศรี",
-      genres: ["ซามูไร", "แอ็กชัน", "ผจญภัย"],
-      videoId: "Zuu6ClXRabE"
-    },
-    "Naruto Uzumaki": {
-      anime: "Naruto",
-      rank: "#3 ใน Hall of Fame",
-      desc: "นินจาจอมคาถาผู้มีจิ้งจอกเก้าหางอยู่ในร่าง จากเด็กที่ถูกกักขังสู่วีรบุรุษผู้ไม่เคยยอมแพ้และกลายเป็นโฮคาเงะรุ่นที่ 7",
-      genres: ["นินจา", "แอ็กชัน", "มิตรภาพ"],
-      videoId: "31_v38o6H8c"
-    },
-    "Vegeta": {
-      anime: "Dragon Ball",
-      rank: "#2 ใน Hall of Fame",
-      desc: "เจ้าชายแห่งชาวไซย่าผู้มีศักดิ์ศรีสูงส่ง จากศัตรูตัวร้ายสู่คู่ปรับและพันธมิตรผู้ฝึกฝนอย่างหนักเพื่อก้าวข้ามขีดจำกัดตัวเองเสมอ",
-      genres: ["แอ็กชัน", "ศิลปะการต่อสู้"],
-      videoId: "72jLqX31v3k"
-    },
-    "Goku": {
-      anime: "Dragon Ball",
-      rank: "#1 ใน Hall of Fame",
-      desc: "ซุน โกคู ชาวไซย่าระดับตำนานผู้ก้าวข้ามขีดจำกัดของตนเองครั้งแล้วครั้งเล่าด้วยพลังสัญชาตญาณดิบและจิตใจที่รักการต่อสู้ สัญลักษณ์ตลอดกาลแห่งวงการอนิเมะ",
-      genres: ["แอ็กชัน", "ศิลปะการต่อสู้"],
-      videoId: "Qda0Q8dO4sI"
-    }
-  };
 
-  const DEFAULT_VIDEO_ID = "Qda0Q8dO4sI";
-  let currentTitle = null;
+/* =========================================================
+   ข้อมูลตัวละคร
+========================================================= */
 
-  function openModal(title){
-    currentTitle = title;
-    const data = animeData[title] || {
-      anime: "Unknown",
-      rank: "Ranked",
-      desc: "ไม่มีข้อมูลเนื้อเรื่องย่อ",
-      genres: ["อนิเมะ"],
-      videoId: DEFAULT_VIDEO_ID
-    };
+const animeData = {
 
-    document.getElementById('modal').classList.remove('playing');
-    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเดิม
-    document.getElementById('modalTitle').textContent = `${title} (${data.anime})`;
-    document.getElementById('modalDesc').textContent = data.desc;
-    document.getElementById('modalRank').textContent = data.rank;
-    document.getElementById('modalAnimeName').textContent = data.anime;
-    
-    const genresWrap = document.getElementById('modalGenres');
-    genresWrap.innerHTML = "";
-    data.genres.forEach(g => {
-      const chip = document.createElement('span');
-      chip.className = 'genre-chip'; 
-      chip.textContent = g;
-      genresWrap.appendChild(chip);
-    });
+  "Arsene Lupin 3": {
+    anime:"Lupin III",
+    rank:"#23 ใน Hall of Fame",
+    desc:"จอมโจรระดับตำนานผู้มีไหวพริบ ความสามารถในการปลอมตัว และแผนการสุดเหนือชั้น",
+    genres:["แอ็กชัน","สืบสวน","ตลก"],
+    videoId:"bX27wV8bmdQ"
+  },
 
-    document.getElementById('overlay').classList.add('open');
+  "Motoko Kusanagi": {
+    anime:"Ghost in the Shell",
+    rank:"#22 ใน Hall of Fame",
+    desc:"ผู้นำหน่วยพิเศษไซเบอร์ผู้เชี่ยวชาญการต่อสู้และการเจาะระบบขั้นสูง",
+    genres:["ไซไฟ","สืบสวน","แอ็กชัน"],
+    videoId:"lnKmw6lC0os"
+  },
+
+  "Shinji Ikari": {
+    anime:"Neon Genesis Evangelion",
+    rank:"#21 ใน Hall of Fame",
+    desc:"นักขับ EVA-01 ผู้ต้องเผชิญชะตากรรมและความกดดันครั้งใหญ่",
+    genres:["จิตวิทยา","หุ่นยนต์","ดราม่า"],
+    videoId:"13nSB_-64Xg"
+  },
+
+  "Sailor Moon": {
+    anime:"Bishoujo Senshi Sailor Moon",
+    rank:"#20 ใน Hall of Fame",
+    desc:"สาวน้อยผู้แปลงร่างเป็นนักรบแห่งดวงจันทร์",
+    genres:["เวทมนตร์","แฟนตาซี"],
+    videoId:"0p89Jk36j0A"
+  },
+
+  "Vash the Stampede": {
+    anime:"Trigun",
+    rank:"#19 ใน Hall of Fame",
+    desc:"มือปืนระดับตำนานผู้ยึดมั่นในสันติภาพ",
+    genres:["ไซไฟ","แอ็กชัน","คาวบอย"],
+    videoId:"2X23aw8qUOk"
+  },
+
+  "Johan": {
+    anime:"Monster",
+    rank:"#18 ใน Hall of Fame",
+    desc:"บุคคลลึกลับที่เป็นศูนย์กลางของเรื่องราวเชิงจิตวิทยา",
+    genres:["ระทึกขวัญ","จิตวิทยา"],
+    videoId:"4aW2jFkM6fM"
+  },
+
+  "Dio Brando": {
+    anime:"JoJo's Bizarre Adventure",
+    rank:"#17 ใน Hall of Fame",
+    desc:"วายร้ายระดับตำนานและผู้ใช้พลัง The World",
+    genres:["วายร้าย","แฟนตาซี","แอ็กชัน"],
+    videoId:"n3pMtz5_Rj8"
+  },
+
+  "Gon Freecss": {
+    anime:"Hunter x Hunter",
+    rank:"#16 ใน Hall of Fame",
+    desc:"เด็กหนุ่มผู้เดินทางเป็นฮันเตอร์เพื่อตามหาพ่อของตัวเอง",
+    genres:["ผจญภัย","แอ็กชัน"],
+    videoId:"QeejY2OflB4"
+  },
+
+  "Spike Spiegel": {
+    anime:"Cowboy Bebop",
+    rank:"#15 ใน Hall of Fame",
+    desc:"นักล่าค่าหัวอวกาศผู้มีอดีตอันซับซ้อน",
+    genres:["ไซไฟ","แอ็กชัน"],
+    videoId:"JQv67DpMgjk"
+  },
+
+  "Himura Kenshin": {
+    anime:"Rurouni Kenshin",
+    rank:"#14 ใน Hall of Fame",
+    desc:"อดีตนักฆ่าผู้เลือกใช้ชีวิตเพื่อปกป้องผู้คน",
+    genres:["ซามูไร","ประวัติศาสตร์"],
+    videoId:"W7g7Kq-gHUk"
+  },
+
+  "Edward Elric": {
+    anime:"Fullmetal Alchemist",
+    rank:"#13 ใน Hall of Fame",
+    desc:"นักเล่นแร่แปรธาตุผู้เดินทางเพื่อตามหาวิธีคืนสิ่งที่สูญเสียไป",
+    genres:["ผจญภัย","แฟนตาซี"],
+    videoId:"2uq34TeWEdQ"
+  },
+
+  "Tanjiro": {
+    anime:"Demon Slayer",
+    rank:"#12 ใน Hall of Fame",
+    desc:"นักล่าอสูรผู้ต่อสู้เพื่อปกป้องครอบครัวของตัวเอง",
+    genres:["แอ็กชัน","แฟนตาซี"],
+    videoId:"VQGCKyvzIM4"
+  },
+
+  "L": {
+    anime:"Death Note",
+    rank:"#11 ใน Hall of Fame",
+    desc:"นักสืบอัจฉริยะผู้ตามสืบคดีลึกลับระดับโลก",
+    genres:["สืบสวน","จิตวิทยา"],
+    videoId:"hT_nvWreIhg"
+  },
+
+  "Guts": {
+    anime:"Berserk",
+    rank:"#10 ใน Hall of Fame",
+    desc:"นักรบผู้ต่อสู้กับโชคชะตาในโลกแฟนตาซีอันโหดร้าย",
+    genres:["ดาร์กแฟนตาซี","แอ็กชัน"],
+    videoId:"q4441p0-Sps"
+  },
+
+  "Jotaro Kujo": {
+    anime:"JoJo's Bizarre Adventure",
+    rank:"#9 ใน Hall of Fame",
+    desc:"ผู้ใช้สแตนด์ Star Platinum ผู้ทรงพลัง",
+    genres:["แอ็กชัน","ผจญภัย"],
+    videoId:"13o6q51wR9g"
+  },
+
+  "Lelouch Lamperouge": {
+    anime:"Code Geass",
+    rank:"#8 ใน Hall of Fame",
+    desc:"ชายผู้ใช้พลัง Geass เพื่อเปลี่ยนแปลงโลก",
+    genres:["หุ่นยนต์","วางแผน","ดราม่า"],
+    videoId:"DiBdFgaYtaU"
+  },
+
+  "Kakashi": {
+    anime:"Naruto",
+    rank:"#7 ใน Hall of Fame",
+    desc:"นินจาระดับตำนานและอาจารย์ของทีม 7",
+    genres:["นินจา","แอ็กชัน"],
+    videoId:"v7p7d4d42bE"
+  },
+
+  "Monkey D. Luffy": {
+    anime:"One Piece",
+    rank:"#6 ใน Hall of Fame",
+    desc:"กัปตันกลุ่มหมวกฟางผู้ใฝ่ฝันจะเป็นราชาโจรสลัด",
+    genres:["โจรสลัด","ผจญภัย","แอ็กชัน"],
+    videoId:"1KMcoJBMWE4"
+  },
+
+  "Levi Ackerman": {
+    anime:"Attack on Titan",
+    rank:"#5 ใน Hall of Fame",
+    desc:"หนึ่งในทหารที่แข็งแกร่งที่สุดของมนุษยชาติ",
+    genres:["แอ็กชัน","สงคราม"],
+    videoId:"FY17vwF0Bqc"
+  },
+
+  "Roronoa Zoro": {
+    anime:"One Piece",
+    rank:"#4 ใน Hall of Fame",
+    desc:"นักดาบสามดาบแห่งกลุ่มหมวกฟาง",
+    genres:["ซามูไร","แอ็กชัน"],
+    videoId:"1KMcoJBMWE4"
+  },
+
+  "Naruto Uzumaki": {
+    anime:"Naruto",
+    rank:"#3 ใน Hall of Fame",
+    desc:"นินจาผู้ไม่เคยยอมแพ้และใฝ่ฝันจะเป็นโฮคาเงะ",
+    genres:["นินจา","แอ็กชัน","มิตรภาพ"],
+    videoId:"31_v38o6H8c"
+  },
+
+  "Vegeta": {
+    anime:"Dragon Ball",
+    rank:"#2 ใน Hall of Fame",
+    desc:"เจ้าชายแห่งชาวไซย่าผู้ฝึกฝนตัวเองเพื่อก้าวข้ามขีดจำกัด",
+    genres:["แอ็กชัน","ศิลปะการต่อสู้"],
+    videoId:"72jLqX31v3k"
+  },
+
+  "Goku": {
+    anime:"Dragon Ball",
+    rank:"#1 ใน Hall of Fame",
+    desc:"ซุน โกคู ชาวไซย่าระดับตำนานและสัญลักษณ์สำคัญของวงการอนิเมะ",
+    genres:["แอ็กชัน","ศิลปะการต่อสู้"],
+    videoId:"Qda0Q8dO4sI"
   }
 
-  function playTrailer(){
-    if(!currentTitle) currentTitle = "Goku";
-    const data = animeData[currentTitle] || { videoId: DEFAULT_VIDEO_ID };
+};
+
+
+/* =========================================================
+   ตั้งค่าหน้าปกทุก Card อัตโนมัติ
+========================================================= */
+
+function setAllPosterImages(){
+
+  document.querySelectorAll(".card").forEach(card => {
+
+    const onclickText = card.getAttribute("onclick");
+
+    const match = onclickText.match(/openModal\('(.+?)'\)/);
+
+    if(!match) return;
+
+    const title = match[1];
+
+    const data = animeData[title];
+
+    if(!data) return;
+
+    const poster = card.querySelector(".poster-bg");
+
+    if(!poster) return;
+
     const id = data.videoId;
 
-    const frame = document.createElement('iframe');
-    frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-    frame.title = "trailer player";
-    frame.allow = "autoplay; encrypted-media; picture-in-picture";
-    frame.allowFullscreen = true;
-    document.getElementById('modalVideo').innerHTML = "";
-    document.getElementById('modalVideo').appendChild(frame);
-    document.getElementById('modal').classList.add('playing');
-  }
+    /* ใช้รูปคุณภาพสูงก่อน */
 
-  function closeModal(){
-    document.getElementById('overlay').classList.remove('open');
-    document.getElementById('modal').classList.remove('playing');
-    document.getElementById('modalVideo').innerHTML = ""; 
-  }
+    poster.style.backgroundImage =
+      `url("https://img.youtube.com/vi/${id}/maxresdefault.jpg")`;
 
-  function toggleSearch(){
-    const wrap = document.getElementById('searchWrap');
-    wrap.classList.toggle('open');
-    if(wrap.classList.contains('open')) document.getElementById('searchInput').focus();
-  }
+    /* ถ้ารูปไม่มี ใช้ hqdefault */
 
-  function filterCards(){
-    const q = document.getElementById('searchInput').value.trim().toLowerCase();
-    const cards = document.querySelectorAll('.card');
-    let visibleCount = 0;
-    cards.forEach(c => {
-      const match = c.dataset.title.toLowerCase().includes(q);
-      c.style.display = match ? 'flex' : 'none';
-      if(match) visibleCount++;
-    });
-    document.getElementById('emptyState').classList.toggle('show', q.length > 0 && visibleCount === 0);
-    document.getElementById('rows').style.display = (q.length > 0 && visibleCount === 0) ? 'none' : 'block';
-  }
+    const testImage = new Image();
 
-  document.querySelectorAll('.nav-links li').forEach(li => {
-    li.addEventListener('click', () => {
-      document.querySelectorAll('.nav-links li').forEach(x => x.classList.remove('active'));
-      li.classList.add('active');
-      const filter = li.dataset.filter;
-      document.querySelectorAll('.row').forEach(row => {
-        row.style.display = (filter === 'all' || row.dataset.cat === filter) ? 'block' : 'none';
-      });
-    });
+    testImage.onerror = function(){
+
+      poster.style.backgroundImage =
+        `url("https://img.youtube.com/vi/${id}/hqdefault.jpg")`;
+
+    };
+
+    testImage.src =
+      `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
   });
 
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+}
+
+
+/* =========================================================
+   ตั้งค่า Hero Goku
+========================================================= */
+
+function setHeroImage(){
+
+  const data = animeData["Goku"];
+
+  const hero = document.getElementById("heroSection");
+
+  const id = data.videoId;
+
+  hero.style.backgroundImage = `
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.15) 0%,
+      rgba(0,0,0,.55) 55%,
+      #000 100%
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.55),
+      rgba(0,0,0,.15)
+    ),
+
+    url("https://img.youtube.com/vi/${id}/maxresdefault.jpg")
+  `;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+let currentTitle = null;
+
+
+function openModal(title){
+
+  currentTitle = title;
+
+  const data = animeData[title];
+
+  if(!data) return;
+
+
+  document.getElementById("modal")
+    .classList.remove("playing");
+
+
+  document.getElementById("modalVideo")
+    .innerHTML = "";
+
+
+  document.getElementById("modalTitle")
+    .textContent = `${title}`;
+
+
+  document.getElementById("modalDesc")
+    .textContent = data.desc;
+
+
+  document.getElementById("modalRank")
+    .textContent = data.rank;
+
+
+  document.getElementById("modalAnimeName")
+    .textContent = data.anime;
+
+
+  const modalHero =
+    document.getElementById("modalHero");
+
+
+  modalHero.style.backgroundImage =
+    `url("https://img.youtube.com/vi/${data.videoId}/maxresdefault.jpg")`;
+
+
+  const genresWrap =
+    document.getElementById("modalGenres");
+
+
+  genresWrap.innerHTML = "";
+
+
+  data.genres.forEach(genre => {
+
+    const chip =
+      document.createElement("span");
+
+    chip.className =
+      "genre-chip";
+
+    chip.textContent =
+      genre;
+
+    genresWrap.appendChild(chip);
+
   });
+
+
+  document.getElementById("overlay")
+    .classList.add("open");
+
+}
+
+
+/* =========================================================
+   เล่นวิดีโอ
+========================================================= */
+
+function playTrailer(){
+
+  if(!currentTitle){
+
+    currentTitle = "Goku";
+
+  }
+
+
+  const data =
+    animeData[currentTitle];
+
+
+  if(!data || !data.videoId){
+
+    alert("ไม่พบวิดีโอ");
+
+    return;
+
+  }
+
+
+  const id =
+    data.videoId.replace(/\\/g,"");
+
+
+  const frame =
+    document.createElement("iframe");
+
+
+  frame.src =
+    `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+
+
+  frame.title =
+    `${currentTitle} Highlight`;
+
+
+  frame.allow =
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+
+  frame.allowFullscreen =
+    true;
+
+
+  const videoContainer =
+    document.getElementById("modalVideo");
+
+
+  videoContainer.innerHTML =
+    "";
+
+
+  videoContainer.appendChild(frame);
+
+
+  document.getElementById("modal")
+    .classList.add("playing");
+
+}
+
+
+/* =========================================================
+   ปิด Modal
+========================================================= */
+
+function closeModal(){
+
+  document.getElementById("overlay")
+    .classList.remove("open");
+
+
+  document.getElementById("modal")
+    .classList.remove("playing");
+
+
+  document.getElementById("modalVideo")
+    .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   Search
+========================================================= */
+
+function toggleSearch(){
+
+  const wrap =
+    document.getElementById("searchWrap");
+
+
+  wrap.classList.toggle("open");
+
+
+  if(wrap.classList.contains("open")){
+
+    document.getElementById("searchInput")
+      .focus();
+
+  }
+
+}
+
+
+function filterCards(){
+
+  const q =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const cards =
+    document.querySelectorAll(".card");
+
+
+  let visibleCount = 0;
+
+
+  cards.forEach(card => {
+
+    const title =
+      card.dataset.title.toLowerCase();
+
+
+    const match =
+      title.includes(q);
+
+
+    card.style.display =
+      match ? "flex" : "none";
+
+
+    if(match){
+
+      visibleCount++;
+
+    }
+
+  });
+
+
+  document
+    .getElementById("emptyState")
+    .classList.toggle(
+      "show",
+      q.length > 0 && visibleCount === 0
+    );
+
+}
+
+
+/* =========================================================
+   Navbar scroll effect
+========================================================= */
+
+window.addEventListener("scroll", () => {
+
+  document
+    .getElementById("nav")
+    .classList.toggle(
+      "scrolled",
+      window.scrollY > 40
+    );
+
+});
+
+
+/* =========================================================
+   Keyboard
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+  if(event.key === "Escape"){
+
+    closeModal();
+
+  }
+
+});
+
+
+/* =========================================================
+   เริ่มระบบ
+========================================================= */
+
+setAllPosterImages();
+
+setHeroImage();
+
 </script>
+
 </body>
 </html>
