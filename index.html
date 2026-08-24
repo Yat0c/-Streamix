@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STREAMIX — ดูหนังและซีรีส์ออนไลน์</title>
+<title>STREAMIX — ตัวละครอนิเมะยอดนิยมตลอดกาล</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
 
@@ -113,16 +113,6 @@
   .card-title{ font-family:'Bebas Neue',sans-serif; font-size:18px; color:#fff; line-height:1.05; }
   .card-genre{ font-size:11px; color:#c9c9c6; margin-top:3px; }
 
-  /* poster gradients (no real images used) */
-  .p1{ background:linear-gradient(160deg,#3a0a10,#0d0d0d 70%); }
-  .p2{ background:linear-gradient(160deg,#1a2438,#0d0d0d 70%); }
-  .p3{ background:linear-gradient(160deg,#2a1f10,#0d0d0d 70%); }
-  .p4{ background:linear-gradient(160deg,#132a1f,#0d0d0d 70%); }
-  .p5{ background:linear-gradient(160deg,#2a1030,#0d0d0d 70%); }
-  .p6{ background:linear-gradient(160deg,#1f1f1f,#0d0d0d 70%); }
-  .p7{ background:linear-gradient(160deg,#0d2a2a,#0d0d0d 70%); }
-  .p8{ background:linear-gradient(160deg,#301818,#0d0d0d 70%); }
-
   /* ---------- MODAL ---------- */
   .overlay{
     position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:200;
@@ -171,32 +161,33 @@
       <ul class="nav-links">
         <li class="active" data-filter="all">หน้าแรก</li>
         <li data-filter="all">ตัวละครทั้งหมด</li>
-        <li data-filter="all">WT100 Poll 2026</li>
+        <li data-filter="all">ANIME HALL OF FAME 2026</li>
       </ul>
     </div>
     <div class="nav-right">
       <div class="search-wrap" id="searchWrap">
         <button class="icon-btn" onclick="toggleSearch()">🔍</button>
-        <input class="search-input" id="searchInput" placeholder="ค้นหาชื่อเรื่อง..." oninput="filterCards()">
+        <input class="search-input" id="searchInput" placeholder="ค้นหาชื่อตัวละครหรืออนิเมะ..." oninput="filterCards()">
       </div>
       <div class="avatar">S</div>
     </div>
   </nav>
 
-  <header class="hero" id="heroSection" style="background-image:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 55%, #000 100%), linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.15)), url('https://img.youtube.com/vi/yaXu9XrvhhM/hqdefault.jpg'); background-size:cover; background-position:center 25%;">
+  <!-- HERO BANNER (อันดับ 1: Goku จาก Dragon Ball) -->
+  <header class="hero" id="heroSection" style="background-image:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 55%, #000 100%), linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.15)), url('https://img.youtube.com/vi/Qda0Q8dO4sI/hqdefault.jpg'); background-size:cover; background-position:center 20%;">
     <div class="hero-inner">
-      <div class="hero-badge">● อันดับ 1 · WT100 GLOBAL POLL 2026</div>
-      <h1>Luffy</h1>
-      <p>มังกี้ ดี. ลูฟี่ กัปตันหมวกฟาง เจ้าของพลังผลปีศาจในตำนาน Nika ผู้ใฝ่ฝันเป็นราชาโจรสลัด คว้าอันดับ 1 ตัวละครยอดนิยมที่สุดของ One Piece จากผลโหวต WT100 Global Popularity Poll ครั้งที่ 2 ประกาศผลที่งาน ONE PIECE DAY '26</p>
+      <div class="hero-badge">● อันดับ 1 · GLOBAL ANIME POLL 2026</div>
+      <h1>Goku</h1>
+      <p><b>Dragon Ball</b> — ชาวไซย่าระดับตำนานผู้ก้าวข้ามขีดจำกัดของตนเองครั้งแล้วครั้งเล่าด้วยพลังสัญชาตญาณดิบและจิตใจที่รักการต่อสู้ สัญลักษณ์ตลอดกาลแห่งวงการอนิเมะโชเน็น</p>
       <div class="hero-meta">
-        <span class="match">ความนิยมอันดับ 1 จาก 1,567 ตัวละคร</span>
+        <span class="match">ความนิยมอันดับ 1 (Hall of Fame)</span>
         <span>2026</span>
         <span class="pill">ทุกวัย</span>
-        <span class="pill">แอ็กชัน · ผจญภัย</span>
+        <span class="pill">แอ็กชัน · ศิลปะการต่อสู้</span>
       </div>
       <div class="hero-btns">
-        <button class="btn btn-primary" onclick="openModal('Luffy'); playTrailer();">▶ เล่น</button>
-        <button class="btn btn-ghost" onclick="openModal('Luffy')">ℹ ข้อมูลเพิ่มเติม</button>
+        <button class="btn btn-primary" onclick="openModal('Goku'); playTrailer();">▶ เล่นไฮไลต์</button>
+        <button class="btn btn-ghost" onclick="openModal('Goku')">ℹ ข้อมูลเพิ่มเติม</button>
       </div>
     </div>
   </header>
@@ -204,125 +195,266 @@
   <main class="rows" id="rows">
 
     <div style="padding:0 clamp(16px,4vw,56px) 6px; color:var(--nx-muted); font-family:'Roboto Mono',monospace; font-size:11.5px; letter-spacing:.04em;">
-      เรียงลำดับจากตัวละครที่ได้รับความนิยม <b style="color:#c9c9c6;">น้อยที่สุด → มากที่สุด</b> อ้างอิงผลโหวตจริง ONE PIECE WT100 Global Popularity Poll ครั้งที่ 2 (ประกาศผล ส.ค. 2026) · Luffy อันดับ 1 อยู่ที่ Hero banner ด้านบน
+      เรียงลำดับจากตัวละครที่ได้รับความนิยม <b style="color:#c9c9c6;">น้อยที่สุด → มากที่สุด (อันดับ 23 → อันดับ 1)</b> · Goku อันดับ 1 อยู่ที่ Hero Banner ด้านบน
     </div>
 
+    <!-- ROW 1: อันดับ 23 - 18 -->
     <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">เริ่มต้นสายความนิยม</h2></div>
+      <div class="row-head"><h2 class="row-title">เริ่มต้นสายความนิยม (อันดับ 23 - 18)</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="Perona" onclick="openModal('Perona')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/GFwtKOw5Kjk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Perona</p><p class="card-genre">ผจญภัย · ตลก</p></div>
+        
+        <!-- #23 -->
+        <div class="card" data-title="Arsene Lupin 3 Lupin III" onclick="openModal('Arsene Lupin 3')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/bX27wV8bmdQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#23 · Lupin III</p>
+            <p class="card-title">Arsene Lupin 3</p>
+            <p class="card-genre">แอ็กชัน · สืบสวน · ตลก</p>
+          </div>
         </div>
-        <div class="card" data-title="Doflamingo" onclick="openModal('Doflamingo')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/e9cc3LthbNU/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Doflamingo</p><p class="card-genre">วายร้าย · แอ็กชัน</p></div>
+
+        <!-- #22 -->
+        <div class="card" data-title="Motoko Kusanagi Ghost in the Shell" onclick="openModal('Motoko Kusanagi')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/lnKmw6lC0os/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#22 · Ghost in the Shell</p>
+            <p class="card-title">Motoko Kusanagi</p>
+            <p class="card-genre">ไซไฟ · สืบสวน · แอ็กชัน</p>
+          </div>
         </div>
-        <div class="card" data-title="Cracker" onclick="openModal('Cracker')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/bW4zWdjVyRk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Cracker</p><p class="card-genre">แอ็กชัน · ตลก</p></div>
+
+        <!-- #21 -->
+        <div class="card" data-title="Shinji Ikari Neon Genesis Evangelion" onclick="openModal('Shinji Ikari')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/13nSB_-64Xg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#21 · Evangelion</p>
+            <p class="card-title">Shinji Ikari</p>
+            <p class="card-genre">จิตวิทยา · หุ่นยนต์ · ดราม่า</p>
+          </div>
         </div>
-        <div class="card" data-title="Loki" onclick="openModal('Loki')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PX48JBfx0G0/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Loki</p><p class="card-genre">แฟนตาซี · ดราม่า</p></div>
+
+        <!-- #20 -->
+        <div class="card" data-title="Sailor Moon Bishoujo Senshi Sailor Moon" onclick="openModal('Sailor Moon')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/0p89Jk36j0A/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#20 · Sailor Moon</p>
+            <p class="card-title">Sailor Moon</p>
+            <p class="card-genre">เวทมนตร์ · แฟนตาซี</p>
+          </div>
         </div>
-        <div class="card" data-title="Usopp" onclick="openModal('Usopp')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Q9_c9aP3ExM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Usopp</p><p class="card-genre">ผจญภัย · ตลก</p></div>
+
+        <!-- #19 -->
+        <div class="card" data-title="Vash the Stampede Trigun" onclick="openModal('Vash the Stampede')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/2X23aw8qUOk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#19 · Trigun</p>
+            <p class="card-title">Vash the Stampede</p>
+            <p class="card-genre">ไซไฟ · แอ็กชัน · คาวบอย</p>
+          </div>
         </div>
-        <div class="card" data-title="Yamato" onclick="openModal('Yamato')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/gfP55dAf5BY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Yamato</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+
+        <!-- #18 -->
+        <div class="card" data-title="Johan Monster" onclick="openModal('Johan')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/4aW2jFkM6fM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#18 · Monster</p>
+            <p class="card-title">Johan Liebert</p>
+            <p class="card-genre">ระทึกขวัญ · จิตวิทยา</p>
+          </div>
         </div>
+
       </div>
     </section>
 
+    <!-- ROW 2: อันดับ 17 - 12 -->
     <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">แฟนคลับเพิ่มขึ้นเรื่อย ๆ</h2></div>
+      <div class="row-head"><h2 class="row-title">แฟนคลับเพิ่มขึ้นเรื่อย ๆ (อันดับ 17 - 12)</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="Rocks D. Xebec" onclick="openModal('Rocks D. Xebec')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/SZ56_faZTXQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Rocks D. Xebec</p><p class="card-genre">ประวัติศาสตร์ · แอ็กชัน</p></div>
+        
+        <!-- #17 -->
+        <div class="card" data-title="Dio Brando JoJo's Bizarre Adventure" onclick="openModal('Dio Brando')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/n3pMtz5_Rj8/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#17 · JoJo's Bizarre Adventure</p>
+            <p class="card-title">Dio Brando</p>
+            <p class="card-genre">วายร้าย · แฟนตาซี · แอ็กชัน</p>
+          </div>
         </div>
-        <div class="card" data-title="Carrot" onclick="openModal('Carrot')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Xcex-RaxTkM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Carrot</p><p class="card-genre">แอ็กชัน · แฟนตาซี</p></div>
+
+        <!-- #16 -->
+        <div class="card" data-title="Gon Freecss Hunter x Hunter" onclick="openModal('Gon Freecss')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/QeejY2OflB4/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#16 · Hunter x Hunter</p>
+            <p class="card-title">Gon Freecss</p>
+            <p class="card-genre">ผจญภัย · แอ็กชัน</p>
+          </div>
         </div>
-        <div class="card" data-title="Uta" onclick="openModal('Uta')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/IPaSD4sQOkg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Uta</p><p class="card-genre">ดนตรี · ดราม่า</p></div>
+
+        <!-- #15 -->
+        <div class="card" data-title="Spike Spiegel Cowboy Bebop" onclick="openModal('Spike Spiegel')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/JQv67DpMgjk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#15 · Cowboy Bebop</p>
+            <p class="card-title">Spike Spiegel</p>
+            <p class="card-genre">ไซไฟ · แอ็กชัน · นีโอโนอาร์</p>
+          </div>
         </div>
-        <div class="card" data-title="Sabo" onclick="openModal('Sabo')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PwU1geQeLpM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Sabo</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+
+        <!-- #14 -->
+        <div class="card" data-title="Himura Kenshin Rurouni Kenshin" onclick="openModal('Himura Kenshin')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/W7g7Kq-gHUk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#14 · Rurouni Kenshin</p>
+            <p class="card-title">Himura Kenshin</p>
+            <p class="card-genre">ซามูไร · ประวัติศาสตร์ · ดราม่า</p>
+          </div>
         </div>
-        <div class="card" data-title="Chopper" onclick="openModal('Chopper')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/5reop01XCuk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Chopper</p><p class="card-genre">ตลก · ดราม่า</p></div>
+
+        <!-- #13 -->
+        <div class="card" data-title="Edward Elric Fullmetal Alchemist" onclick="openModal('Edward Elric')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/2uq34TeWEdQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#13 · Fullmetal Alchemist</p>
+            <p class="card-title">Edward Elric</p>
+            <p class="card-genre">เล่นแร่แปรธาตุ · ผจญภัย</p>
+          </div>
         </div>
-        <div class="card" data-title="Boa Hancock" onclick="openModal('Boa Hancock')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/BAIaAVCvW2A/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Boa Hancock</p><p class="card-genre">โรแมนติก · แอ็กชัน</p></div>
+
+        <!-- #12 -->
+        <div class="card" data-title="Tanjiro Demon Slayer" onclick="openModal('Tanjiro')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/VQGCKyvzIM4/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#12 · Demon Slayer</p>
+            <p class="card-title">Tanjiro Kamado</p>
+            <p class="card-genre">แอ็กชัน · แฟนตาซี · ดราม่า</p>
+          </div>
         </div>
+
       </div>
     </section>
 
+    <!-- ROW 3: อันดับ 11 - 6 -->
     <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">ตัวละครสุดฮิต</h2></div>
+      <div class="row-head"><h2 class="row-title">ระดับตำนานยอดนิยม (อันดับ 11 - 6)</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="Corazon" onclick="openModal('Corazon')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PqF9qdIiXnY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Corazon</p><p class="card-genre">ดราม่า · โศกนาฏกรรม</p></div>
+        
+        <!-- #11 -->
+        <div class="card" data-title="L Death Note" onclick="openModal('L')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/hT_nvWreIhg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#11 · Death Note</p>
+            <p class="card-title">L Lawliet</p>
+            <p class="card-genre">สืบสวน · จิตวิทยา</p>
+          </div>
         </div>
-        <div class="card" data-title="Crocodile" onclick="openModal('Crocodile')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/rmRzTBY-8EY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Crocodile</p><p class="card-genre">วายร้าย · แอ็กชัน</p></div>
+
+        <!-- #10 -->
+        <div class="card" data-title="Guts Berserk" onclick="openModal('Guts')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/q4441p0-Sps/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#10 · Berserk</p>
+            <p class="card-title">Guts</p>
+            <p class="card-genre">ดาร์กแฟนตาซี · แอ็กชัน</p>
+          </div>
         </div>
-        <div class="card" data-title="Mihawk" onclick="openModal('Mihawk')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/BgKRqGBlttk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Mihawk</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+
+        <!-- #9 -->
+        <div class="card" data-title="Jotaro Kujo JoJo's Bizarre Adventure" onclick="openModal('Jotaro Kujo')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/13o6q51wR9g/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#9 · JoJo's Bizarre Adventure</p>
+            <p class="card-title">Jotaro Kujo</p>
+            <p class="card-genre">แอ็กชัน · แอ็กชันสแตนด์</p>
+          </div>
         </div>
-        <div class="card" data-title="Shanks" onclick="openModal('Shanks')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/ypxMTu1VNlY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Shanks</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+
+        <!-- #8 -->
+        <div class="card" data-title="Lelouch Lamperouge Code Geass" onclick="openModal('Lelouch Lamperouge')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/DiBdFgaYtaU/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#8 · Code Geass</p>
+            <p class="card-title">Lelouch Lamperouge</p>
+            <p class="card-genre">หุ่นยนต์ · วางแผน · ดราม่า</p>
+          </div>
         </div>
-        <div class="card" data-title="Ace" onclick="openModal('Ace')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/EvRDba5hWs8/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Ace</p><p class="card-genre">ดราม่า · โศกนาฏกรรม</p></div>
+
+        <!-- #7 -->
+        <div class="card" data-title="Kakashi Naruto" onclick="openModal('Kakashi')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/v7p7d4d42bE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#7 · Naruto</p>
+            <p class="card-title">Kakashi Hatake</p>
+            <p class="card-genre">นินจา · แอ็กชัน</p>
+          </div>
         </div>
-        <div class="card" data-title="Robin" onclick="openModal('Robin')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/npufTv1ifNg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Robin</p><p class="card-genre">ดราม่า · ผจญภัย</p></div>
+
+        <!-- #6 -->
+        <div class="card" data-title="Monkey D. Luffy One Piece" onclick="openModal('Monkey D. Luffy')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/yaXu9XrvhhM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#6 · One Piece</p>
+            <p class="card-title">Monkey D. Luffy</p>
+            <p class="card-genre">โจรสลัด · ผจญภัย · แอ็กชัน</p>
+          </div>
         </div>
+
       </div>
     </section>
 
+    <!-- ROW 4: อันดับ 5 - 2 -->
     <section class="row" data-cat="all">
-      <div class="row-head"><h2 class="row-title">ท็อปแรงค์ก่อนถึงอันดับ 1</h2></div>
+      <div class="row-head"><h2 class="row-title">ท็อป 5 สุดยอดตัวละครตลอดกาล (อันดับ 5 - 2)</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="Law" onclick="openModal('Law')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/QAxaniV3zIM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Law</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+        
+        <!-- #5 -->
+        <div class="card" data-title="Levi Ackerman Attack on Titan" onclick="openModal('Levi Ackerman')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/4_f3L0o9l3g/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#5 · Attack on Titan</p>
+            <p class="card-title">Levi Ackerman</p>
+            <p class="card-genre">แอ็กชัน · สงคราม · ดราม่า</p>
+          </div>
         </div>
-        <div class="card" data-title="Nami" onclick="openModal('Nami')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/KsYxOTAiMlk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Nami</p><p class="card-genre">ผจญภัย · ตลก</p></div>
-        </div>
-        <div class="card" data-title="Sanji" onclick="openModal('Sanji')">
-          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/hpE7VOVQDHE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Sanji</p><p class="card-genre">แอ็กชัน · ตลก</p></div>
-        </div>
-        <div class="card" data-title="Zoro" onclick="openModal('Zoro')">
+
+        <!-- #4 -->
+        <div class="card" data-title="Roronoa Zoro One Piece" onclick="openModal('Roronoa Zoro')">
           <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Zuu6ClXRabE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Zoro</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+          <div class="card-body">
+            <p class="card-tag">#4 · One Piece</p>
+            <p class="card-title">Roronoa Zoro</p>
+            <p class="card-genre">ซามูไร · แอ็กชัน · ผจญภัย</p>
+          </div>
         </div>
+
+        <!-- #3 -->
+        <div class="card" data-title="Naruto Uzumaki Naruto" onclick="openModal('Naruto Uzumaki')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/31_v38o6H8c/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#3 · Naruto</p>
+            <p class="card-title">Naruto Uzumaki</p>
+            <p class="card-genre">นินจา · แอ็กชัน · มิตรภาพ</p>
+          </div>
+        </div>
+
+        <!-- #2 -->
+        <div class="card" data-title="Vegeta Dragon Ball" onclick="openModal('Vegeta')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/72jLqX31v3k/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body">
+            <p class="card-tag">#2 · Dragon Ball</p>
+            <p class="card-title">Vegeta</p>
+            <p class="card-genre">แอ็กชัน · ศิลปะการต่อสู้</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
   </main>
 
-  <div class="empty-state" id="emptyState">ไม่พบเรื่องที่ค้นหา ลองคำอื่นดูนะ</div>
+  <div class="empty-state" id="emptyState">ไม่พบตัวละครหรืออนิเมะที่ค้นหา ลองคำอื่นดูนะ</div>
 
+  <!-- MODAL DISPLAY -->
   <div class="overlay" id="overlay" onclick="if(event.target===this) closeModal()">
     <div class="modal" id="modal">
       <div class="modal-hero" id="modalHero">
@@ -333,12 +465,12 @@
       </div>
       <div class="modal-body">
         <div class="modal-btns">
-          <button class="btn btn-primary" style="padding:9px 20px;" onclick="playTrailer()">▶ เล่น</button>
+          <button class="btn btn-primary" style="padding:9px 20px;" onclick="playTrailer()">▶ เล่นไฮไลต์</button>
           <button class="icon-btn" style="border:1px solid var(--nx-line); border-radius:50%; width:36px; height:36px;">+</button>
         </div>
         <div class="modal-meta">
-          <span class="match" style="color:#4CAF66; font-weight:700;">ตรงใจ 9x%</span>
-          <span>2026</span>
+          <span class="match" style="color:#4CAF66; font-weight:700;" id="modalRank">อันดับความนิยม</span>
+          <span id="modalAnimeName">Anime Title</span>
           <span class="pill">15+</span>
         </div>
         <p class="modal-desc" id="modalDesc">เนื้อเรื่องย่อจะแสดงที่นี่</p>
@@ -350,98 +482,212 @@
   <footer class="footer">
     <p class="label">Prepared by</p>
     <p class="names">ชื่อสมาชิกทีม<br>(แก้ไขส่วนนี้ให้ตรงกับรายชื่อจริงของทีม)</p>
-    <p>เว็บไซต์นี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น เนื้อหาชื่อเรื่อง โปสเตอร์ และเรื่องย่อทั้งหมดเป็นผลงานสมมติ ไม่ได้เกี่ยวข้องกับคอนเทนต์จริงของแพลตฟอร์มใด ๆ · STREAMIX MOCKUP · Business: Netflix (โมเดลอ้างอิง)</p>
+    <p>เว็บไซต์นี้จัดทำขึ้นเพื่อการศึกษาเท่านั้น เนื้อหาชื่อตัวละคร โปสเตอร์ และวิดีโอทั้งหมดเป็นผลงานเพื่อความบันเทิงและการนำเสนอแบบจำลอง · STREAMIX MOCKUP · Business: Netflix (โมเดลอ้างอิง)</p>
   </footer>
 
 <script>
-  const descriptions = {
-    "Luffy":"กัปตันหมวกฟาง เจ้าของพลังผลปีศาจในตำนาน Nika ผู้ใฝ่ฝันเป็นราชาโจรสลัด คว้าอันดับ 1 ตัวละครยอดนิยมที่สุดจากผลโหวต WT100 Global Popularity Poll ครั้งที่ 2 ประจำปี 2026",
-    "Zoro":"นักดาบสามสไตล์ผู้ใฝ่ฝันเป็นนักดาบที่หนึ่งของโลก มือขวาที่ไว้ใจได้ที่สุดของลูฟี่",
-    "Sanji":"พ่อครัวขาไฟแห่งลูกเรือหมวกฟาง นักสู้ผู้ไม่ยอมใช้มือต่อสู้เพื่อปกป้องมือทำอาหาร",
-    "Nami":"นักเดินเรือสาวจอมโจรกรรมผู้ใฝ่ฝันวาดแผนที่โลกทั้งใบด้วยตัวเอง",
-    "Law":"ศัลยแพทย์มรณะ กัปตันโจรสลัดฮาร์ตผู้กลายเป็นพันธมิตรคนสำคัญของลูฟี่",
-    "Robin":"นักโบราณคดีผู้รอดชีวิตเพียงคนเดียวจากเกาะโอฮาระ เจ้าของประโยคในตำนาน 'ฉันอยากมีชีวิตอยู่'",
-    "Ace":"พี่ชายคนโตของลูฟี่ กัปตันหมัดเพลิงแห่งกองโจรสลัดสเปด ต่อมาเป็นหัวหน้ากองพลที่ 2 ของโจรสลัดหนวดขาว",
-    "Shanks":"หนึ่งในสี่จักรพรรดิแห่งท้องทะเล ผู้มอบหมวกฟางให้ลูฟี่ในวันที่เขายังเป็นเด็ก",
-    "Mihawk":"จอมดาบที่ได้รับการยอมรับว่าแข็งแกร่งที่สุดในโลก คู่ปรับตลอดกาลของโซโร",
-    "Crocodile":"อดีตนักรบเจ็ดผู้ยิ่งใหญ่แห่งท้องทะเล เจ้าของพลังทรายที่เกือบยึดครองราชอาณาจักรอาราบัสตา",
-    "Corazon":"นักสืบสายลับของกองทัพปฏิวัติผู้เสียสละชีวิตเพื่อปกป้องลอว์ในวัยเด็ก หนึ่งในฉากที่สะเทือนใจที่สุดของเรื่อง",
-    "Boa Hancock":"จักรพรรดินีงูแห่งเกาะอเมซอนลิลี่ ผู้ได้รับการยกย่องว่าเป็นหญิงงามที่สุดในโลก",
-    "Chopper":"หมอกวางเรนเดียร์ผู้กินผลปีศาจฮิโตะฮิโตะจนพูดได้ สมาชิกที่น่ารักที่สุดของลูกเรือหมวกฟาง",
-    "Sabo":"พี่ชายคนที่สองของลูฟี่ ผู้นำคนสำคัญของกองทัพปฏิวัติที่กลับมาพร้อมพลังผลปีศาจแห่งเปลวเพลิง",
-    "Uta":"นักร้องในตำนานจากภาพยนตร์ One Piece Film: Red ผู้ซ่อนความลับเรื่องตัวตนที่แท้จริงเอาไว้",
-    "Carrot":"นักรบเผ่ามิงค์ผู้ตื่นพลังการแปลงร่างซุลอง (Sulong) ภายใต้แสงจันทร์เต็มดวง",
-    "Rocks D. Xebec":"กัปตันโจรสลัดในตำนานผู้จุดชนวนเหตุการณ์ 'ก็อดวัลเลย์' เมื่อหลายสิบปีก่อนเรื่องราวหลัก",
-    "Yamato":"ลูกสาวของไคโดผู้ใฝ่ฝันเป็นโอเด้ง นักสู้พลังจิตวิญญาณมังกรแห่งแดนวาโนะ",
-    "Usopp":"นักแม่นปืนผู้กล้าหาญแห่งกลุ่มโจรสลัดหมวกฟาง จอมโกหกที่เติบโตเป็นนักสู้ตัวจริง",
-    "Loki":"เจ้าชายผู้ถูกสาปแห่งเกาะยักษ์เอลบาฟ ตัวละครสำคัญจากซากาสุดท้ายของเรื่อง",
-    "Cracker":"หนึ่งในสามนายพลของบิ๊กแมมผู้ควบคุมกองทัพบิสกิตนักรบนับพันตน",
-    "Doflamingo":"อดีตราชันโลกผู้ผงาดเป็นเจ้าพ่อดอกไม้ปีศาจแห่งดอนกิโฆเต้ ผู้บงการอยู่เบื้องหลังเมืองดอกไม้",
-    "Perona":"เจ้าหญิงผีสาวแห่งเกาะทริลเลอร์บาร์ก ผู้ควบคุมกองทัพผีด้วยพลังผลปีศาจโฮโระโฮโระ"
-  };
-  const genresMap = {
-    "Luffy":["แอ็กชัน","ผจญภัย"], "Zoro":["แอ็กชัน","ดราม่า"], "Sanji":["แอ็กชัน","ตลก"],
-    "Nami":["ผจญภัย","ตลก"], "Law":["แอ็กชัน","ดราม่า"], "Robin":["ดราม่า","ผจญภัย"],
-    "Ace":["ดราม่า","โศกนาฏกรรม"], "Shanks":["แอ็กชัน","ดราม่า"], "Mihawk":["แอ็กชัน","ดราม่า"],
-    "Crocodile":["วายร้าย","แอ็กชัน"], "Corazon":["ดราม่า","โศกนาฏกรรม"], "Boa Hancock":["โรแมนติก","แอ็กชัน"],
-    "Chopper":["ตลก","ดราม่า"], "Sabo":["แอ็กชัน","ดราม่า"], "Uta":["ดนตรี","ดราม่า"],
-    "Carrot":["แอ็กชัน","แฟนตาซี"], "Rocks D. Xebec":["ประวัติศาสตร์","แอ็กชัน"], "Yamato":["แอ็กชัน","ดราม่า"],
-    "Usopp":["ผจญภัย","ตลก"], "Loki":["แฟนตาซี","ดราม่า"], "Cracker":["แอ็กชัน","ตลก"],
-    "Doflamingo":["วายร้าย","แอ็กชัน"], "Perona":["ผจญภัย","ตลก"]
+  // ข้อมูลรายละเอียดตัวละครและอนิเมะ
+  const animeData = {
+    "Arsene Lupin 3": {
+      anime: "Lupin III",
+      rank: "#23 ใน Hall of Fame",
+      desc: "จอมโจรจอมกะล่อนผู้สืบทอดเชื้อสายจากอาร์แซน ลูแปง มีไหวพริบยอดเยี่ยมและทักษะการปลอมตัวกับดัดแปลงอุปกรณ์ที่ไม่เป็นสองรองใคร",
+      genres: ["แอ็กชัน", "สืบสวน", "ตลก"],
+      videoId: "bX27wV8bmdQ"
+    },
+    "Motoko Kusanagi": {
+      anime: "Ghost in the Shell",
+      rank: "#22 ใน Hall of Fame",
+      desc: "ผู้พันแห่งแผนก 9 ไซบอร์กเต็มตัวผู้เปี่ยมไปด้วยทักษะการต่อสู้และการเจาะระบบขั้นสูง พร้อมการตั้งคำถามเกี่ยวกับจิตวิญญาณและตัวตนของมนุษย์",
+      genres: ["ไซไฟ", "สืบสวน", "แอ็กชัน"],
+      videoId: "lnKmw6lC0os"
+    },
+    "Shinji Ikari": {
+      anime: "Neon Genesis Evangelion",
+      rank: "#21 ใน Hall of Fame",
+      desc: "นักขับ EVA-01 วัยรุ่นผู้ต้องแบกรับชะตากรรมของมนุษยชาติ ตัวแทนความสับสน ความกลัว และความเหงาของมนุษย์ในโลกอันโหดร้าย",
+      genres: ["จิตวิทยา", "หุ่นยนต์", "ดราม่า"],
+      videoId: "13nSB_-64Xg"
+    },
+    "Sailor Moon": {
+      anime: "Bishoujo Senshi Sailor Moon",
+      rank: "#20 ใน Hall of Fame",
+      desc: "สึคิโนะ อุซางิ สาวน้อยผู้แปลงร่างเป็นอัศวินเซเลอร์แห่งดวงจันทร์ ตัวแทนแห่งความรักและความยุติธรรม ไอคอนในตำนานของสาวน้อยเวทมนตร์",
+      genres: ["เวทมนตร์", "แฟนตาซี", "ดราม่า"],
+      videoId: "0p89Jk36j0A"
+    },
+    "Vash the Stampede": {
+      anime: "Trigun",
+      rank: "#19 ใน Hall of Fame",
+      desc: "มือปืนผู้มีค่าหัวสูงถึง 6 หมื่นล้านเหรียญดอลลาร์ซิกแซก ชายผู้ยึดมั่นในสันติภาพและไม่เคยฆ่าใคร แม้จะเดินทางไปที่ไหนก็สร้างความวินาศสิ้นสูญก็ตาม",
+      genres: ["ไซไฟ", "แอ็กชัน", "คาวบอย"],
+      videoId: "2X23aw8qUOk"
+    },
+    "Johan": {
+      anime: "Monster",
+      rank: "#18 ใน Hall of Fame",
+      desc: "โยฮัน ลีเบิร์ท สุดยอดวายร้ายผู้เกลี้ยกล่อมผู้คนให้จบชีวิตหรือชั่วร้ายได้อย่างแยบยล ตัวแทนแห่งความมืดมิดไร้ที่มาที่ไปในจิตใจมนุษย์",
+      genres: ["ระทึกขวัญ", "จิตวิทยา", "ดราม่า"],
+      videoId: "4aW2jFkM6fM"
+    },
+    "Dio Brando": {
+      anime: "JoJo's Bizarre Adventure",
+      rank: "#17 ใน Hall of Fame",
+      desc: "ดิโอ บรันโด อดีตมนุษย์ผู้ละทิ้งความเป็นมนุษย์ไปเป็นแอ็กชันแวมไพร์และเจ้าของสแตนด์ The World ที่สามารถหยุดเวลาได้",
+      genres: ["วายร้าย", "แฟนตาซี", "แอ็กชัน"],
+      videoId: "n3pMtz5_Rj8"
+    },
+    "Gon Freecss": {
+      anime: "Hunter x Hunter",
+      rank: "#16 ใน Hall of Fame",
+      desc: "เด็กหนุ่มผู้ใสซื่อที่มีสัญชาตญาณสัตว์ป่า ออกเดินทางเป็นฮันเตอร์เพื่อตามหาพ่อ พร้อมพลังสายเสริมพลังอันมหาศาล",
+      genres: ["ผจญภัย", "แอ็กชัน", "มิตรภาพ"],
+      videoId: "QeejY2OflB4"
+    },
+    "Spike Spiegel": {
+      anime: "Cowboy Bebop",
+      rank: "#15 ใน Hall of Fame",
+      desc: "นักล่าค่าหัวอวกาศผู้ใช้ชีวิตอย่างไร้ความกลัวและมีศิลปะการต่อสู้แบบจีทคุนโด อดีตสมาชิกองค์กรอาชญากรรมที่ถูกอดีตตามล่า",
+      genres: ["ไซไฟ", "แอ็กชัน", "นีโอโนอาร์"],
+      videoId: "JQv67DpMgjk"
+    },
+    "Himura Kenshin": {
+      anime: "Rurouni Kenshin",
+      rank: "#14 ใน Hall of Fame",
+      desc: "อดีตมือสังหาร 'มือประหารบัตโตไซ' ผู้ปฏิญาณว่าจะไม่ฆ่าใครอีกต่อไปด้วยการใช้ดาบสลับคมเพื่อปกป้องผู้คนในยุคเมจิ",
+      genres: ["ซามูไร", "ประวัติศาสตร์", "ดราม่า"],
+      videoId: "W7g7Kq-gHUk"
+    },
+    "Edward Elric": {
+      anime: "Fullmetal Alchemist",
+      rank: "#13 ใน Hall of Fame",
+      desc: "นักเล่นแร่แปรธาตุเหล็กไหล ผู้สูญเสียแขนและขาในการชุบชีวิตมารดา ออกเดินทางตามหาศิลาเหล็กไหลเพื่อคืนร่างกายให้ตัวเองและน้องชาย",
+      genres: ["เล่นแร่แปรธาตุ", "ผจญภัย", "ดราม่า"],
+      videoId: "2uq34TeWEdQ"
+    },
+    "Tanjiro": {
+      anime: "Demon Slayer (Kimetsu no Yaiba)",
+      rank: "#12 ใน Hall of Fame",
+      desc: "เด็กหนุ่มผู้จิตใจอ่อนโยน เข้าร่วมกลุ่มพิฆาตอสูรเพื่อหาทางรักษาเนซึโกะน้องสาวให้กลับมาเป็นมนุษย์ พร้อมวิชาปราณวารีและฮิโนคามิ คางุระ",
+      genres: ["แอ็กชัน", "แฟนตาซี", "ดราม่า"],
+      videoId: "VQGCKyvzIM4"
+    },
+    "L": {
+      anime: "Death Note",
+      rank: "#11 ใน Hall of Fame",
+      desc: "นักสืบอัจฉริยะอันดับหนึ่งของโลก ผู้ไขคดีลับสมองกับคิระ (ยาคามิ ไลท์) ด้วยบุคลิกแปลกแยกและการวิเคราะห์อย่างเฉียบแหลม",
+      genres: ["สืบสวน", "จิตวิทยา", "ดราม่า"],
+      videoId: "hT_nvWreIhg"
+    },
+    "Guts": {
+      anime: "Berserk",
+      rank: "#10 ใน Hall of Fame",
+      desc: "นักนักดาบดำผู้แบกดาบฆ่ามังกรขนาดมหึมา ฟันฝ่าโชคชะตาและอสูรร้ายด้วยความโกรธเกรี้ยวและจิตวิญญาณที่ไม่เคยยอมแพ้",
+      genres: ["ดาร์กแฟนตาซี", "แอ็กชัน", "โศกนาฏกรรม"],
+      videoId: "q4441p0-Sps"
+    },
+    "Jotaro Kujo": {
+      anime: "JoJo's Bizarre Adventure",
+      rank: "#9 ใน Hall of Fame",
+      desc: "ตัวเอกภาค Stardust Crusaders ผู้มาพร้อมกับสแตนด์สายหมัดหมัดหนักปานสายฟ้าอย่าง Star Platinum และคำพูดติดปาก 'ยาเร ยาเร ดาเซะ'",
+      genres: ["แอ็กชัน", "แอ็กชันสแตนด์", "ผจญภัย"],
+      videoId: "13o6q51wR9g"
+    },
+    "Lelouch Lamperouge": {
+      anime: "Code Geass",
+      rank: "#8 ใน Hall of Fame",
+      desc: "อดีตเจ้าชายแห่งบริทาเนียผู้ได้รับพลัง 'กีอัส' บังคับสั่งการผู้อื่น ปลอมตัวเป็น 'ซีโร่' ผู้นำการปฏิวัติเพื่อสร้างโลกใหม่ให้น้องสาว",
+      genres: ["หุ่นยนต์", "วางแผน", "ดราม่า"],
+      videoId: "DiBdFgaYtaU"
+    },
+    "Kakashi": {
+      anime: "Naruto",
+      rank: "#7 ใน Hall of Fame",
+      desc: "คาคาชิ นินจาคาถาพันมนต์ เจ้าของเนตรวงแหวนและครูผู้ชี้นำทีม 7 บุคลิกชิลล์แต่เต็มเปี่ยมด้วยทักษะการต่อสู้ระดับโฮคาเงะ",
+      genres: ["นินจา", "แอ็กชัน", "ดราม่า"],
+      videoId: "v7p7d4d42bE"
+    },
+    "Monkey D. Luffy": {
+      anime: "One Piece",
+      rank: "#6 ใน Hall of Fame",
+      desc: "กัปตันหมวกฟาง ผู้ใฝ่ฝันเป็นราชาโจรสลัด เจ้าของพลังผลปีศาจยางยืด (นิกะ) ผู้รักอิสระและพวกพ้องเหนือสิ่งอื่นใด",
+      genres: ["โจรสลัด", "ผจญภัย", "แอ็กชัน"],
+      videoId: "yaXu9XrvhhM"
+    },
+    "Levi Ackerman": {
+      anime: "Attack on Titan",
+      rank: "#5 ใน Hall of Fame",
+      desc: "หัวหน้าหมู่รีไว ทหารที่แข็งแกร่งที่สุดของมนุษยชาติ ทักษะการใช้เครื่องเคลื่อนย้าย 3 มิติระดับอัจฉริยะสังหารไททันไร้ปรานี",
+      genres: ["แอ็กชัน", "สงคราม", "ดราม่า"],
+      videoId: "4_f3L0o9l3g"
+    },
+    "Roronoa Zoro": {
+      anime: "One Piece",
+      rank: "#4 ใน Hall of Fame",
+      desc: "นักดาบสามสไตล์แห่งกลุ่มหมวกฟาง มุ่งสู่การเป็นนักดาบอันดับ 1 ของโลก ชายผู้พร้อมสละชีวิตเพื่อปกป้องกัปตันและศักดิ์ศรี",
+      genres: ["ซามูไร", "แอ็กชัน", "ผจญภัย"],
+      videoId: "Zuu6ClXRabE"
+    },
+    "Naruto Uzumaki": {
+      anime: "Naruto",
+      rank: "#3 ใน Hall of Fame",
+      desc: "นินจาจอมคาถาผู้มีจิ้งจอกเก้าหางอยู่ในร่าง จากเด็กที่ถูกกักขังสู่วีรบุรุษผู้ไม่เคยยอมแพ้และกลายเป็นโฮคาเงะรุ่นที่ 7",
+      genres: ["นินจา", "แอ็กชัน", "มิตรภาพ"],
+      videoId: "31_v38o6H8c"
+    },
+    "Vegeta": {
+      anime: "Dragon Ball",
+      rank: "#2 ใน Hall of Fame",
+      desc: "เจ้าชายแห่งชาวไซย่าผู้มีศักดิ์ศรีสูงส่ง จากศัตรูตัวร้ายสู่คู่ปรับและพันธมิตรผู้ฝึกฝนอย่างหนักเพื่อก้าวข้ามขีดจำกัดตัวเองเสมอ",
+      genres: ["แอ็กชัน", "ศิลปะการต่อสู้"],
+      videoId: "72jLqX31v3k"
+    },
+    "Goku": {
+      anime: "Dragon Ball",
+      rank: "#1 ใน Hall of Fame",
+      desc: "ซุน โกคู ชาวไซย่าระดับตำนานผู้ก้าวข้ามขีดจำกัดของตนเองครั้งแล้วครั้งเล่าด้วยพลังสัญชาตญาณดิบและจิตใจที่รักการต่อสู้ สัญลักษณ์ตลอดกาลแห่งวงการอนิเมะ",
+      genres: ["แอ็กชัน", "ศิลปะการต่อสู้"],
+      videoId: "Qda0Q8dO4sI"
+    }
   };
 
-  // ---- วิดีโอตัวอย่าง (YouTube) ----
-  // Video ID ของแต่ละตัวละคร เป็นคลิปไฮไลต์จริงจาก YouTube (ส่วนใหญ่จากช่อง Crunchyroll Collection)
-  const DEFAULT_VIDEO_ID = "yaXu9XrvhhM";
-  const videoMap = {
-    "Luffy": "yaXu9XrvhhM",
-    "Zoro": "Zuu6ClXRabE",
-    "Sanji": "hpE7VOVQDHE",
-    "Nami": "KsYxOTAiMlk",
-    "Law": "QAxaniV3zIM",
-    "Robin": "npufTv1ifNg",
-    "Ace": "EvRDba5hWs8",
-    "Shanks": "ypxMTu1VNlY",
-    "Mihawk": "BgKRqGBlttk",
-    "Crocodile": "rmRzTBY-8EY",
-    "Corazon": "PqF9qdIiXnY",
-    "Boa Hancock": "BAIaAVCvW2A",
-    "Chopper": "5reop01XCuk",
-    "Sabo": "PwU1geQeLpM",
-    "Uta": "IPaSD4sQOkg",
-    "Carrot": "Xcex-RaxTkM",
-    "Rocks D. Xebec": "SZ56_faZTXQ",
-    "Yamato": "gfP55dAf5BY",
-    "Usopp": "Q9_c9aP3ExM",
-    "Loki": "PX48JBfx0G0",
-    "Cracker": "bW4zWdjVyRk",
-    "Doflamingo": "e9cc3LthbNU",
-    "Perona": "GFwtKOw5Kjk"
-  };
-
+  const DEFAULT_VIDEO_ID = "Qda0Q8dO4sI";
   let currentTitle = null;
-
-  function getVideoId(title){ return videoMap[title] || DEFAULT_VIDEO_ID; }
 
   function openModal(title){
     currentTitle = title;
+    const data = animeData[title] || {
+      anime: "Unknown",
+      rank: "Ranked",
+      desc: "ไม่มีข้อมูลเนื้อเรื่องย่อ",
+      genres: ["อนิเมะ"],
+      videoId: DEFAULT_VIDEO_ID
+    };
+
     document.getElementById('modal').classList.remove('playing');
-    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเดิมถ้ามี
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalDesc').textContent = descriptions[title] || "เนื้อเรื่องย่อจะแสดงที่นี่";
+    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเดิม
+    document.getElementById('modalTitle').textContent = `${title} (${data.anime})`;
+    document.getElementById('modalDesc').textContent = data.desc;
+    document.getElementById('modalRank').textContent = data.rank;
+    document.getElementById('modalAnimeName').textContent = data.anime;
+    
     const genresWrap = document.getElementById('modalGenres');
     genresWrap.innerHTML = "";
-    (genresMap[title]||[]).forEach(g=>{
+    data.genres.forEach(g => {
       const chip = document.createElement('span');
-      chip.className = 'genre-chip'; chip.textContent = g;
+      chip.className = 'genre-chip'; 
+      chip.textContent = g;
       genresWrap.appendChild(chip);
     });
+
     document.getElementById('overlay').classList.add('open');
   }
 
   function playTrailer(){
-    if(!currentTitle) currentTitle = "My Hero";
-    const id = getVideoId(currentTitle);
+    if(!currentTitle) currentTitle = "Goku";
+    const data = animeData[currentTitle] || { videoId: DEFAULT_VIDEO_ID };
+    const id = data.videoId;
+
     const frame = document.createElement('iframe');
     frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
     frame.title = "trailer player";
@@ -455,7 +701,7 @@
   function closeModal(){
     document.getElementById('overlay').classList.remove('open');
     document.getElementById('modal').classList.remove('playing');
-    document.getElementById('modalVideo').innerHTML = ""; // หยุดคลิปเมื่อปิดหน้าต่าง
+    document.getElementById('modalVideo').innerHTML = ""; 
   }
 
   function toggleSearch(){
@@ -468,27 +714,27 @@
     const q = document.getElementById('searchInput').value.trim().toLowerCase();
     const cards = document.querySelectorAll('.card');
     let visibleCount = 0;
-    cards.forEach(c=>{
+    cards.forEach(c => {
       const match = c.dataset.title.toLowerCase().includes(q);
       c.style.display = match ? 'flex' : 'none';
       if(match) visibleCount++;
     });
-    document.getElementById('emptyState').classList.toggle('show', q.length>0 && visibleCount===0);
-    document.getElementById('rows').style.display = (q.length>0 && visibleCount===0) ? 'none' : 'block';
+    document.getElementById('emptyState').classList.toggle('show', q.length > 0 && visibleCount === 0);
+    document.getElementById('rows').style.display = (q.length > 0 && visibleCount === 0) ? 'none' : 'block';
   }
 
-  document.querySelectorAll('.nav-links li').forEach(li=>{
-    li.addEventListener('click', ()=>{
-      document.querySelectorAll('.nav-links li').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-links li').forEach(li => {
+    li.addEventListener('click', () => {
+      document.querySelectorAll('.nav-links li').forEach(x => x.classList.remove('active'));
       li.classList.add('active');
       const filter = li.dataset.filter;
-      document.querySelectorAll('.row').forEach(row=>{
-        row.style.display = (filter==='all' || row.dataset.cat===filter) ? 'block' : 'none';
+      document.querySelectorAll('.row').forEach(row => {
+        row.style.display = (filter === 'all' || row.dataset.cat === filter) ? 'block' : 'none';
       });
     });
   });
 
-  window.addEventListener('scroll', ()=>{
+  window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
   });
 </script>
