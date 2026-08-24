@@ -170,9 +170,8 @@
       <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">STREAMIX</div>
       <ul class="nav-links">
         <li class="active" data-filter="all">หน้าแรก</li>
-        <li data-filter="ซีรีส์">ซีรีส์</li>
-        <li data-filter="หนัง">หนัง</li>
-        <li data-filter="ยอดนิยม">ยอดนิยมล่าสุด</li>
+        <li data-filter="all">ตัวละครทั้งหมด</li>
+        <li data-filter="all">WT100 Poll 2026</li>
       </ul>
     </div>
     <div class="nav-right">
@@ -184,105 +183,138 @@
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="heroSection" style="background-image:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 55%, #000 100%), linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.15)), url('https://img.youtube.com/vi/yaXu9XrvhhM/hqdefault.jpg'); background-size:cover; background-position:center 25%;">
     <div class="hero-inner">
-      <div class="hero-badge">● STREAMIX ORIGINAL</div>
-      <h1>My Hero</h1>
-      <p>เมื่อคดีฆาตกรรมปริศนากลางเมืองใหญ่เชื่อมโยงไปถึงความลับที่ฝังลึกมา 20 ปี นักสืบหญิงต้องไล่ล่าความจริงก่อนที่อดีตจะกลืนกินทุกคนที่เธอรัก</p>
+      <div class="hero-badge">● อันดับ 1 · WT100 GLOBAL POLL 2026</div>
+      <h1>Luffy</h1>
+      <p>มังกี้ ดี. ลูฟี่ กัปตันหมวกฟาง เจ้าของพลังผลปีศาจในตำนาน Nika ผู้ใฝ่ฝันเป็นราชาโจรสลัด คว้าอันดับ 1 ตัวละครยอดนิยมที่สุดของ One Piece จากผลโหวต WT100 Global Popularity Poll ครั้งที่ 2 ประกาศผลที่งาน ONE PIECE DAY '26</p>
       <div class="hero-meta">
-        <span class="match">ตรงใจ 97%</span>
+        <span class="match">ความนิยมอันดับ 1 จาก 1,567 ตัวละคร</span>
         <span>2026</span>
-        <span class="pill">15+</span>
-        <span>1 ซีซัน</span>
-        <span class="pill">ดราม่า · ระทึกขวัญ</span>
+        <span class="pill">ทุกวัย</span>
+        <span class="pill">แอ็กชัน · ผจญภัย</span>
       </div>
       <div class="hero-btns">
-        <button class="btn btn-primary" onclick="openModal('My Hero'); playTrailer();">▶ เล่น</button>
-        <button class="btn btn-ghost" onclick="openModal('My Hero')">ℹ ข้อมูลเพิ่มเติม</button>
+        <button class="btn btn-primary" onclick="openModal('Luffy'); playTrailer();">▶ เล่น</button>
+        <button class="btn btn-ghost" onclick="openModal('Luffy')">ℹ ข้อมูลเพิ่มเติม</button>
       </div>
     </div>
   </header>
 
   <main class="rows" id="rows">
 
-    <section class="row" data-cat="ยอดนิยม">
-      <div class="row-head"><h2 class="row-title">กำลังมาแรงตอนนี้</h2></div>
+    <div style="padding:0 clamp(16px,4vw,56px) 6px; color:var(--nx-muted); font-family:'Roboto Mono',monospace; font-size:11.5px; letter-spacing:.04em;">
+      เรียงลำดับจากตัวละครที่ได้รับความนิยม <b style="color:#c9c9c6;">น้อยที่สุด → มากที่สุด</b> อ้างอิงผลโหวตจริง ONE PIECE WT100 Global Popularity Poll ครั้งที่ 2 (ประกาศผล ส.ค. 2026) · Luffy อันดับ 1 อยู่ที่ Hero banner ด้านบน
+    </div>
+
+    <section class="row" data-cat="all">
+      <div class="row-head"><h2 class="row-title">เริ่มต้นสายความนิยม</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="My Hero" data-genre="ดราม่า · ระทึกขวัญ" onclick="openModal('My Hero')">
-          <div class="poster-bg p1"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series · New</p><p class="card-title">My Hero</p><p class="card-genre">ดราม่า · ระทึกขวัญ</p></div>
+        <div class="card" data-title="Perona" onclick="openModal('Perona')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/GFwtKOw5Kjk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Perona</p><p class="card-genre">ผจญภัย · ตลก</p></div>
         </div>
-        <div class="card" data-title="Ippo" data-genre="ไซไฟ · แอ็กชัน" onclick="openModal('Ippo')">
-          <div class="poster-bg p2"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">Ippo</p><p class="card-genre">ไซไฟ · แอ็กชัน</p></div>
+        <div class="card" data-title="Doflamingo" onclick="openModal('Doflamingo')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/e9cc3LthbNU/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Doflamingo</p><p class="card-genre">วายร้าย · แอ็กชัน</p></div>
         </div>
-        <div class="card" data-title="ร้านลับข้างซอย" data-genre="คอมเมดี้" onclick="openModal('ร้านลับข้างซอย')">
-          <div class="poster-bg p3"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">ร้านลับข้างซอย</p><p class="card-genre">คอมเมดี้</p></div>
+        <div class="card" data-title="Cracker" onclick="openModal('Cracker')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/bW4zWdjVyRk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Cracker</p><p class="card-genre">แอ็กชัน · ตลก</p></div>
         </div>
-        <div class="card" data-title="ไฟใต้สายฝน" data-genre="โรแมนติก" onclick="openModal('ไฟใต้สายฝน')">
-          <div class="poster-bg p4"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ไฟใต้สายฝน</p><p class="card-genre">โรแมนติก</p></div>
+        <div class="card" data-title="Loki" onclick="openModal('Loki')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PX48JBfx0G0/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Loki</p><p class="card-genre">แฟนตาซี · ดราม่า</p></div>
         </div>
-        <div class="card" data-title="เขาวงกตราตรี" data-genre="สยองขวัญ" onclick="openModal('เขาวงกตราตรี')">
-          <div class="poster-bg p5"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">เขาวงกตราตรี</p><p class="card-genre">สยองขวัญ</p></div>
+        <div class="card" data-title="Usopp" onclick="openModal('Usopp')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Q9_c9aP3ExM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Usopp</p><p class="card-genre">ผจญภัย · ตลก</p></div>
         </div>
-        <div class="card" data-title="นักล่าแสงดาว" data-genre="แอนิเมชัน" onclick="openModal('นักล่าแสงดาว')">
-          <div class="poster-bg p6"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Animation</p><p class="card-title">นักล่าแสงดาว</p><p class="card-genre">แอนิเมชัน</p></div>
+        <div class="card" data-title="Yamato" onclick="openModal('Yamato')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/gfP55dAf5BY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Yamato</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
         </div>
       </div>
     </section>
 
-    <section class="row" data-cat="ซีรีส์">
-      <div class="row-head"><h2 class="row-title">ซีรีส์ยอดฮิต</h2></div>
+    <section class="row" data-cat="all">
+      <div class="row-head"><h2 class="row-title">แฟนคลับเพิ่มขึ้นเรื่อย ๆ</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="ห้องเรียนสีเลือด" data-genre="ระทึกขวัญ" onclick="openModal('ห้องเรียนสีเลือด')">
-          <div class="poster-bg p7"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">ห้องเรียนสีเลือด</p><p class="card-genre">ระทึกขวัญ</p></div>
+        <div class="card" data-title="Rocks D. Xebec" onclick="openModal('Rocks D. Xebec')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/SZ56_faZTXQ/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Rocks D. Xebec</p><p class="card-genre">ประวัติศาสตร์ · แอ็กชัน</p></div>
         </div>
-        <div class="card" data-title="คนละครึ่งฟ้า" data-genre="ดราม่าครอบครัว" onclick="openModal('คนละครึ่งฟ้า')">
-          <div class="poster-bg p8"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">คนละครึ่งฟ้า</p><p class="card-genre">ดราม่าครอบครัว</p></div>
+        <div class="card" data-title="Carrot" onclick="openModal('Carrot')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Xcex-RaxTkM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Carrot</p><p class="card-genre">แอ็กชัน · แฟนตาซี</p></div>
         </div>
-        <div class="card" data-title="เมืองที่ไม่หลับใหล" data-genre="อาชญากรรม" onclick="openModal('เมืองที่ไม่หลับใหล')">
-          <div class="poster-bg p1"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">เมืองที่ไม่หลับใหล</p><p class="card-genre">อาชญากรรม</p></div>
+        <div class="card" data-title="Uta" onclick="openModal('Uta')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/IPaSD4sQOkg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Uta</p><p class="card-genre">ดนตรี · ดราม่า</p></div>
         </div>
-        <div class="card" data-title="รักนี้ไม่มีสคริปต์" data-genre="โรแมนติกคอมเมดี้" onclick="openModal('รักนี้ไม่มีสคริปต์')">
-          <div class="poster-bg p4"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">รักนี้ไม่มีสคริปต์</p><p class="card-genre">โรแมนติกคอมเมดี้</p></div>
+        <div class="card" data-title="Sabo" onclick="openModal('Sabo')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PwU1geQeLpM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Sabo</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
         </div>
-        <div class="card" data-title="รหัสลับสุดขอบฟ้า" data-genre="ไซไฟ" onclick="openModal('รหัสลับสุดขอบฟ้า')">
-          <div class="poster-bg p2"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Series</p><p class="card-title">รหัสลับสุดขอบฟ้า</p><p class="card-genre">ไซไฟ</p></div>
+        <div class="card" data-title="Chopper" onclick="openModal('Chopper')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/5reop01XCuk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Chopper</p><p class="card-genre">ตลก · ดราม่า</p></div>
+        </div>
+        <div class="card" data-title="Boa Hancock" onclick="openModal('Boa Hancock')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/BAIaAVCvW2A/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Boa Hancock</p><p class="card-genre">โรแมนติก · แอ็กชัน</p></div>
         </div>
       </div>
     </section>
 
-    <section class="row" data-cat="หนัง">
-      <div class="row-head"><h2 class="row-title">ภาพยนตร์แนะนำ</h2></div>
+    <section class="row" data-cat="all">
+      <div class="row-head"><h2 class="row-title">ตัวละครสุดฮิต</h2></div>
       <div class="row-scroller">
-        <div class="card" data-title="ปลายทางที่ไม่มีชื่อ" data-genre="ดราม่า" onclick="openModal('ปลายทางที่ไม่มีชื่อ')">
-          <div class="poster-bg p3"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ปลายทางที่ไม่มีชื่อ</p><p class="card-genre">ดราม่า</p></div>
+        <div class="card" data-title="Corazon" onclick="openModal('Corazon')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/PqF9qdIiXnY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Corazon</p><p class="card-genre">ดราม่า · โศกนาฏกรรม</p></div>
         </div>
-        <div class="card" data-title="เกมล่าเงา" data-genre="แอ็กชันระทึกขวัญ" onclick="openModal('เกมล่าเงา')">
-          <div class="poster-bg p5"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">เกมล่าเงา</p><p class="card-genre">แอ็กชันระทึกขวัญ</p></div>
+        <div class="card" data-title="Crocodile" onclick="openModal('Crocodile')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/rmRzTBY-8EY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Crocodile</p><p class="card-genre">วายร้าย · แอ็กชัน</p></div>
         </div>
-        <div class="card" data-title="ครัวไฟฝัน" data-genre="สารคดี" onclick="openModal('ครัวไฟฝัน')">
-          <div class="poster-bg p6"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Documentary</p><p class="card-title">ครัวไฟฝัน</p><p class="card-genre">สารคดี</p></div>
+        <div class="card" data-title="Mihawk" onclick="openModal('Mihawk')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/BgKRqGBlttk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Mihawk</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
         </div>
-        <div class="card" data-title="ก่อนฟ้าจะสาง" data-genre="ดราม่าโรแมนติก" onclick="openModal('ก่อนฟ้าจะสาง')">
-          <div class="poster-bg p8"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">ก่อนฟ้าจะสาง</p><p class="card-genre">ดราม่าโรแมนติก</p></div>
+        <div class="card" data-title="Shanks" onclick="openModal('Shanks')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/ypxMTu1VNlY/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Shanks</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
         </div>
-        <div class="card" data-title="หมู่บ้านมายา" data-genre="แฟนตาซี" onclick="openModal('หมู่บ้านมายา')">
-          <div class="poster-bg p7"></div><div class="shade"></div>
-          <div class="card-body"><p class="card-tag">Movie</p><p class="card-title">หมู่บ้านมายา</p><p class="card-genre">แฟนตาซี</p></div>
+        <div class="card" data-title="Ace" onclick="openModal('Ace')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/EvRDba5hWs8/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Ace</p><p class="card-genre">ดราม่า · โศกนาฏกรรม</p></div>
+        </div>
+        <div class="card" data-title="Robin" onclick="openModal('Robin')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/npufTv1ifNg/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Robin</p><p class="card-genre">ดราม่า · ผจญภัย</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row" data-cat="all">
+      <div class="row-head"><h2 class="row-title">ท็อปแรงค์ก่อนถึงอันดับ 1</h2></div>
+      <div class="row-scroller">
+        <div class="card" data-title="Law" onclick="openModal('Law')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/QAxaniV3zIM/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Law</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
+        </div>
+        <div class="card" data-title="Nami" onclick="openModal('Nami')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/KsYxOTAiMlk/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Nami</p><p class="card-genre">ผจญภัย · ตลก</p></div>
+        </div>
+        <div class="card" data-title="Sanji" onclick="openModal('Sanji')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/hpE7VOVQDHE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Sanji</p><p class="card-genre">แอ็กชัน · ตลก</p></div>
+        </div>
+        <div class="card" data-title="Zoro" onclick="openModal('Zoro')">
+          <div class="poster-bg" style="background-image:url('https://img.youtube.com/vi/Zuu6ClXRabE/hqdefault.jpg');background-size:cover;background-position:center;"></div><div class="shade"></div>
+          <div class="card-body"><p class="card-tag">Character</p><p class="card-title">Zoro</p><p class="card-genre">แอ็กชัน · ดราม่า</p></div>
         </div>
       </div>
     </section>
@@ -323,39 +355,68 @@
 
 <script>
   const descriptions = {
-    "My Hero":"เมื่อคดีฆาตกรรมปริศนากลางเมืองใหญ่เชื่อมโยงไปถึงความลับที่ฝังลึกมา 20 ปี นักสืบหญิงต้องไล่ล่าความจริงก่อนที่อดีตจะกลืนกินทุกคนที่เธอรัก",
-    "Ippo":"ทีมนักบินอวกาศต้องเอาชีวิตรอดหลังยานถูกตัดขาดจากโลก ท่ามกลางสัญญาณประหลาดที่ไม่มีใครอธิบายได้",
-    "ร้านลับข้างซอย":"ร้านก๋วยเตี๋ยวเล็ก ๆ ในซอยกลายเป็นจุดนัดพบของคนแปลกหน้าที่ต่างมีความลับซ่อนอยู่",
-    "ไฟใต้สายฝน":"ความรักของสองคนที่พบกันในคืนฝนตก ท่ามกลางเมืองที่กำลังจะเปลี่ยนไปตลอดกาล",
-    "เขาวงกตราตรี":"กลุ่มเพื่อนติดอยู่ในบ้านเก่าที่ซ่อนเขาวงกตลึกลับ ทุกการตัดสินใจนำไปสู่จุดจบที่ต่างกัน",
-    "นักล่าแสงดาว":"เด็กหญิงผู้ค้นพบพลังพิเศษต้องออกเดินทางเพื่อปกป้องดวงดาวดวงสุดท้ายของจักรวาล",
-    "ห้องเรียนสีเลือด":"นักเรียนกลุ่มหนึ่งค้นพบความจริงอันน่าสะพรึงเบื้องหลังโรงเรียนที่พวกเขาเรียนอยู่",
-    "คนละครึ่งฟ้า":"ครอบครัวที่แตกแยกต้องกลับมารวมตัวกันอีกครั้งเพื่อรับมือกับวิกฤตครั้งใหญ่",
-    "เมืองที่ไม่หลับใหล":"นักสืบหนุ่มไล่ล่าองค์กรอาชญากรรมที่ควบคุมเมืองอยู่เบื้องหลัง",
-    "รักนี้ไม่มีสคริปต์":"นักเขียนบทที่ชีวิตรักไม่เป็นไปตามแผน ต้องเรียนรู้ที่จะปล่อยให้เรื่องราวเป็นไปเอง",
-    "รหัสลับสุดขอบฟ้า":"นักวิทยาศาสตร์ค้นพบสัญญาณลึกลับจากอวกาศที่อาจเปลี่ยนอนาคตของมนุษยชาติ",
-    "ปลายทางที่ไม่มีชื่อ":"ชายที่สูญเสียความทรงจำออกเดินทางตามรอยอดีตของตัวเอง",
-    "เกมล่าเงา":"หน่วยปฏิบัติการลับต้องหยุดแผนร้ายก่อนที่มันจะสายเกินไป",
-    "ครัวไฟฝัน":"สารคดีที่พาไปสำรวจเบื้องหลังร้านอาหารริมทางทั่วประเทศ และเรื่องราวของคนทำอาหาร",
-    "ก่อนฟ้าจะสาง":"คู่รักที่ต้องเลือกระหว่างความฝันกับความรักในคืนสุดท้ายก่อนแยกจากกัน",
-    "หมู่บ้านมายา":"หมู่บ้านลึกลับที่ปรากฏขึ้นเพียงคืนเดียวในรอบร้อยปี ซ่อนความจริงที่เปลี่ยนโลกได้"
+    "Luffy":"กัปตันหมวกฟาง เจ้าของพลังผลปีศาจในตำนาน Nika ผู้ใฝ่ฝันเป็นราชาโจรสลัด คว้าอันดับ 1 ตัวละครยอดนิยมที่สุดจากผลโหวต WT100 Global Popularity Poll ครั้งที่ 2 ประจำปี 2026",
+    "Zoro":"นักดาบสามสไตล์ผู้ใฝ่ฝันเป็นนักดาบที่หนึ่งของโลก มือขวาที่ไว้ใจได้ที่สุดของลูฟี่",
+    "Sanji":"พ่อครัวขาไฟแห่งลูกเรือหมวกฟาง นักสู้ผู้ไม่ยอมใช้มือต่อสู้เพื่อปกป้องมือทำอาหาร",
+    "Nami":"นักเดินเรือสาวจอมโจรกรรมผู้ใฝ่ฝันวาดแผนที่โลกทั้งใบด้วยตัวเอง",
+    "Law":"ศัลยแพทย์มรณะ กัปตันโจรสลัดฮาร์ตผู้กลายเป็นพันธมิตรคนสำคัญของลูฟี่",
+    "Robin":"นักโบราณคดีผู้รอดชีวิตเพียงคนเดียวจากเกาะโอฮาระ เจ้าของประโยคในตำนาน 'ฉันอยากมีชีวิตอยู่'",
+    "Ace":"พี่ชายคนโตของลูฟี่ กัปตันหมัดเพลิงแห่งกองโจรสลัดสเปด ต่อมาเป็นหัวหน้ากองพลที่ 2 ของโจรสลัดหนวดขาว",
+    "Shanks":"หนึ่งในสี่จักรพรรดิแห่งท้องทะเล ผู้มอบหมวกฟางให้ลูฟี่ในวันที่เขายังเป็นเด็ก",
+    "Mihawk":"จอมดาบที่ได้รับการยอมรับว่าแข็งแกร่งที่สุดในโลก คู่ปรับตลอดกาลของโซโร",
+    "Crocodile":"อดีตนักรบเจ็ดผู้ยิ่งใหญ่แห่งท้องทะเล เจ้าของพลังทรายที่เกือบยึดครองราชอาณาจักรอาราบัสตา",
+    "Corazon":"นักสืบสายลับของกองทัพปฏิวัติผู้เสียสละชีวิตเพื่อปกป้องลอว์ในวัยเด็ก หนึ่งในฉากที่สะเทือนใจที่สุดของเรื่อง",
+    "Boa Hancock":"จักรพรรดินีงูแห่งเกาะอเมซอนลิลี่ ผู้ได้รับการยกย่องว่าเป็นหญิงงามที่สุดในโลก",
+    "Chopper":"หมอกวางเรนเดียร์ผู้กินผลปีศาจฮิโตะฮิโตะจนพูดได้ สมาชิกที่น่ารักที่สุดของลูกเรือหมวกฟาง",
+    "Sabo":"พี่ชายคนที่สองของลูฟี่ ผู้นำคนสำคัญของกองทัพปฏิวัติที่กลับมาพร้อมพลังผลปีศาจแห่งเปลวเพลิง",
+    "Uta":"นักร้องในตำนานจากภาพยนตร์ One Piece Film: Red ผู้ซ่อนความลับเรื่องตัวตนที่แท้จริงเอาไว้",
+    "Carrot":"นักรบเผ่ามิงค์ผู้ตื่นพลังการแปลงร่างซุลอง (Sulong) ภายใต้แสงจันทร์เต็มดวง",
+    "Rocks D. Xebec":"กัปตันโจรสลัดในตำนานผู้จุดชนวนเหตุการณ์ 'ก็อดวัลเลย์' เมื่อหลายสิบปีก่อนเรื่องราวหลัก",
+    "Yamato":"ลูกสาวของไคโดผู้ใฝ่ฝันเป็นโอเด้ง นักสู้พลังจิตวิญญาณมังกรแห่งแดนวาโนะ",
+    "Usopp":"นักแม่นปืนผู้กล้าหาญแห่งกลุ่มโจรสลัดหมวกฟาง จอมโกหกที่เติบโตเป็นนักสู้ตัวจริง",
+    "Loki":"เจ้าชายผู้ถูกสาปแห่งเกาะยักษ์เอลบาฟ ตัวละครสำคัญจากซากาสุดท้ายของเรื่อง",
+    "Cracker":"หนึ่งในสามนายพลของบิ๊กแมมผู้ควบคุมกองทัพบิสกิตนักรบนับพันตน",
+    "Doflamingo":"อดีตราชันโลกผู้ผงาดเป็นเจ้าพ่อดอกไม้ปีศาจแห่งดอนกิโฆเต้ ผู้บงการอยู่เบื้องหลังเมืองดอกไม้",
+    "Perona":"เจ้าหญิงผีสาวแห่งเกาะทริลเลอร์บาร์ก ผู้ควบคุมกองทัพผีด้วยพลังผลปีศาจโฮโระโฮโระ"
   };
   const genresMap = {
-    "My Hero":["ดราม่า","ระทึกขวัญ"], "Ippo":["ไซไฟ","แอ็กชัน"],
-    "ร้านลับข้างซอย":["คอมเมดี้"], "ไฟใต้สายฝน":["โรแมนติก"], "เขาวงกตราตรี":["สยองขวัญ"],
-    "นักล่าแสงดาว":["แอนิเมชัน"], "ห้องเรียนสีเลือด":["ระทึกขวัญ"], "คนละครึ่งฟ้า":["ดราม่า","ครอบครัว"],
-    "เมืองที่ไม่หลับใหล":["อาชญากรรม"], "รักนี้ไม่มีสคริปต์":["โรแมนติก","คอมเมดี้"],
-    "รหัสลับสุดขอบฟ้า":["ไซไฟ"], "ปลายทางที่ไม่มีชื่อ":["ดราม่า"], "เกมล่าเงา":["แอ็กชัน","ระทึกขวัญ"],
-    "ครัวไฟฝัน":["สารคดี"], "ก่อนฟ้าจะสาง":["ดราม่า","โรแมนติก"], "หมู่บ้านมายา":["แฟนตาซี"]
+    "Luffy":["แอ็กชัน","ผจญภัย"], "Zoro":["แอ็กชัน","ดราม่า"], "Sanji":["แอ็กชัน","ตลก"],
+    "Nami":["ผจญภัย","ตลก"], "Law":["แอ็กชัน","ดราม่า"], "Robin":["ดราม่า","ผจญภัย"],
+    "Ace":["ดราม่า","โศกนาฏกรรม"], "Shanks":["แอ็กชัน","ดราม่า"], "Mihawk":["แอ็กชัน","ดราม่า"],
+    "Crocodile":["วายร้าย","แอ็กชัน"], "Corazon":["ดราม่า","โศกนาฏกรรม"], "Boa Hancock":["โรแมนติก","แอ็กชัน"],
+    "Chopper":["ตลก","ดราม่า"], "Sabo":["แอ็กชัน","ดราม่า"], "Uta":["ดนตรี","ดราม่า"],
+    "Carrot":["แอ็กชัน","แฟนตาซี"], "Rocks D. Xebec":["ประวัติศาสตร์","แอ็กชัน"], "Yamato":["แอ็กชัน","ดราม่า"],
+    "Usopp":["ผจญภัย","ตลก"], "Loki":["แฟนตาซี","ดราม่า"], "Cracker":["แอ็กชัน","ตลก"],
+    "Doflamingo":["วายร้าย","แอ็กชัน"], "Perona":["ผจญภัย","ตลก"]
   };
 
   // ---- วิดีโอตัวอย่าง (YouTube) ----
-  // ใส่ YouTube Video ID ของแต่ละเรื่องตรงนี้ (เอามาจากท้าย URL ของคลิป เช่น youtube.com/watch?v=XXXXXXXXXXX)
-  // ตอนนี้ทุกเรื่องยังใช้คลิปตัวอย่างเดียวกันแบบ placeholder (Creative Commons) — เปลี่ยนได้ตามต้องการ
-  const DEFAULT_VIDEO_ID = "aqz-KE-bpKQ"; // Big Buck Bunny (CC-BY, ใช้เป็น placeholder)
+  // Video ID ของแต่ละตัวละคร เป็นคลิปไฮไลต์จริงจาก YouTube (ส่วนใหญ่จากช่อง Crunchyroll Collection)
+  const DEFAULT_VIDEO_ID = "yaXu9XrvhhM";
   const videoMap = {
-    "My Hero": "2iqlLWFvRv0",
-    "Ippo": "WxrTu7fT1FY",
+    "Luffy": "yaXu9XrvhhM",
+    "Zoro": "Zuu6ClXRabE",
+    "Sanji": "hpE7VOVQDHE",
+    "Nami": "KsYxOTAiMlk",
+    "Law": "QAxaniV3zIM",
+    "Robin": "npufTv1ifNg",
+    "Ace": "EvRDba5hWs8",
+    "Shanks": "ypxMTu1VNlY",
+    "Mihawk": "BgKRqGBlttk",
+    "Crocodile": "rmRzTBY-8EY",
+    "Corazon": "PqF9qdIiXnY",
+    "Boa Hancock": "BAIaAVCvW2A",
+    "Chopper": "5reop01XCuk",
+    "Sabo": "PwU1geQeLpM",
+    "Uta": "IPaSD4sQOkg",
+    "Carrot": "Xcex-RaxTkM",
+    "Rocks D. Xebec": "SZ56_faZTXQ",
+    "Yamato": "gfP55dAf5BY",
+    "Usopp": "Q9_c9aP3ExM",
+    "Loki": "PX48JBfx0G0",
+    "Cracker": "bW4zWdjVyRk",
+    "Doflamingo": "e9cc3LthbNU",
+    "Perona": "GFwtKOw5Kjk"
   };
 
   let currentTitle = null;
