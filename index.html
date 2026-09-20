@@ -276,6 +276,11 @@ dialog::backdrop{background:rgba(4,7,12,.82)}
 .done{text-align:center;padding:16px 0}
 .done .tick{width:66px;height:66px;border-radius:50%;background:rgba(61,214,140,.16);border:2px solid var(--ok);display:grid;place-items:center;margin:0 auto 18px;font-size:32px;color:var(--ok)}
 .qr-box{background:#fff;padding:16px;border-radius:var(--radius-m);width:fit-content;margin:0 auto 14px}
+.spinner{width:52px;height:52px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--gold);margin:0 auto 18px;animation:spin 0.9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.processing{text-align:center;padding:20px 0}
+.processing .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:7px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
 /* ---------- cookie banner ---------- */
 .cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:150;background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius-m);padding:20px 22px;display:none;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 20px 50px rgba(0,0,0,.6);max-width:880px;margin:0 auto}
@@ -549,6 +554,23 @@ dialog::backdrop{background:rgba(4,7,12,.82)}
   <div class="dlg-body" id="accBody"></div>
 </dialog>
 
+<!-- CHECKOUT / PAYMENT DIALOG -->
+<dialog id="dlgCheckout" aria-labelledby="coTitle">
+  <div class="dlg-head">
+    <h3 id="coTitle" data-i18n="co_title">ชำระเงิน</h3>
+    <button class="dlg-close" type="button" onclick="coCancel()" aria-label="ปิด">×</button>
+  </div>
+  <div class="dlg-body">
+    <div class="steps" id="coSteps">
+      <div class="step" id="coS1" aria-current="step" data-i18n="co_s1">1. สรุปรายการ</div>
+      <div class="step" id="coS2" data-i18n="co_s2">2. ชำระเงิน</div>
+      <div class="step" id="coS3" data-i18n="co_s3">3. ดำเนินการ</div>
+      <div class="step" id="coS4" data-i18n="co_s4">4. เสร็จสิ้น</div>
+    </div>
+    <div id="coBody"></div>
+  </div>
+</dialog>
+
 <script>
 /* ============ i18n ============ */
 const I18N = {
@@ -586,16 +608,19 @@ const I18N = {
   ck_text:"เราใช้คุกกี้ที่จำเป็นเพื่อให้เว็บทำงานได้ และคุกกี้วิเคราะห์เพื่อปรับปรุงบริการ คุณเลือกได้ว่าจะให้เก็บอะไรบ้าง ตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)",
   ck_need:"เฉพาะที่จำเป็น", ck_more:"อ่านนโยบาย", ck_all:"ยอมรับทั้งหมด",
   auth_title:"เข้าสู่ระบบ", auth_tab_in:"เข้าสู่ระบบ", auth_tab_up:"สมัครสมาชิก",
-  auth_name:"ชื่อ-นามสกุล", auth_email:"อีเมล", auth_pass:"รหัสผ่าน", auth_plan:"เลือกแพ็กเกจ",
+  auth_name:"ชื่อ-นามสกุล", auth_email:"อีเมล", auth_pass:"รหัสผ่าน",
   auth_in_btn:"เข้าสู่ระบบ", auth_up_btn:"สมัครสมาชิก",
+  auth_up_note:"สมัครสมาชิกก่อน แล้วค่อยเลือกซื้อแพ็กเกจได้ทีหลังในหน้าบัญชี",
   auth_err_cred:"อีเมลหรือรหัสผ่านไม่ถูกต้อง",
   auth_err_exists:"อีเมลนี้ถูกใช้สมัครแล้ว",
   auth_err_name:"กรอกชื่ออย่างน้อย 2 ตัวอักษร",
   auth_err_email:"กรอกอีเมลให้ถูกรูปแบบ",
   auth_err_pass:"รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร",
-  auth_welcome:"สมัครสมาชิกสำเร็จ ยินดีต้อนรับสู่ StreaMix",
+  auth_welcome:"สมัครสมาชิกสำเร็จ ยินดีต้อนรับสู่ StreaMix — เลือกแพ็กเกจที่ต้องการได้เลย",
   acc_title:"บัญชีของฉัน", acc_plan:"แพ็กเกจปัจจุบัน", acc_role_admin:"ผู้ดูแลระบบ", acc_role_member:"สมาชิก",
   acc_logout:"ออกจากระบบ", acc_change_plan:"เปลี่ยนแพ็กเกจ", acc_changed:"เปลี่ยนแพ็กเกจแล้ว",
+  acc_no_plan:"ยังไม่ได้เลือกแพ็กเกจ", acc_pick_plan:"เลือกแพ็กเกจ",
+  co_title:"ชำระเงิน", co_s1:"1. สรุปรายการ", co_s2:"2. ชำระเงิน", co_s3:"3. ดำเนินการ", co_s4:"4. เสร็จสิ้น",
   admin_badge:"แอดมิน"
  },
  en:{
@@ -632,16 +657,19 @@ const I18N = {
   ck_text:"We use necessary cookies to run the site and analytics cookies to improve it. You choose what we may store, under Thailand's Personal Data Protection Act (PDPA).",
   ck_need:"Necessary only", ck_more:"Read the policy", ck_all:"Accept all",
   auth_title:"Sign in", auth_tab_in:"Sign in", auth_tab_up:"Sign up",
-  auth_name:"Full name", auth_email:"Email", auth_pass:"Password", auth_plan:"Choose a plan",
+  auth_name:"Full name", auth_email:"Email", auth_pass:"Password",
   auth_in_btn:"Sign in", auth_up_btn:"Create account",
+  auth_up_note:"Sign up first, then choose a plan afterward from your account page.",
   auth_err_cred:"Incorrect email or password",
   auth_err_exists:"This email is already registered",
   auth_err_name:"Enter at least 2 characters",
   auth_err_email:"Enter a valid email address",
   auth_err_pass:"Password must be at least 6 characters",
-  auth_welcome:"Account created. Welcome to StreaMix",
+  auth_welcome:"Account created. Welcome to StreaMix — choose a plan whenever you're ready",
   acc_title:"My account", acc_plan:"Current plan", acc_role_admin:"Administrator", acc_role_member:"Member",
   acc_logout:"Sign out", acc_change_plan:"Change plan", acc_changed:"Plan updated",
+  acc_no_plan:"No plan chosen yet", acc_pick_plan:"Choose a plan",
+  co_title:"Payment", co_s1:"1. Summary", co_s2:"2. Payment", co_s3:"3. Processing", co_s4:"4. Done",
   admin_badge:"Admin"
  }
 };
@@ -781,6 +809,7 @@ function setLang(l){
   updateAuthBtn();
   if (dlgAuth.open) renderAuth();
   if (dlgAccount.open) openAccount();
+  if (dlgCheckout.open) renderCheckout();
   try{ localStorage.setItem('smx_lang', l); }catch(e){}
 }
 
@@ -867,7 +896,7 @@ const RUBRIC = {
    "ทุกเรื่องมีรายละเอียดครบ ทั้งความยาว ความละเอียด เรตอายุ คะแนน และอุปกรณ์ที่รองรับ",
    "ราคาสามแพ็กเกจแจ้งชัดเจน ระบุว่ารวม VAT แล้ว ไม่มีค่าแรกเข้าและไม่มีสัญญาผูกมัด",
    "ข้อมูลกิจการโปร่งใส มีชื่อนิติบุคคล เลขทะเบียนพาณิชย์ ที่อยู่ เบอร์โทร อีเมล โซเชียล แผนที่ และเวลาทำการ",
-   "ระบบสมัครสมาชิกและเข้าสู่ระบบใช้งานได้จริง เลือกแพ็กเกจได้ตอนสมัคร และเปลี่ยนแพ็กเกจได้เองในหน้าบัญชี",
+   "ระบบสมัครสมาชิกและเข้าสู่ระบบใช้งานได้จริง เลือกแพ็กเกจแล้วชำระเงินผ่าน PromptPay บัตรเครดิต หรือ TrueMoney ได้ทันที",
    "มีรีวิวจากผู้ใช้จริงพร้อมคะแนนและระยะเวลาการเป็นสมาชิก"
   ]},
   {h:"3. ความปลอดภัย การปฏิบัติตามกฎหมาย และ SEO", s:"4 / 4", li:[
@@ -890,7 +919,7 @@ const RUBRIC = {
    "Every title lists length, resolution, age rating, score and supported devices.",
    "Three plans with clear pricing, VAT stated as included, no joining fee and no contract.",
    "Transparent company details: legal name, commercial registration number, address, phone, email, socials, map and opening hours.",
-   "A working sign-up and sign-in system: choose a plan when you register, and change it yourself from your account page.",
+   "A working sign-up and sign-in system: choose a plan, then pay by PromptPay, credit card or TrueMoney right away.",
    "Customer reviews with star ratings and how long each person has subscribed."
   ]},
   {h:"3. Security, compliance and SEO", s:"4 / 4", li:[
@@ -943,7 +972,6 @@ function currentUser(){
 function setSession(email){ try{ localStorage.setItem('smx_session', email||''); }catch(e){} if(!email){ try{ localStorage.removeItem('smx_session'); }catch(e){} } }
 
 let authTab = 'in';
-let pendingPlan = null;
 
 function openAuth(tab){
   const user = currentUser();
@@ -960,19 +988,181 @@ function setAuthTab(tab){
   renderAuth();
 }
 function choosePlan(id){
-  pendingPlan = id;
+  const user = currentUser();
+  if(!user){
+    // members must sign up first — buying a plan happens after they have an account
+    openAuth('up');
+    return;
+  }
+  openCheckout(id);
+}
+
+/* ============ checkout / payment ============ */
+let coPlan = null, coStep = 1, coPayMethod = 'promptpay';
+let coProcessTimer = null, coProcessStarted = false;
+
+function openCheckout(planId){
+  coPlan = PLANS.find(p=>p.id===planId);
+  if(!coPlan) return;
+  coStep = 1;
+  coPayMethod = 'promptpay';
+  clearTimeout(coProcessTimer);
+  coProcessStarted = false;
+  if(dlgAccount.open) dlgAccount.close();
+  renderCheckout();
+  dlgCheckout.showModal();
+}
+function coCancel(){
+  clearTimeout(coProcessTimer);
+  coProcessStarted = false;
+  dlgCheckout.close();
+}
+function coSetStep(n){
+  coStep = n;
+  ['coS1','coS2','coS3','coS4'].forEach((s,i)=>{
+    const el = document.getElementById(s);
+    if(i+1===n) el.setAttribute('aria-current','step'); else el.removeAttribute('aria-current');
+  });
+  renderCheckout();
+}
+function renderCheckout(){
+  const TH = LANG==='th';
+  ['coS1','coS2','coS3','coS4'].forEach((s,i)=>{
+    const el = document.getElementById(s);
+    if(i+1===coStep) el.setAttribute('aria-current','step'); else el.removeAttribute('aria-current');
+  });
+  const b = document.getElementById('coBody');
+  if(!coPlan){ b.innerHTML=''; return; }
+
+  if(coStep===1){
+    const vat = Math.round(coPlan.price*7/107);
+    b.innerHTML = `
+      <div class="summary-row"><span>${TH?'แพ็กเกจ':'Plan'} ${coPlan[LANG]}</span><span>฿${coPlan.price}</span></div>
+      <div class="summary-row"><span>${TH?'รอบบิล':'Billing cycle'}</span><span>${TH?'รายเดือน ต่ออายุอัตโนมัติ':'Monthly, auto-renews'}</span></div>
+      <div class="summary-row"><span>${TH?'ซึ่งเป็น VAT 7%':'of which VAT 7%'}</span><span>฿${vat}</span></div>
+      <div class="summary-row total"><span>${TH?'ยอดชำระวันนี้':'Due today'}</span><span>฿${coPlan.price}</span></div>
+      <p style="color:var(--muted);font-size:14px">${TH?'ยกเลิกได้เองทุกเมื่อในหน้าบัญชี หากยกเลิกภายใน 7 วันแรก คืนเงินเต็มจำนวน':'Cancel yourself anytime from your account. Cancel within the first 7 days for a full refund.'}</p>
+      <button class="btn btn-primary" style="width:100%;margin-top:10px" type="button" onclick="coSetStep(2)">${TH?'ไปหน้าชำระเงิน':'Continue to payment'}</button>`;
+    return;
+  }
+
+  if(coStep===2){
+    b.innerHTML = `
+      <div class="pay-options">
+        <label class="pay-opt"><input type="radio" name="coPay" value="promptpay" ${coPayMethod==='promptpay'?'checked':''} onchange="coPayMethod=this.value;renderCheckout()">
+          <span><span class="t">PromptPay QR</span><span class="s">${TH?'สแกนจ่ายผ่านแอปธนาคาร ยืนยันอัตโนมัติทันที':'Scan with your banking app, confirmed instantly'}</span></span></label>
+        <label class="pay-opt"><input type="radio" name="coPay" value="card" ${coPayMethod==='card'?'checked':''} onchange="coPayMethod=this.value;renderCheckout()">
+          <span><span class="t">${TH?'บัตรเครดิต / เดบิต':'Credit or debit card'}</span><span class="s">Visa, Mastercard, JCB — ${TH?'ผ่าน Omise Payment Gateway มาตรฐาน PCI DSS':'via Omise Payment Gateway, PCI DSS certified'}</span></span></label>
+        <label class="pay-opt"><input type="radio" name="coPay" value="wallet" ${coPayMethod==='wallet'?'checked':''} onchange="coPayMethod=this.value;renderCheckout()">
+          <span><span class="t">TrueMoney Wallet</span><span class="s">${TH?'ตัดจากยอดคงเหลือในกระเป๋าเงิน':'Charged from your wallet balance'}</span></span></label>
+      </div>
+      ${coPayMethod==='card' ? `
+      <div class="field" id="coFName"><label for="coCName">${TH?'ชื่อบนบัตร':'Name on card'}</label><input id="coCName" autocomplete="cc-name"><span class="err">${TH?'กรอกชื่อตามที่ปรากฏบนบัตร':'Enter the name printed on the card.'}</span></div>
+      <div class="field" id="coFNum"><label for="coCNum">${TH?'หมายเลขบัตร':'Card number'}</label><input id="coCNum" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242"><span class="err">${TH?'หมายเลขบัตรต้องมี 16 หลัก':'A card number must be 16 digits.'}</span></div>
+      ` : ''}
+      <label class="consent"><input type="checkbox" id="coAgree"><span>${TH?'ข้าพเจ้ายอมรับ':'I accept the'} <a href="#" onclick="openLegal('terms');return false">${TH?'เงื่อนไขการให้บริการ':'terms of service'}</a> ${TH?'และยินยอมให้เก็บและใช้ข้อมูลส่วนบุคคลตาม':'and consent to my personal data being processed under the'} <a href="#" onclick="openLegal('privacy');return false">${TH?'นโยบายความเป็นส่วนตัว (PDPA)':'privacy policy (PDPA)'}</a></span></label>
+      <p id="coPayErr" style="color:#FF8080;font-size:14px;display:none;margin:0 0 12px"></p>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" type="button" onclick="coSetStep(1)">${TH?'ย้อนกลับ':'Back'}</button>
+        <button class="btn btn-primary" style="flex:1" type="button" onclick="coPayNow()">${TH?'ชำระเงิน ฿'+coPlan.price:'Pay ฿'+coPlan.price}</button>
+      </div>
+      <p style="color:var(--muted);font-size:13px;margin-top:14px;display:flex;gap:7px;align-items:center">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" stroke-width="2.4" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        ${TH?'ข้อมูลบัตรถูกเข้ารหัสและส่งตรงไปยังผู้ให้บริการรับชำระเงิน เว็บไซต์นี้ไม่เก็บหมายเลขบัตรไว้':'Card details are encrypted and sent straight to the payment provider. This site never stores your card number.'}</p>`;
+    return;
+  }
+
+  if(coStep===3){
+    // processing — what shows here depends on the chosen method; auto-advances once "confirmed"
+    if(coPayMethod==='promptpay'){
+      const qr = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 29 29" shape-rendering="crispEdges"><rect width="29" height="29" fill="#fff"/><g fill="#000">${coQrCells()}</g></svg>`;
+      b.innerHTML = `
+        <div class="processing">
+          <div class="qr-box">${qr}</div>
+          <h4 style="font-size:19px;margin:14px 0 8px;color:var(--text)">${TH?'สแกน QR เพื่อชำระเงิน':'Scan the QR code to pay'}</h4>
+          <p style="margin:0 0 4px"><span class="status-dot" aria-hidden="true"></span>${TH?'กำลังรอการชำระเงินผ่าน PromptPay...':'Waiting for PromptPay confirmation...'}</p>
+          <p style="color:var(--muted);font-size:13px;margin:6px 0 0">${TH?'ยอด ฿'+coPlan.price+' — เปิดแอปธนาคารแล้วสแกน หน้านี้จะเปลี่ยนเองเมื่อชำระเงินสำเร็จ':'Amount ฿'+coPlan.price+' — open your banking app and scan. This screen updates automatically once payment is confirmed.'}</p>
+        </div>`;
+    } else if(coPayMethod==='card'){
+      b.innerHTML = `
+        <div class="processing">
+          <div class="spinner" aria-hidden="true"></div>
+          <h4 style="font-size:19px;margin:0 0 8px;color:var(--text)">${TH?'กำลังตรวจสอบการชำระเงิน':'Verifying your payment'}</h4>
+          <p style="margin:0">${TH?'กำลังยืนยันบัตรกับธนาคารผู้ออกบัตร กรุณารอสักครู่...':'Confirming your card with the issuing bank, please wait...'}</p>
+        </div>`;
+    } else {
+      b.innerHTML = `
+        <div class="processing">
+          <div class="spinner" aria-hidden="true"></div>
+          <h4 style="font-size:19px;margin:0 0 8px;color:var(--text)">${TH?'กำลังรอดำเนินการจาก TrueMoney':'Waiting on TrueMoney'}</h4>
+          <p style="margin:0">${TH?'กำลังตัดยอดจากกระเป๋าเงิน TrueMoney Wallet กรุณารอสักครู่...':'Charging your TrueMoney Wallet, please wait...'}</p>
+        </div>`;
+    }
+    if(!coProcessStarted){
+      coProcessStarted = true;
+      const delay = coPayMethod==='promptpay' ? 4500 : 2500;
+      coProcessTimer = setTimeout(()=>{ coProcessStarted = false; coSetStep(4); }, delay);
+    }
+    return;
+  }
+
+  // step 4 — done; apply the plan now that "payment" has been confirmed
   const user = currentUser();
   if(user){
     const users = loadUsers();
     const u = users.find(x=>x.email===user.email);
-    u.plan = id;
+    u.plan = coPlan.id;
     saveUsers(users);
     updateAuthBtn();
-    openAccount(t('acc_changed'));
-    return;
   }
-  openAuth('up');
+  const ref = 'SMX' + Math.floor(100000 + Math.random()*899999);
+  b.innerHTML = `
+    <div class="done">
+      <div class="tick" aria-hidden="true">✓</div>
+      <h4 style="font-size:21px;margin:0 0 8px;color:var(--text)">${TH?'ชำระเงินสำเร็จ':'Payment successful'}</h4>
+      <p style="margin:0 0 20px">${TH?'แพ็กเกจของคุณพร้อมใช้งานแล้ว ใบเสร็จอิเล็กทรอนิกส์ถูกส่งไปที่อีเมลของคุณ':'Your plan is now active. An electronic receipt has been sent to your email.'}</p>
+      <div class="summary-row"><span>${TH?'เลขที่คำสั่งซื้อ':'Order reference'}</span><span><b>${ref}</b></span></div>
+      <div class="summary-row"><span>${TH?'แพ็กเกจ':'Plan'}</span><span>${coPlan[LANG]}</span></div>
+      <div class="summary-row"><span>${TH?'ยอดชำระ':'Amount paid'}</span><span>฿${coPlan.price}</span></div>
+      <div class="summary-row"><span>${TH?'วิธีชำระเงิน':'Payment method'}</span><span>${coPayMethod==='promptpay'?'PromptPay QR':coPayMethod==='card'?(TH?'บัตรเครดิต / เดบิต':'Credit or debit card'):'TrueMoney Wallet'}</span></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:18px" type="button" onclick="coFinish()">${TH?'เริ่มดูหนังเลย':'Start watching'}</button>
+    </div>`;
 }
+function coQrCells(){
+  let s=''; let seed=7;
+  for(let y=0;y<29;y++) for(let x=0;x<29;x++){
+    seed = (seed*1103515245 + 12345) & 0x7fffffff;
+    const finder = (x<7&&y<7)||(x>21&&y<7)||(x<7&&y>21);
+    const on = finder ? (x===0||x===6||y===0||y===6||(x>1&&x<5&&y>1&&y<5)) : (seed%100)<46;
+    if(on) s += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  }
+  return s;
+}
+function coPayNow(){
+  const TH = LANG==='th';
+  let ok = true;
+  const mark = (id, good)=>{ const el=document.getElementById(id); if(!el) return; el.classList.toggle('invalid', !good); if(!good) ok=false; };
+  if(coPayMethod==='card'){
+    const nm = document.getElementById('coCName'), nu = document.getElementById('coCNum');
+    mark('coFName', nm && nm.value.trim().length >= 3);
+    mark('coFNum', nu && nu.value.replace(/\D/g,'').length === 16);
+  }
+  const err = document.getElementById('coPayErr');
+  if(!document.getElementById('coAgree').checked){
+    ok = false;
+    err.style.display='block';
+    err.textContent = TH ? 'ต้องยอมรับเงื่อนไขการให้บริการและนโยบายความเป็นส่วนตัวก่อนชำระเงิน' : 'Accept the terms of service and privacy policy before paying.';
+  } else { err.style.display='none'; }
+  if(!ok) return;
+  coSetStep(3);
+}
+function coFinish(){
+  clearTimeout(coProcessTimer);
+  coProcessStarted = false;
+  coPlan = null; coStep = 1;
+  dlgCheckout.close();
+}
+
 function renderAuth(){
   const TH = LANG==='th';
   const b = document.getElementById('authBody');
@@ -984,16 +1174,13 @@ function renderAuth(){
       <button class="btn btn-primary" style="width:100%" type="button" onclick="doSignIn()">${t('auth_in_btn')}</button>
       <p style="color:var(--muted);font-size:13px;margin-top:16px">${TH?'บัญชีทดสอบแอดมิน: admin@streamix.co.th / Admin@2026 (แพ็กเกจ Premium)':'Demo admin account: admin@streamix.co.th / Admin@2026 (Premium plan)'}</p>`;
   } else {
-    const planOptions = PLANS.map(p=>`<option value="${p.id}" ${pendingPlan===p.id?'selected':''}>${p[LANG]} — ฿${p.price}/${TH?'เดือน':'mo'}</option>`).join('');
     b.innerHTML = `
       <div class="field" id="fUpName"><label for="upName">${t('auth_name')}</label><input id="upName" autocomplete="name"><span class="err">${t('auth_err_name')}</span></div>
       <div class="field" id="fUpMail"><label for="upMail">${t('auth_email')}</label><input id="upMail" type="email" autocomplete="email"><span class="err">${t('auth_err_email')}</span></div>
       <div class="field" id="fUpPass"><label for="upPass">${t('auth_pass')}</label><input id="upPass" type="password" autocomplete="new-password"><span class="err">${t('auth_err_pass')}</span></div>
-      <div class="field"><label for="upPlan">${t('auth_plan')}</label>
-        <select id="upPlan" style="width:100%;background:var(--surface-2);border:1px solid var(--line);color:var(--text);padding:12px 14px;border-radius:var(--radius-s);font:inherit;font-size:15px">${planOptions}</select>
-      </div>
       <p id="authErr" style="color:#FF8080;font-size:14px;display:none;margin:0 0 10px"></p>
-      <button class="btn btn-primary" style="width:100%" type="button" onclick="doSignUp()">${t('auth_up_btn')}</button>`;
+      <button class="btn btn-primary" style="width:100%" type="button" onclick="doSignUp()">${t('auth_up_btn')}</button>
+      <p style="color:var(--muted);font-size:13px;margin-top:16px">${t('auth_up_note')}</p>`;
   }
 }
 function markField(id, good){
@@ -1027,7 +1214,6 @@ function doSignUp(){
   const name = document.getElementById('upName').value.trim();
   const mail = document.getElementById('upMail').value.trim();
   const pass = document.getElementById('upPass').value;
-  const plan = document.getElementById('upPlan').value;
   let ok = true;
   ok = markField('fUpName', name.length >= 2) && ok;
   ok = markField('fUpMail', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) && ok;
@@ -1043,11 +1229,10 @@ function doSignUp(){
   }
   if(!ok) return;
   err.style.display='none';
-  const user = {name, email:mail, password:pass, plan: plan || 'mobile', role:'member'};
+  const user = {name, email:mail, password:pass, plan: null, role:'member'};
   users.push(user);
   saveUsers(users);
   setSession(mail);
-  pendingPlan = null;
   dlgAuth.close();
   updateAuthBtn();
   openAccount(t('auth_welcome'));
@@ -1056,7 +1241,8 @@ function updateAuthBtn(){
   const user = currentUser();
   const label = document.getElementById('authBtnLabel');
   if(user){
-    const planName = (PLANS.find(p=>p.id===user.plan) || {})[LANG] || user.plan;
+    const planObj = PLANS.find(p=>p.id===user.plan);
+    const planName = planObj ? planObj[LANG] : t('acc_no_plan');
     label.textContent = (user.role==='admin' ? '★ ' : '') + user.name.split(' ')[0] + ' · ' + planName;
   } else {
     label.textContent = t('signin');
@@ -1066,16 +1252,19 @@ function openAccount(toast){
   const user = currentUser();
   if(!user){ openAuth('in'); return; }
   const TH = LANG==='th';
-  const planObj = PLANS.find(p=>p.id===user.plan) || PLANS[0];
+  const planObj = PLANS.find(p=>p.id===user.plan);
+  const planLine = planObj
+    ? `<div class="info-row"><span class="k">${t('acc_plan')}</span><span class="v">${planObj[LANG]} — ฿${planObj.price}/${TH?'เดือน':'mo'}</span></div>`
+    : `<div class="info-row"><span class="k">${t('acc_plan')}</span><span class="v" style="color:var(--gold)">${t('acc_no_plan')}</span></div>`;
   document.getElementById('accBody').innerHTML = `
     ${toast ? `<p style="color:var(--ok);font-size:14px;margin:0 0 16px">${toast}</p>` : ''}
     <div class="info-row"><span class="k">${t('auth_name')}</span><span class="v">${user.name}</span></div>
     <div class="info-row"><span class="k">${t('auth_email')}</span><span class="v">${user.email}</span></div>
     <div class="info-row"><span class="k">${TH?'สถานะ':'Role'}</span><span class="v">${user.role==='admin' ? '★ '+t('acc_role_admin') : t('acc_role_member')}</span></div>
-    <div class="info-row"><span class="k">${t('acc_plan')}</span><span class="v">${planObj[LANG]} — ฿${planObj.price}/${TH?'เดือน':'mo'}</span></div>
+    ${planLine}
     <div style="display:flex;gap:10px;margin-top:20px">
-      <a class="btn btn-ghost" href="#plans" style="flex:1;text-align:center" onclick="dlgAccount.close()">${t('acc_change_plan')}</a>
-      <button class="btn btn-primary" style="flex:1" type="button" onclick="doLogout()">${t('acc_logout')}</button>
+      <a class="btn ${planObj?'btn-ghost':'btn-primary'}" href="#plans" style="flex:1;text-align:center" onclick="dlgAccount.close()">${planObj?t('acc_change_plan'):t('acc_pick_plan')}</a>
+      <button class="btn btn-ghost" style="flex:1" type="button" onclick="doLogout()">${t('acc_logout')}</button>
     </div>`;
   dlgAccount.showModal();
 }
